@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11 情绪性进食困局者 - 用户洞察</title>
+
+<style>
+:root {
+    --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+    --border-subtle: #ececef; --border-hover: #dcdce0;
+    --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+    --accent-warm: #f5a524; --accent-pink: #ff6b8a; --accent-gold: #8b6cef;
+    --path-awakening: #4aa3df; --path-independent: #8b6cef;
+    --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.8; min-height: 100vh; overflow-x: hidden; }
+a { color: var(--accent-warm); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; padding: 24px 0 0 0; transition: color 0.3s; }
+.back-link:hover { color: var(--text-primary); text-decoration: none; }
+.back-link::before { content: '←'; font-size: 1.1rem; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+.page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 32px; }
+.header-number { font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: rgba(212,184,150,0.15); line-height: 1; }
+.header-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin: -12px 0 8px; }
+.header-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 16px; }
+.header-badges { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.path-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+.badge-independent { background: rgba(212,184,150,0.1); color: #d4b896; border: 1px solid rgba(212,184,150,0.2); }
+.badge-product { background: rgba(212,165,116,0.12); color: var(--accent-warm); border: 1px solid rgba(212,165,116,0.25); }
+.metrics-bar { display: flex; gap: 32px; padding: 20px 24px; margin-bottom: 32px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); }
+.metric-item { text-align: center; }
+.metric-value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--accent-warm); }
+.metric-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border-subtle); flex-wrap: wrap; }
+.tab-btn { padding: 12px 24px; background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo); position: relative; top: 1px; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent-warm); }
+.tab-content { display: none; padding: 32px 0; animation: fadeIn 0.4s var(--ease-out-expo); }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section { margin-bottom: 40px; }
+.section-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: var(--bg-card); color: var(--text-secondary); font-weight: 500; border-bottom: 1px solid var(--border-subtle); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+tr:hover td { background: var(--bg-card-hover); }
+.insight-box { background: var(--bg-card); border-left: 3px solid var(--accent-warm); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.insight-box strong { color: var(--text-primary); }
+.post-list { list-style: none; margin: 12px 0; }
+.post-list li { padding: 10px 16px; margin: 6px 0; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border-subtle); font-size: 0.9rem; transition: border-color 0.3s; }
+.post-list li:hover { border-color: var(--border-hover); }
+.post-list li a { color: var(--accent-warm); }
+.post-stat { color: var(--text-muted); font-size: 0.8rem; }
+.accordion { margin: 16px 0; }
+.accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--bg-card); cursor: pointer; font-weight: 500; font-size: 0.95rem; transition: background 0.3s; user-select: none; }
+.accordion-header:hover { background: var(--bg-card-hover); }
+.accordion-arrow { transition: transform 0.3s var(--ease-out-expo); font-size: 0.8rem; color: var(--text-muted); }
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo), padding 0.3s; }
+.accordion-item.open .accordion-body { max-height: 5000px; padding: 16px 20px; }
+p { margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">返回总览</a>
+
+    <div class="page-header">
+        <div class="header-number">11</div>
+        <h1 class="header-title">情绪性进食困局者</h1>
+        <div class="header-subtitle">获客入口是"减肥"而非"心理"</div>
+        <div class="header-badges">
+            <span class="path-badge badge-independent">独立产品线</span>
+        </div>
+    </div>
+
+    <div class="metrics-bar">
+        <div class="metric-item">
+            <div class="metric-value">4.4%</div>
+            <div class="metric-label">发帖量占比</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-value">10.1%</div>
+            <div class="metric-label">互动率</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="who">她们是谁</button>
+        <button class="tab-btn" data-tab="pain">痛苦时刻</button>
+        <button class="tab-btn" data-tab="cooccur">共现问题</button>
+        <button class="tab-btn" data-tab="journey">用户旅程</button>
+        <button class="tab-btn" data-tab="scenes">子场景群</button>
+        <button class="tab-btn" data-tab="more">标签与互动</button>
+    </div>
+
+    <!-- 她们是谁 -->
+    <div class="tab-content active" id="tab-who">
+        <div class="section">
+            <div class="insight-box">
+                <strong>这是五个群体中"女性浓度"最高的一个——67帖明确标注为女性受众，几乎没有男性声音。</strong> 同时也是最"年轻化"的群体之一，学生标签（5帖）和描述中的年龄线索（"23岁""大一""实习生"）指向20-25岁为核心。
+            </div>
+
+            <h3 class="section-title">受众标签分布</h3>
+            <table>
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>女性</td><td>67</td><td><strong>绝对主体——标注率远超其他群体</strong></td></tr>
+                    <tr><td>更年期女性</td><td>9</td><td>更年期体重变化亚群</td></tr>
+                    <tr><td>学生</td><td>5</td><td></td></tr>
+                    <tr><td>职场人</td><td>3</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-title">生活阶段</h3>
+            <table>
+                <thead><tr><th>阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>更年期</td><td>8</td><td></td></tr>
+                    <tr><td>学生期</td><td>5</td><td></td></tr>
+                    <tr><td>育儿期</td><td>3</td><td></td></tr>
+                    <tr><td>未标注</td><td>256</td><td>大量是20-30岁年轻女性</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box">
+                <strong>和前五个群体的根本差异：这个群体的痛苦有一个"可见的身体"。</strong> 前五个群体的痛苦是看不见的（敏感/内耗/失眠/情绪崩溃），但身材焦虑和暴食的痛苦<strong>直接写在身体上</strong>——这让她们同时承受心理痛苦和社会评价的双重压力。
+            </div>
+
+            <h3 class="section-title">与前五个群体的关键差异</h3>
+            <table>
+                <thead><tr><th>维度</th><th>高敏感</th><th>原生家庭</th><th>内耗</th><th>睡前思维</th><th>妈妈</th><th>情绪进食</th></tr></thead>
+                <tbody>
+                    <tr><td>群体核心</td><td>20-30职场女性</td><td>育儿妈妈</td><td>多角色中年女性</td><td>更年期+职场</td><td>妈妈</td><td><strong>20-25岁年轻女性</strong></td></tr>
+                    <tr><td>痛苦来源</td><td>人格特质</td><td>过去创伤</td><td>说不清的累</td><td>脑子停不下来</td><td>角色过载</td><td><strong>身体+情绪双重</strong></td></tr>
+                    <tr><td>独有标签</td><td>#钝感力</td><td>#断亲</td><td>#日签</td><td>#胡思乱想</td><td>#情绪管理</td><td><strong>#暴食 #ed #进食障碍</strong></td></tr>
+                    <tr><td>竞品</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><strong>竞品是减肥课</strong></td></tr>
+                    <tr><td>最强收藏</td><td>极简</td><td>自救指南</td><td>书单</td><td>即时方法</td><td>每日练习</td><td><strong>食物清单+心理学解释</strong></td></tr>
+                    <tr><td>求助型内容</td><td>中</td><td>中</td><td>高</td><td>高</td><td>高</td><td><strong>极高（"救救我""怎么办"反复出现）</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 痛苦时刻 -->
+    <div class="tab-content" id="tab-pain">
+        <div class="section">
+            <h3 class="section-title">痛苦时刻——发帖时间</h3>
+            <div class="insight-box">
+                <strong>21:00是唯一的尖峰（34帖）——深夜暴食高发时段。</strong> 其次是17:00-19:00（63帖），对应下班后/放学后。凌晨1:00有6帖，对应深夜暴食后的自责。
+            </div>
+            <p>和前五个群体对比，<strong>上午9:00-12:00也有显著活跃（57帖，21%）</strong>——这对应的是"昨晚暴食后的第二天早上"，她们在早上清醒时反思和自责。</p>
+        </div>
+    </div>
+
+    <!-- 共现问题 -->
+    <div class="tab-content" id="tab-cooccur">
+        <div class="section">
+            <h3 class="section-title">共现问题</h3>
+            <table>
+                <thead><tr><th>共现问题</th><th>频次</th><th>占比</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>158</td><td>58%</td><td>不是100%——部分帖子是纯减肥话题</td></tr>
+                    <tr><td>内耗</td><td>25</td><td>9%</td><td></td></tr>
+                    <tr><td>自我成长</td><td>20</td><td>7%</td><td></td></tr>
+                    <tr><td>失眠</td><td>14</td><td>5%</td><td>暴食→失眠链条</td></tr>
+                    <tr><td>更年期</td><td>8</td><td>3%</td><td></td></tr>
+                    <tr><td>抑郁</td><td>4</td><td>1.5%</td><td>低于预期</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>关键发现：这个群体的"抑郁"标签共现率很低（1.5%），但帖子里的情绪强度极高——"我好痛苦""救救我""我该咋办"。</strong> 说明她们不认为自己"抑郁"，而是把痛苦归因到"吃"和"身材"上。这是课程切入的重要角度——帮她们看到"不是你管不住嘴，是你的情绪需要出口"。
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户旅程 -->
+    <div class="tab-content" id="tab-journey">
+        <div class="section">
+            <h3 class="section-title">用户旅程</h3>
+            <ul class="post-list">
+                <li><strong>1. 身材不满触发</strong> → 某次照镜子/称体重/被评价 → 开始节食/减肥</li>
+                <li><strong>2. 控制期</strong> → 严格热量控制 → 短期见效 → "我可以的"</li>
+                <li><strong>3. 反弹崩溃</strong> → 某次情绪波动触发暴食 → 一次吃5000大卡 → 极度羞耻</li>
+                <li><strong>4. 节食-暴食循环</strong> → 节食→暴食→自责→更严格的节食→更猛烈的暴食 → 循环无法打破</li>
+                <li><strong>5. 寻找解释</strong> → 搜"为什么控制不住" → 遇到"暴食不是馋，是感受太少了" → <strong>第一次把暴食和情绪联系起来</strong></li>
+                <li><strong>6. 系统求助</strong> → 但找不到"心理+饮食"的整合方案 → <strong>课程介入点</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 子场景群 -->
+    <div class="tab-content" id="tab-scenes">
+        <div class="section">
+            <h3 class="section-title">14个子场景群（展示核心9个）</h3>
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群1：情绪性暴食/进食障碍（118帖，最大子群）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/691f1c18000000001e033fc6" target="_blank">"真实记录——进食障碍情绪性暴食的三小时"</a> <span class="post-stat">5643赞，1116评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69b4e916000000001f0072cc" target="_blank">"不知道什么时候开始，工作生活上的一点不顺，就习惯性的用吃东西来麻痹自己"</a> <span class="post-stat">465评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c39847000000001b022f18" target="_blank">"每天节食暴食再节食然后还暴食我好痛苦我该怎么办"</a> <span class="post-stat">210评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/691159190000000003010bd7" target="_blank">"暴食不是馋，是感受太少了——我从不觉得自己是饿，我只是突然停不下来"</a> <span class="post-stat">290评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/691eee74000000001f00c286" target="_blank">"又暴食了，情绪化进食了哎——暴食5000大卡"</a> <span class="post-stat">147评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69cfdb9f0000000023016de6" target="_blank">"我就知道我今天会暴食，最近下雨天情绪太不好了"</a> <span class="post-stat">187评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"用食物填满空洞的内心"——这是这个子群最核心的一句话。</strong> 她们已经能清晰表达"不是饿，是情绪"，但无法打破循环。注意"真实记录"系列——同一个用户连续发了多条暴食记录帖，每条都有上百评论——说明<strong>暴食者有极强的"记录+倾诉"需求</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群2：心理学解释（104帖，总赞25.4万——最高）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p>这是"把暴食从减肥问题重新定义为心理问题"的内容。</p>
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/699d5a05000000001503315e" target="_blank">"内心模糊和痛苦的人是没法身材管理的——因为内心没有锚点"</a> <span class="post-stat">4万赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6917f65d0000000007000560" target="_blank">"详细解析：习惯通过食物来发泄缓解压力"</a> <span class="post-stat">1.3万赞，8324收藏</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69cd9faf000000001a027a0d" target="_blank">"暴食从心理学分析到底因为啥？"</a> <span class="post-stat">3570赞，收藏比0.78</span></li>
+                            <li>"暴食是身体在喊疼" <span class="post-stat">收藏比0.77</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69be5f39000000001a027273" target="_blank">"胖，可能因为太委屈"</a> <span class="post-stat">收藏比0.73</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>104帖总赞25.4万——平均每帖2400赞，是所有子群中单帖效率最高的。</strong> "内心没有锚点"那条帖4万赞——这不是一个暴食帖，这是一个<strong>认知翻转帖</strong>，把"你为什么管不住嘴"翻转成了"你为什么不知道自己要什么"。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群3：节食-暴食循环（109帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/6908b5c10000000003036310" target="_blank">"瘦了60斤以后开始暴食了，不是不暴，时候未到"</a> <span class="post-stat">322评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ccfc45000000002301e01a" target="_blank">"如果不是特别胖的话真的不要轻易减肥"</a> <span class="post-stat">472评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69a26648000000001a033017" target="_blank">"到底咋样才能好好吃饭——170/130减到108，但例假已经推迟了二十天了"</a> <span class="post-stat">288评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>109帖在反复描述同一个模式：成功减肥→触发暴食→比减肥前更痛苦。</strong> "不是不暴，时候未到"这句话总结了整个循环——极端节食必然导致暴食，只是时间问题。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群4：身材焦虑/体型不满（40帖，评论总量最高——2.4万）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69ae8d03000000001a02d752" target="_blank">"有人懂这种身材吗？——本人女，梨形太痛了"</a> <span class="post-stat">9286评论</span></li>
+                            <li>"身材焦虑" <span class="post-stat">5369评论——帖子很短，全是评论区用户自发倾诉</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ac64c80000000022038fb7" target="_blank">"这要怎么减肥（求骂醒我版）"</a> <span class="post-stat">11756评论——全群体评论之王</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d88107000000001a03076e" target="_blank">"我因为太胖了每天都不开心……减肥我还是不开心。我该咋办"</a> <span class="post-stat">792评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/690ce3fa0000000003037c3f" target="_blank">"一个胖女孩的心声——有什么好的办法可以真正接纳自己"</a> <span class="post-stat">348评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            注意"169cm 110斤"和"94斤"——很多发帖者的体重在客观上完全正常，但她们仍然极度焦虑。说明身材焦虑的核心不是体重本身，而是<strong>"身体形象失调"（Body Image Distortion）</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群5：情绪与食物的关系（37帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/691159190000000003010bd7" target="_blank">"暴食不是馋，是感受太少了——我只是突然停不下来"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/697b2867000000000a029b78" target="_blank">"深夜暴食冲动来袭怎么办？可以做这些！"</a> <span class="post-stat">4304赞，收藏比0.92</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69aed1c7000000002801ee28" target="_blank">"情绪化进食的平替行为"</a> <span class="post-stat">收藏比0.97</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6931bfc6000000001e020abb" target="_blank">"无数次被情绪化进食和馋打败"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c7b501000000002800aef6" target="_blank">"每次暴食都是一次能量透支"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"情绪化进食的平替行为"收藏/赞比0.97——几乎每个点赞的人都收藏了。</strong> 这说明用户极度渴望<strong>"不靠食物也能处理情绪的替代方案"</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群6：方法/戒暴食（57帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/6936a24b000000001f00a4fd" target="_blank">"被身材焦虑困住的你，我来救！"</a> <span class="post-stat">2.4万赞，2412评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6936c4da000000001e0125a1" target="_blank">"想暴食就反复观看"</a> <span class="post-stat">3949赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6971d79d000000000a02e11c" target="_blank">"减肥的核心就两个"</a> <span class="post-stat">4411赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c7d5900000000023006b4c" target="_blank">"情绪减肥邪修法！"</a> <span class="post-stat">6930赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>57帖总评论1.7万——评论密度极高，说明"怎么戒暴食"是评论区最活跃的讨论方向。</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群7：畸形审美抵抗（15帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69284d03000000001e03263f" target="_blank">"女孩们！请拒绝畸形审美！！美可以是多样的"</a> <span class="post-stat">3.4万赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/699c142d000000001a024360" target="_blank">"我呼吁不要将正常体重的人称为微胖"</a> <span class="post-stat">1.4万赞，1448评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d212d2000000001a030278" target="_blank">"拒绝身材焦虑"</a> <span class="post-stat">3934赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>赞数极高但收藏比极低（0.01-0.04）——典型的"社会声量大但行动价值低"内容。</strong> "拒绝畸形审美"在认知层面被广泛接受，但在日常行为层面，她们仍然在焦虑。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群8：减肥成功故事（17帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/6954c217000000002103f496" target="_blank">"纪念自己瘦的70斤"</a> <span class="post-stat">14.7万赞，7663评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/693a96ca000000001e0036a2" target="_blank">"关于长胖时候的一些心里话，想瘦的一定要看"</a> <span class="post-stat">3.6万赞</span></li>
+                        </ul>
+                        <p>减肥成功帖有巨大流量但和心理课程关系不大。唯一的课程价值在于：这些帖子的评论区里藏着大量"还在挣扎"的用户——可以作为引流场景。</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群9：太瘦焦虑（13帖，一个被完全忽视的反面）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69bab134000000001f000fd1" target="_blank">"夏天你能不能别来了——瘦的我好崩溃，160没有80斤"</a> <span class="post-stat">1101评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6968d1e2000000000c035731" target="_blank">"感觉自己现在瘦的很恶心，前胸后背的骨头都清晰可见"</a> <span class="post-stat">1087评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>13帖总评论1.3万——单帖评论密度远超身材焦虑帖。</strong> 说明"太瘦焦虑"用户的讨论需求甚至比"太胖焦虑"更强——因为社会叙事里几乎没有她们的位置。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 标签与互动 -->
+    <div class="tab-content" id="tab-more">
+        <div class="section">
+            <h3 class="section-title">搜索标签体系</h3>
+            <table>
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#暴食</td><td>21</td><td>核心身份标签</td></tr>
+                    <tr><td>#减肥</td><td>20</td><td>大量用户的搜索入口仍然是"减肥"，不是"情绪性进食"</td></tr>
+                    <tr><td>#情绪性进食</td><td>14</td><td>开始使用心理化标签</td></tr>
+                    <tr><td>#暴食症 / #进食障碍</td><td>17</td><td>已经在用临床术语</td></tr>
+                    <tr><td>#ed</td><td>7</td><td>英文缩写——指向进食障碍社区</td></tr>
+                    <tr><td>#身材焦虑</td><td>7</td><td></td></tr>
+                    <tr><td>#控制不住嘴</td><td>6</td><td>自我归因标签——"问题在于我没控制力"</td></tr>
+                    <tr><td>#戒暴食</td><td>6</td><td>行动导向</td></tr>
+                    <tr><td>#心理减肥</td><td>6</td><td><strong>"心理减肥"是一个自发产生的融合标签</strong></td></tr>
+                    <tr><td>#胃是情绪器官</td><td>3</td><td>身体化解释</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>#减肥（20次）和#情绪性进食（14次）并存，说明这个群体正处于"从减肥框架向心理框架过渡"的阶段。</strong> 最优策略是用"减肥"做引流词，用"情绪与食物的关系"做正课框架。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">收藏/赞比</h3>
+            <p><strong>超高收藏（>0.9）：</strong></p>
+            <table>
+                <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+                <tbody>
+                    <tr><td>对抗焦虑吃对的食物</td><td>1.24</td><td>食物清单</td></tr>
+                    <tr><td>更年期多吃这6种食物</td><td>1.10</td><td>具体食物方案</td></tr>
+                    <tr><td>情绪化进食的平替行为</td><td>0.97</td><td>替代方案</td></tr>
+                    <tr><td>深夜暴食冲动来袭怎么办</td><td>0.92</td><td>即时方法</td></tr>
+                    <tr><td>暴食从心理学分析</td><td>0.78</td><td>心理学解释</td></tr>
+                    <tr><td>暴食是身体在喊疼</td><td>0.77</td><td>身体化解释</td></tr>
+                    <tr><td>胖可能因为太委屈</td><td>0.73</td><td>情绪归因</td></tr>
+                </tbody>
+            </table>
+            <p><strong>极低收藏（&lt;0.05）：</strong></p>
+            <table>
+                <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+                <tbody>
+                    <tr><td>不要将正常体重称为微胖</td><td>0.01</td><td>社会倡导</td></tr>
+                    <tr><td>女性永远的困境之身材焦虑</td><td>0.02</td><td>纯表态</td></tr>
+                    <tr><td>暴食vlog/饮食记录</td><td>0.02-0.04</td><td>纯记录</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>规律：食物清单/替代方案/心理学解释的收藏比>0.7，社会倡导和纯记录的收藏比&lt;0.05。</strong> 她们存的是"能用的"，不存"表态的"。<br><br>
+                独有发现：<strong>"食物清单"类内容的收藏比（1.10-1.24）在所有六个群体中仅次于"睡前方法"的2.49。</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+</script>
+</body>
+</html>

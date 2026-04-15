@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婚姻围城疲惫女性 - 用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+            --border-subtle: #ececef; --border-hover: #dcdce0;
+            --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+            --accent-warm: #f5a524; --accent-pink: #ff6b8a;
+            --path-lifecycle: #2ec27e;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary); color: var(--text-primary);
+            font-family: var(--font-body); font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            line-height: 1.75; -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--path-lifecycle); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .page-container { max-width: 960px; margin: 0 auto; padding: clamp(1rem, 4vw, 3rem); }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+        .back-link svg { width: 16px; height: 16px; }
+        .hero { margin-bottom: 3rem; }
+        .hero-number { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; color: rgba(168,196,184,0.15); line-height: 1; }
+        .hero-title { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--text-primary); margin-top: -0.5rem; }
+        .hero-subtitle { font-family: var(--font-body); font-size: clamp(0.9rem, 1.5vw, 1.1rem); color: var(--text-secondary); margin-top: 0.5rem; }
+        .path-badge { display: inline-block; margin-top: 1rem; padding: 0.25rem 0.85rem; border: 1px solid var(--path-lifecycle); border-radius: 999px; font-size: 0.75rem; color: var(--path-lifecycle); letter-spacing: 0.05em; }
+        .metrics-bar { display: flex; gap: 2rem; flex-wrap: wrap; padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 2.5rem; }
+        .metric { display: flex; flex-direction: column; }
+        .metric-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--path-lifecycle); }
+        .metric-label { font-size: 0.75rem; color: var(--text-muted); }
+        .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem; overflow-x: auto; }
+        .tab-btn { background: none; border: none; padding: 0.75rem 1.25rem; font-family: var(--font-body); font-size: 0.85rem; color: var(--text-muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo); }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--path-lifecycle); border-bottom-color: var(--path-lifecycle); }
+        .tab-panel { display: none; animation: fadeIn 0.4s var(--ease-out-expo); }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-block { margin-bottom: 2.5rem; }
+        .section-block h2 { font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle); }
+        .section-block h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--accent-warm); margin: 1.5rem 0 0.75rem; }
+        p, .content-text { color: var(--text-secondary); margin-bottom: 1rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .data-table th { text-align: left; padding: 0.6rem 0.75rem; font-weight: 500; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .data-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+        .accordion-header { width: 100%; background: var(--bg-card); border: none; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; transition: background 0.3s; }
+        .accordion-header:hover { background: var(--bg-card-hover); }
+        .accordion-header .arrow { transition: transform 0.3s var(--ease-out-expo); color: var(--text-muted); font-size: 0.8rem; }
+        .accordion-item.open .accordion-header .arrow { transform: rotate(180deg); }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo); background: var(--bg-card); }
+        .accordion-item.open .accordion-body { max-height: 5000px; }
+        .accordion-content { padding: 0 1.25rem 1.25rem; }
+        .accordion-content p { color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .user-voice { border-left: 2px solid var(--path-lifecycle); padding: 0.5rem 0 0.5rem 1rem; margin: 0.75rem 0; color: var(--text-secondary); font-size: 0.85rem; }
+        .user-voice a { color: var(--text-secondary); }
+        .user-voice a:hover { color: var(--path-lifecycle); }
+        .insight { background: rgba(168,196,184,0.06); border: 1px solid rgba(168,196,184,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; color: var(--text-secondary); font-size: 0.85rem; }
+        .journey { counter-reset: step; margin: 1rem 0; }
+        .journey-step { position: relative; padding: 0 0 1.5rem 2.5rem; color: var(--text-secondary); }
+        .journey-step::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: rgba(168,196,184,0.12); color: var(--path-lifecycle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+        .journey-step::after { content: ''; position: absolute; left: 0.75rem; top: 1.8rem; width: 1px; height: calc(100% - 1.8rem); background: var(--border-subtle); }
+        .journey-step:last-child::after { display: none; }
+        .table-scroll { overflow-x: auto; margin: 1rem 0; }
+        .table-scroll table { min-width: 700px; }
+        @media (max-width: 640px) { .metrics-bar { flex-direction: column; gap: 1rem; } .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        返回总览
+    </a>
+
+    <header class="hero">
+        <div class="hero-number">06</div>
+        <h1 class="hero-title">婚姻围城疲惫女性</h1>
+        <p class="hero-subtitle">不离婚前提下的关系策略</p>
+        <span class="path-badge">生命周期路径</span>
+    </header>
+
+    <div class="metrics-bar">
+        <div class="metric">
+            <span class="metric-value">3.3%</span>
+            <span class="metric-label">发帖量占比</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">6.3%</span>
+            <span class="metric-label">互动率</span>
+        </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="who" role="tab">她们是谁</button>
+        <button class="tab-btn" data-tab="pain" role="tab">痛苦时刻</button>
+        <button class="tab-btn" data-tab="cooccur" role="tab">共现问题</button>
+        <button class="tab-btn" data-tab="journey" role="tab">用户旅程</button>
+        <button class="tab-btn" data-tab="diff" role="tab">群体差异</button>
+        <button class="tab-btn" data-tab="scenes" role="tab">子场景群</button>
+        <button class="tab-btn" data-tab="tags" role="tab">标签与互动</button>
+    </div>
+
+    <!-- TAB: 她们是谁 -->
+    <div class="tab-panel active" id="tab-who">
+        <div class="section-block">
+            <h2>她们是谁</h2>
+
+            <h3>受众标签分布</h3>
+            <table class="data-table">
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>关系困扰人群</td><td>107</td><td><strong>绝对主体</strong></td></tr>
+                    <tr><td>女性</td><td>18</td><td></td></tr>
+                    <tr><td>妈妈/家长</td><td>12</td><td>育儿+婚姻双压</td></tr>
+                    <tr><td>心理咨询来访者</td><td>9</td><td></td></tr>
+                    <tr><td>职场人</td><td>9</td><td></td></tr>
+                    <tr><td>更年期女性</td><td>8</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <h3>生活阶段</h3>
+            <table class="data-table">
+                <thead><tr><th>阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>育儿期</td><td>27</td><td><strong>最大标记群——育儿期婚姻冲突最集中</strong></td></tr>
+                    <tr><td>产后</td><td>8</td><td>产后是婚姻危机的高发期</td></tr>
+                    <tr><td>中年阶段</td><td>7</td><td></td></tr>
+                    <tr><td>更年期</td><td>4</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>和其他群体的关键差异：这个群体有男性声音。</strong> "有没有愿意听男人吐槽婚姻的"（1607评论）、"老婆总说对我们的婚姻感到很累——说我每天回家不上心家里的事情，可是我每天六点多起床出门上班"（862评论）——男性帖虽然少，但评论量极高，说明<strong>婚姻痛苦不是单方面的，但平台上只有女性在持续表达</strong>。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 痛苦时刻 -->
+    <div class="tab-panel" id="tab-pain">
+        <div class="section-block">
+            <h2>痛苦时刻——发帖时间</h2>
+            <p><strong>20:00-22:00是持平高峰（各19帖），一直延续到23:00（11帖）。</strong> 这个群体的活跃时间比前几个群体整体偏晚——<strong>因为"矛盾通常发生在晚间"</strong>：老公回家后的沟通失败、孩子睡后的争吵、深夜独自失眠时的反思。</p>
+            <p>凌晨也有9帖（00:00-02:00），对应"吵完架/冷暴力后睡不着"。</p>
+        </div>
+    </div>
+
+    <!-- TAB: 共现问题 -->
+    <div class="tab-panel" id="tab-cooccur">
+        <div class="section-block">
+            <h2>共现问题</h2>
+            <table class="data-table">
+                <thead><tr><th>共现问题</th><th>频次</th><th>占比</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>依恋关系</td><td>121</td><td>59%</td><td><strong>核心共现——婚姻问题本质上是依恋模式的冲突</strong></td></tr>
+                    <tr><td>焦虑</td><td>58</td><td>28%</td><td></td></tr>
+                    <tr><td>亲子育儿</td><td>35</td><td>17%</td><td>育儿期是婚姻高压期</td></tr>
+                    <tr><td>内耗</td><td>15</td><td>7%</td><td></td></tr>
+                    <tr><td>抑郁</td><td>10</td><td>5%</td><td></td></tr>
+                    <tr><td>原生家庭</td><td>8</td><td>4%</td><td>"嫁的人像自己的父亲"</td></tr>
+                    <tr><td>产后情绪</td><td>8</td><td>4%</td><td>产后婚姻危机</td></tr>
+                    <tr><td>分手失恋</td><td>4</td><td>2%</td><td>已在考虑离婚</td></tr>
+                </tbody>
+            </table>
+            <div class="insight">
+                <strong>独有发现：依恋关系共现59%——远超所有其他群体。</strong> 这意味着大量婚姻帖的讨论已经进入了"依恋模式"的话语体系——"回避型""焦虑型""断崖式冷漠"。用户在用依恋理论解释自己的婚姻问题。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 用户旅程 -->
+    <div class="tab-panel" id="tab-journey">
+        <div class="section-block">
+            <h2>用户旅程</h2>
+            <div class="journey">
+                <div class="journey-step"><strong>积怨期</strong> — 日常摩擦累积 → 家务分配不均/沟通失败/情感断联 → "他从来不主动"</div>
+                <div class="journey-step"><strong>爆发期</strong> — 某次吵架/冷暴力 → 深夜无法入睡 → 打开小红书搜"婚姻""老公" → 发现"原来不止我一个人这样"</div>
+                <div class="journey-step"><strong>标签化期</strong> — 遇到"回避型依恋""断崖式冷漠" → 开始用依恋理论标签解读伴侣 → "他是回避型"</div>
+                <div class="journey-step"><strong>犹豫期</strong> — "离还是不离？" → 有孩子/经济依赖/社会压力 → 收藏方法帖但不敢行动</div>
+                <div class="journey-step"><strong>两个分叉</strong> —<br>a. 学习沟通技巧 → 试图"在婚姻内自救" → <strong>课程介入点</strong><br>b. 接受现状 → "各过各的" → 分房/情感隔离</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 群体差异 -->
+    <div class="tab-panel" id="tab-diff">
+        <div class="section-block">
+            <h2>与前七个群体的关键差异</h2>
+            <div class="table-scroll">
+            <table class="data-table">
+                <thead><tr><th>维度</th><th>高敏感</th><th>原生家庭</th><th>内耗</th><th>睡前思维</th><th>妈妈</th><th>情绪进食</th><th>躯体化</th><th>婚姻</th></tr></thead>
+                <tbody>
+                    <tr><td>群体核心</td><td>20-30职场</td><td>育儿妈妈</td><td>多角色中年</td><td>更年期+职场</td><td>妈妈</td><td>年轻女性</td><td>职场+更年期</td><td><strong>育儿期夫妻</strong></td></tr>
+                    <tr><td>痛苦来源</td><td>人格</td><td>过去创伤</td><td>说不清的累</td><td>脑子停不下来</td><td>角色过载</td><td>身体+情绪</td><td>身体症状</td><td><strong>关系中的情感断联</strong></td></tr>
+                    <tr><td>男性声音</td><td>无</td><td>无</td><td>微弱</td><td>微弱</td><td>微弱</td><td>无</td><td>有</td><td><strong>显著</strong></td></tr>
+                    <tr><td>独有标签</td><td>#钝感力</td><td>#断亲</td><td>#日签</td><td>#胡思乱想</td><td>#情绪管理</td><td>#暴食</td><td>#焦虑症</td><td><strong>#回避型 #冷暴力 #婚姻危机</strong></td></tr>
+                    <tr><td>最强收藏</td><td>极简</td><td>自救指南</td><td>书单</td><td>即时方法</td><td>每日练习</td><td>食物清单</td><td>康复方法</td><td><strong>"看见需求"类解释帖</strong></td></tr>
+                    <tr><td>核心需求</td><td>减负</td><td>命名</td><td>停止内耗</td><td>关机方法</td><td>不崩溃</td><td>不暴食</td><td>就医导航</td><td><strong>"在关系里不那么累"</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 子场景群 -->
+    <div class="tab-panel" id="tab-scenes">
+        <div class="section-block">
+            <h2>10个子场景群</h2>
+            <div class="accordion">
+
+                <!-- 子群1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群1：情感断联/"婚内已寡"（最强共鸣帖集中区）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/696447e8000000000d00bd6b">"有多少人和我一样过着无性无爱无钱的婚姻"</a>（3465评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b80bf2000000001f005937">"已婚有娃，微寡，寡99%，没全寡；老公微亖，亖90%，没亖透；婚姻微垮，垮90%，没全垮"</a>（1311评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6962c4a5000000000e03d60c">"一辈子吃过最大的苦就是婚姻的苦，是真苦啊。姐妹们，别轻易结婚呀"</a>（1294评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cfcf71000000001d01e090">"觉得婚姻很没有意思——婚姻这个还蛮反人性的，让两个没有血缘的人共度几十年"</a>（707评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69319666000000001f004543">"原来'婚内已寡'才是很多婚姻的常态——多少人结婚证还在抽屉里躺着，可日子早就过成了一个人的兵荒马乱"</a>（413评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/694862c9000000001d03aaa6">"分房睡，不离婚。不查手机，不问行程，不再嘘寒问暖"</a>（765评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d7d8c2000000002202b98c">"关于婚姻，我真的撑不下去了"</a>（952评论）</div>
+                        <div class="insight"><strong>"婚内已寡"是这个群体独创的自我命名——精准到残忍。</strong> 它描述的不是"没有爱了"这种抽象感受，而是<strong>一种极其具体的日常体验：同一个屋檐下的两个陌生人</strong>。"微寡""微垮"这种用词带着黑色幽默——她们已经学会用自嘲来消化痛苦。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群2：沟通失败/冷暴力（高收藏信号区）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b0abb60000000015038d64">"为什么一点小事就会很生气，一生气要么口不择言要么冷暴力，不会主动沟通"</a>（4432赞，1211评论）</div>
+                        <div class="user-voice">"谁的婚姻都有灰——老公又是以一句'我就这样'结束了沟通"（4920赞，1480评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6912b5ab000000000402a6be">"看见情绪背后的需求，而非情绪本身"</a>（6115赞，<strong>收藏/赞比1.12——全群体最高级别</strong>）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d07854000000002200ed42">"别再和老公吵架了——吵到最后，除了内耗自己什么都改变不了"</a>（收藏/赞比0.89）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69aecda8000000000e03da35">"冷暴力本质是服从性测试，不要被任何人驯化"</a>（收藏/赞比0.93）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6982bbcd000000000b01037b">"一点小事就生气，不是你脾气差，而是..."</a>（收藏/赞比0.87）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c9f59b000000001a031b9b">"婚姻稀巴烂，无法三个原因"</a>（收藏/赞比0.89）</div>
+                        <div class="insight"><strong>"看见情绪背后的需求"收藏/赞比1.12——说明用户在疯狂保存"帮我理解他为什么这样"的解释帖。</strong> 她们要的不是"离开"的勇气，而是<strong>"在留下的前提下，理解发生了什么"</strong>。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群3：回避型/依恋模式解读（标签化特征突出）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d75a58000000002301df98">"回避型伴侣的十大优点，他占了几个？"</a>（369评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cbab3e000000001d01ba19">"焦虑型&回避型：你们为何迷恋不安全"</a></div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6982ac27000000001a01d95e">"做这些让回避型回头的概率高达..."</a></div>
+                        <p>高频hashtags: #回避型依恋（5次）、#回避型伴侣（5次）、#焦虑型依恋（3次）、#断崖式冷漠（3次）、#忽冷忽热（3次）</p>
+                        <div class="insight"><strong>这是依恋理论在民间传播最活跃的场景——不是在心理学课堂，而是在婚姻吐槽帖下面。</strong> "回避型"已经变成了一个日常词汇，用来解释伴侣的冷漠。但注意一个风险：用户可能把"回避型"当作固定标签贴在伴侣身上，反而加深了"他不会改变"的信念。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群4：育儿+婚姻双压（和人群5深度交叉）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/695a99c3000000001e027fc0">"对婚姻祛魅了——我带了一天的娃好累，想着他能分担一点，结果..."</a>（1552评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69509a6a000000001f007628">"40岁感悟：家庭生活真的太吞噬时间了——有两天，老公孩子都不在，过了最近最舒服的两天"</a>（647评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b18ad50000000005030287">"谁的婚姻都有灰——我想要赌气，可是宝宝在床上还喊着妈妈抱抱"</a></div>
+                        <div class="insight"><strong>核心矛盾："我对老公的愤怒无处安放，因为孩子需要我。"</strong> 想发火→孩子在→忍住→积怨→更想发火。育儿成了婚姻冲突的缓冲垫，但也成了情绪的困兽笼。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群5：产后婚姻危机（8帖，但痛苦浓度极高）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d7e12f000000001a024589">"仅五个月，我就迎来如此严重的产后抑郁——怀孕之后有段时间一直很开心，老公上班忙...生完孩子一切变了"</a>（941评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6901a4c200000000070326b3">"产后抑郁自救，不靠老公靠自己"</a></div>
+                        <div class="insight"><strong>产后是婚姻问题的"引爆器"——很多帖子描述的模式是：怀孕时关系还好→生完孩子后老公"消失"→产后妈妈独自带娃→产后抑郁+婚姻危机同时爆发。</strong></div>
+                    </div></div>
+                </div>
+
+                <!-- 子群6 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群6：出轨/背叛</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b556bb0000000022003b05">"到底什么是出轨？"</a>（1.6万赞，565评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/694cccdc000000001e02a3bc">"上班好累，想嫁人了。谁来劝劝我"</a>（5360评论——评论区全是劝退的，包括大量出轨/家暴经历分享）</div>
+                        <div class="user-voice">"背叛创伤——修复自己，不要修复关系"</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群7 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群7：男性视角帖（帖量极少但评论爆炸）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6966955a000000000a02ea82">"有没有愿意听男人吐槽婚姻的，太累了"</a>（1607评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/695b1a1c0000000022039e90">"老婆总说对我们的婚姻感到很累——说我每天回家不上心家里的事情，可是我每天六点多起床出门上班"</a>（862评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6968c674000000002202e94d">"第一次在小红书发帖——请教一下各位美女们，老婆在家全职带娃，每天都很烦躁很抑郁"</a>（4792评论——<strong>丈夫帖评论量最高纪录</strong>）</div>
+                        <div class="insight"><strong>男性帖的平均评论量（2420评论/帖）远超女性帖（约500评论/帖）。</strong> 说明当男性表达"我也不知道该怎么办"时，女性用户的响应是爆炸性的——因为这在平台上极其罕见。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群8 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群8："各过各的"策略帖</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d25a170000000023021cf5">"结婚20年才懂，好的婚姻都是'各玩各的'——不是背叛，是互不干涉的合伙人"</a>（收藏/赞比1.03）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69bfe7d8000000001b0200d2">"我离婚了，用经历告诉你内耗婚姻不要离"</a>（收藏/赞比1.03）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/693a3f64000000001f00e3b5">"家里乱得想要离婚！"</a>（收藏/赞比0.96）</div>
+                        <div class="insight"><strong>收藏/赞比全部>0.96——说明这些"策略帖"是用户真正在保存执行的。</strong> "各玩各的"和"不要离"——看似矛盾，但指向同一个需求：<strong>在不离婚的前提下，找到一种不那么痛苦的相处模式。</strong></div>
+                    </div></div>
+                </div>
+
+                <!-- 子群9 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群9：婚姻x原生家庭交叉</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69a7fe8c000000001d0244d5">"原生家庭吃你，社会就会吃你，婚姻也会吃你"</a></div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ce4cc100000000220298f0">"那个让你愤怒的伴侣，藏着你没有活出的自己"</a></div>
+                        <p>帖量小但概念锋利——把婚姻问题追溯到原生家庭模式。</p>
+                    </div></div>
+                </div>
+
+                <!-- 子群10 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群10：已婚集体倾诉场</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b36609000000001600bfa4">"大家的婚姻都是什么样子呢"</a>（2139评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6990beff000000000903a44d">"已婚夫妻的现状是什么样的"</a>（969评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b2cd28000000000600d2b8">"已婚的姐妹聊一聊，婚后有后悔的吗——我老公很好，但就是觉得婚姻给我带来的不是快乐，而是枷锁"</a>（719评论）</div>
+                        <div class="insight"><strong>这些帖子的功能是"集体验证"——用户需要确认"我的婚姻不是特例"。</strong> 评论/赞比极高（1.5-3.0），说明每一个看到的已婚女性都忍不住留言。</div>
+                    </div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 标签与互动 -->
+    <div class="tab-panel" id="tab-tags">
+        <div class="section-block">
+            <h2>搜索标签体系</h2>
+            <table class="data-table">
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#婚姻</td><td>10</td><td>基础标签</td></tr>
+                    <tr><td>#情感树洞</td><td>11</td><td><strong>独有——说明她们把小红书当树洞</strong></td></tr>
+                    <tr><td>#亲密关系</td><td>9</td><td></td></tr>
+                    <tr><td>#婚姻危机 / #婚姻修复</td><td>13</td><td>两极并存</td></tr>
+                    <tr><td>#回避型依恋 / #回避型 / #回避型伴侣</td><td>15</td><td><strong>依恋理论标签极高频</strong></td></tr>
+                    <tr><td>#女性成长</td><td>8</td><td></td></tr>
+                    <tr><td>#原生家庭</td><td>6</td><td>归因路径</td></tr>
+                    <tr><td>#婚姻的本质</td><td>5</td><td></td></tr>
+                    <tr><td>#断崖式冷漠 / #忽冷忽热</td><td>6</td><td>用来描述伴侣行为</td></tr>
+                    <tr><td>#心理日签 / #日签</td><td>15</td><td>和内耗群体一样——每天需要一句话撑过去</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-block">
+            <h2>互动行为规律</h2>
+
+            <h3>超高收藏（>0.9）</h3>
+            <p>"看见情绪背后的需求"（1.12）| 他不舍得你又不靠近你（1.25）| 内耗婚姻不要离（1.03）| 婚姻稀巴烂的三个原因（0.89）</p>
+
+            <h3>极低收藏（&lt;0.15）</h3>
+            <p>丧偶式婚姻我快撑不下去了（0.13）| 美国妈妈哭诉（0.14）| 冷暴力该怎么办三步曲（0.11）</p>
+
+            <h3>规律</h3>
+            <div class="insight">
+                <strong>"帮我理解发生了什么"的解释帖</strong> → 收藏比>0.9（她们要理解伴侣）<br>
+                <strong>"给我一个留下来的策略"帖</strong> → 收藏比>1.0<br>
+                <strong>纯宣泄/纯方法论</strong> → 收藏比&lt;0.2
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => { header.parentElement.classList.toggle('open'); });
+});
+</script>
+</body>
+</html>

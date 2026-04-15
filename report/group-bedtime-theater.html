@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>睡前思维剧场患者 — 用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-subtle: #ececef;
+            --border-hover: #dcdce0;
+            --text-primary: #1b1b1f;
+            --text-secondary: #4a4a55;
+            --text-muted: #8a8a96;
+            --accent-warm: #f5a524;
+            --accent-pink: #ff6b8a;
+            --path-deterioration: #ff6b8a;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: clamp(1rem, 4vw, 3rem);
+            padding-bottom: 6rem;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 2.5rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--text-secondary); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 3rem;
+        }
+        .page-header .group-number {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: rgba(232, 180, 184, 0.12);
+            line-height: 1;
+            margin-bottom: -0.5rem;
+        }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .page-header .subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: 0.3rem 0.75rem;
+            border-radius: 100px;
+            background: rgba(232, 180, 184, 0.1);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            color: var(--path-deterioration);
+        }
+        .badge .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--path-deterioration);
+        }
+
+        /* Metrics bar */
+        .metrics-bar {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        .metric-value {
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+        .metric-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active {
+            color: var(--accent-warm);
+            border-bottom-color: var(--accent-warm);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.82rem;
+        }
+        th {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        td {
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid #f3f3f5;
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        td strong { color: var(--text-primary); font-weight: 600; }
+        td em { color: var(--accent-warm); font-style: normal; font-weight: 500; }
+
+        /* Section titles */
+        .section { margin-bottom: 3rem; }
+        .section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .section h3 {
+            font-family: var(--font-display);
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        /* Text blocks */
+        .insight-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .insight-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .highlight {
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+        .highlight-warm {
+            color: var(--accent-warm);
+            font-weight: 500;
+        }
+
+        /* Time chart */
+        .time-chart {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+            overflow-x: auto;
+        }
+        .time-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+            font-size: 0.78rem;
+        }
+        .time-label {
+            min-width: 42px;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+        }
+        .time-bar {
+            height: 18px;
+            border-radius: 3px;
+            background: var(--path-deterioration);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            min-width: 2px;
+        }
+        .time-bar:hover { opacity: 1; }
+        .time-bar.peak { opacity: 1; background: var(--accent-warm); }
+        .time-count {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            min-width: 40px;
+        }
+        .time-note {
+            font-size: 0.7rem;
+            color: var(--accent-warm);
+        }
+
+        /* Accordion */
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item {
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            background: var(--bg-card);
+            transition: border-color 0.3s ease;
+        }
+        .accordion-item:hover { border-color: var(--border-hover); }
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            text-align: left;
+            gap: 1rem;
+            transition: background 0.2s ease;
+        }
+        .accordion-header:hover { background: rgba(255,255,255,0.02); }
+        .accordion-header .meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .accordion-chevron {
+            width: 18px; height: 18px;
+            color: var(--text-muted);
+            transition: transform 0.3s var(--ease-out-expo);
+            flex-shrink: 0;
+        }
+        .accordion-item.open .accordion-chevron { transform: rotate(180deg); }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease-out-expo);
+        }
+        .accordion-item.open .accordion-body { max-height: 3000px; }
+        .accordion-content {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+        .accordion-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Links */
+        .xhs-link {
+            color: var(--accent-warm);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        .xhs-link:hover { border-bottom-color: var(--accent-warm); }
+
+        .post-list {
+            list-style: none;
+            margin: 0.75rem 0;
+        }
+        .post-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f3f5;
+            line-height: 1.7;
+        }
+        .post-list li:last-child { border-bottom: none; }
+        .post-stat {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-left: 0.25rem;
+        }
+
+        /* Journey */
+        .journey-step {
+            position: relative;
+            padding: 1rem 0 1rem 2rem;
+            border-left: 2px solid var(--border-subtle);
+        }
+        .journey-step:last-child { border-left-color: transparent; }
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -6px; top: 1.25rem;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--path-deterioration);
+            border: 2px solid var(--bg-primary);
+        }
+        .journey-step .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            margin-bottom: 0.35rem;
+        }
+        .journey-step .step-desc {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+        .journey-branch {
+            margin-left: 1.5rem;
+            padding: 0.75rem 0;
+        }
+        .journey-branch .branch-item {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.35rem 0;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        .branch-label {
+            color: var(--accent-warm);
+            font-weight: 600;
+            min-width: 20px;
+        }
+
+        /* Comparison table */
+        .comparison-wrap {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+        }
+        .comparison-wrap table { margin: 0; }
+        .comparison-wrap th,
+        .comparison-wrap td {
+            padding: 0.55rem 0.65rem;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+        .comparison-wrap th:first-child,
+        .comparison-wrap td:first-child {
+            position: sticky; left: 0;
+            background: var(--bg-card);
+            z-index: 1;
+        }
+        .comparison-wrap td.current {
+            background: rgba(232, 180, 184, 0.08);
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+
+        /* Key points */
+        .key-point {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-warm);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        .key-point strong { color: var(--text-primary); }
+
+        .numbered-list {
+            list-style: none;
+            counter-reset: item;
+            margin: 0.75rem 0;
+        }
+        .numbered-list li {
+            counter-increment: item;
+            padding: 0.4rem 0 0.4rem 1.75rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+        .numbered-list li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            color: var(--accent-warm);
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 640px) {
+            .metrics-bar { gap: 1rem; }
+            .tab-btn { padding: 0.6rem 0.85rem; font-size: 0.78rem; }
+            .comparison-wrap td, .comparison-wrap th { font-size: 0.68rem; padding: 0.4rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <!-- Back -->
+    <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        返回总览
+    </a>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="group-number">03</div>
+        <h1>睡前思维剧场患者</h1>
+        <div class="subtitle">即时可用的工具</div>
+        <span class="badge"><span class="dot"></span>心理恶化路径</span>
+    </header>
+
+    <!-- Metrics -->
+    <div class="metrics-bar">
+        <div class="metric">
+            <span class="metric-value">9.7%</span>
+            <span class="metric-label">发帖量占比</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">13</span>
+            <span class="metric-label">子场景群</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">2.49</span>
+            <span class="metric-label">最高收藏/赞比</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">7.5%</span>
+            <span class="metric-label">抑郁共现率</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">凌晨0-2点</span>
+            <span class="metric-label">独有第二活跃高峰</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="who">她们是谁</button>
+        <button class="tab-btn" data-tab="pain">痛苦时刻</button>
+        <button class="tab-btn" data-tab="comorbid">共现问题</button>
+        <button class="tab-btn" data-tab="journey">用户旅程</button>
+    </div>
+
+    <!-- Tab: 她们是谁 -->
+    <div class="tab-panel active" id="tab-who">
+        <div class="section">
+            <p class="insight-text"><strong>这个群体最大的特征是"横跨"——她们不住在任何一个单一标签里。</strong> 在标注体系中，她们被分散在"失眠""焦虑""内耗""正念冥想"等多个标签下，但她们的核心体验是同一个：<span class="highlight">夜里脑子关不掉</span>。</p>
+
+            <h3>受众标签分布</h3>
+            <table>
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>女性</td><td>45</td><td>主体</td></tr>
+                    <tr><td>职场人</td><td>39</td><td><strong>第二大群——和前三群体的显著差异</strong></td></tr>
+                    <tr><td>更年期女性</td><td>33</td><td><strong>第三大群——前三群体里从未这么突出过</strong></td></tr>
+                    <tr><td>妈妈/家长</td><td>20</td><td></td></tr>
+                    <tr><td>高敏感人群</td><td>10</td><td>交叉</td></tr>
+                    <tr><td>心理咨询来访者</td><td>7</td><td></td></tr>
+                    <tr><td>学生</td><td>4</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <h3>生活阶段</h3>
+            <table>
+                <thead><tr><th>阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>更年期</td><td>30</td><td><strong>第一大标记群——在前三群体里加起来不超过5</strong></td></tr>
+                    <tr><td>育儿期</td><td>14</td><td></td></tr>
+                    <tr><td>中年阶段</td><td>9</td><td></td></tr>
+                    <tr><td>学生期</td><td>4</td><td></td></tr>
+                    <tr><td>产后</td><td>3</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <div class="key-point">
+                <strong>这是一个明显更"中年"、更"身体化"的群体。</strong> 高敏感群体是20-30岁、内耗群体是30-40岁，而"睡前思维剧场"群体的核心力量是<strong>更年期女性（30帖）+职场人（39帖）+妈妈（20帖）</strong>——三者叠加就是"40多岁、上有老下有小、白天撑着晚上崩溃"的典型画像。
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab: 痛苦时刻 -->
+    <div class="tab-panel" id="tab-pain">
+        <div class="section">
+            <h2>痛苦时刻——发帖时间</h2>
+
+            <div class="time-chart">
+                <div class="time-row"><span class="time-label">00:00</span><div class="time-bar" style="width:calc(14/64*100%)"></div><span class="time-count">14</span><span class="time-note">失眠中</span></div>
+                <div class="time-row"><span class="time-label">01:00</span><div class="time-bar peak" style="width:calc(18/64*100%)"></div><span class="time-count">18</span><span class="time-note">凌晨高峰（失眠高峰）</span></div>
+                <div class="time-row"><span class="time-label">02:00</span><div class="time-bar" style="width:calc(12/64*100%)"></div><span class="time-count">12</span><span class="time-note">还在失眠</span></div>
+                <div class="time-row"><span class="time-label">03:00</span><div class="time-bar" style="width:calc(6/64*100%)"></div><span class="time-count">6</span><span class="time-note"></span></div>
+                <div class="time-row"><span class="time-label">...</span><div class="time-bar" style="width:0"></div><span class="time-count"></span></div>
+                <div class="time-row"><span class="time-label">19:00</span><div class="time-bar" style="width:calc(48/64*100%)"></div><span class="time-count">48</span></div>
+                <div class="time-row"><span class="time-label">20:00</span><div class="time-bar peak" style="width:calc(61/64*100%)"></div><span class="time-count">61</span><span class="time-note">最高峰</span></div>
+                <div class="time-row"><span class="time-label">21:00</span><div class="time-bar peak" style="width:calc(64/64*100%)"></div><span class="time-count">64</span><span class="time-note">最高峰</span></div>
+                <div class="time-row"><span class="time-label">22:00</span><div class="time-bar" style="width:calc(46/64*100%)"></div><span class="time-count">46</span></div>
+                <div class="time-row"><span class="time-label">23:00</span><div class="time-bar" style="width:calc(27/64*100%)"></div><span class="time-count">27</span></div>
+            </div>
+
+            <div class="key-point">
+                <strong>和前三群体的最大差异：凌晨0-2点有一个明显的第二高峰（44帖，占7%）。</strong> 前三群体凌晨发帖极少，但这个群体有大量人在凌晨1-2点发帖——她们不是"选择性熬夜"，是<span class="highlight">真的睡不着</span>。
+            </div>
+            <p class="insight-text">20:00-21:00的主高峰和前三群体一致，但22:00-23:00的帖量（73帖）也远高于前三群体——说明这个群体的活跃时间整体后移，直到深夜。</p>
+        </div>
+    </div>
+
+    <!-- Tab: 共现问题 -->
+    <div class="tab-panel" id="tab-comorbid">
+        <div class="section">
+            <h2>共现问题</h2>
+            <table>
+                <thead><tr><th>共现问题</th><th>频次</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>486</td><td>81%——不是100%，因为部分纯失眠帖不带焦虑标签</td></tr>
+                    <tr><td>失眠</td><td>452</td><td>75%——核心身份</td></tr>
+                    <tr><td>内耗</td><td>87</td><td>15%——和人群3交叉</td></tr>
+                    <tr><td>职场焦虑</td><td>47</td><td>8%</td></tr>
+                    <tr><td>抑郁</td><td>45</td><td><em>7.5%——四个群体中最高</em></td></tr>
+                    <tr><td>更年期</td><td>30</td><td><em>5%——独有的显著交叉</em></td></tr>
+                    <tr><td>正念冥想</td><td>27</td><td>4.5%——她们已在寻找工具</td></tr>
+                    <tr><td>亲子育儿</td><td>25</td><td>4%</td></tr>
+                    <tr><td>躯体化</td><td>24</td><td><em>4%——也是四个群体中最高</em></td></tr>
+                    <tr><td>高敏感</td><td>10</td><td>2%</td></tr>
+                    <tr><td>强迫</td><td>8</td><td><em>1.3%——四个群体中最高</em></td></tr>
+                </tbody>
+            </table>
+
+            <h3>三个关键差异</h3>
+            <ol class="numbered-list">
+                <li><strong>躯体化共现4%</strong>——她们的焦虑已经导致了身体症状（心慌、手抖、胸闷）</li>
+                <li><strong>抑郁共现7.5%</strong>——部分人已经从"睡不好"滑向了情绪障碍</li>
+                <li><strong>强迫共现1.3%</strong>——"停不下来的想法"已经接近强迫性思维</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Tab: 用户旅程 -->
+    <div class="tab-panel" id="tab-journey">
+        <div class="section">
+            <h2>用户旅程</h2>
+
+            <div class="journey-step">
+                <div class="step-title">1. 触发期</div>
+                <div class="step-desc">某次重要事件前（考试/汇报/面试）失眠 → 或长期累积的职场/育儿压力 → 或更年期开始后激素变化导致睡眠障碍 → "怎么突然睡不着了"</div>
+            </div>
+            <div class="journey-step">
+                <div class="step-title">2. 尝试期</div>
+                <div class="step-desc">试褪黑素、中药、呼吸法 → 无效 → 试"频率""白噪音" → 部分有效但不稳定</div>
+            </div>
+            <div class="journey-step">
+                <div class="step-title">3. 焦虑叠加期</div>
+                <div class="step-desc">开始害怕"今晚又睡不着" → 对失眠本身的恐惧形成新焦虑层 → 一部分人出现躯体化症状（心悸、胸闷）→ 开始疑病 → "我是不是得了什么大病" → 更睡不着</div>
+            </div>
+            <div class="journey-step">
+                <div class="step-title">4. 搜索爆发期</div>
+                <div class="step-desc">搜"胡思乱想怎么停""失眠怎么办""焦虑症需要吃药吗" → 疯狂收藏方法帖 → 收藏比2.49说明她们是真的在"囤方法"</div>
+            </div>
+            <div class="journey-step">
+                <div class="step-title">5. 分叉</div>
+                <div class="step-desc">
+                    <div class="journey-branch">
+                        <div class="branch-item"><span class="branch-label">a.</span><span>就医 → 被诊断焦虑症 → 纠结吃不吃药 → <a href="https://www.xiaohongshu.com/explore/6923f3bd000000001e008b1b?xsec_token=YB1j6NExBnw7nLxajvmfe8he2QJteUhQcRsKlOE5lECHs=" target="_blank" class="xhs-link">"焦虑症吃药是利大于弊吗"</a></span></div>
+                        <div class="branch-item"><span class="branch-label">b.</span><span>自救 → 但碎片化方法不成体系 → <strong>课程介入点</strong></span></div>
+                        <div class="branch-item"><span class="branch-label">c.</span><span>维持 → 每晚听频率/白噪音勉强入睡 → 治标不治本</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-scenarios -->
+    <div class="section">
+        <h2>13个子场景群</h2>
+
+        <div class="accordion">
+
+            <!-- 子群1 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群1：方法/秒睡/关机 <span class="meta">124帖，最大子群</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <p>这是体量最大的一群——她们来就是找"今晚就能用的方法"。</p>
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69317ffb000000001e0244f7?xsec_token=YBlHgXDry8vWHNQvSUDOXPXewYK3cMzBOeM97synaGImM=" target="_blank" class="xhs-link">"2分钟强制关机！秒睡法我求你去试——我这两年睡眠特别浅，睡前脑子里跟放连续剧似的。前两天刷到一个特别土的方法，就9个字"</a><span class="post-stat">4086赞，392评论</span></li>
+                        <li>"两分钟'骗'过你的大脑，relax~"<span class="post-stat">收藏/赞比 <strong>2.49</strong>——全四个群体中最高值</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6948f8d5000000001d03d8c4?xsec_token=YBGVRD3crJ2Au7tzBNgBuqQOn746AmbBOeBJJ-02xDhpA=" target="_blank" class="xhs-link">"6个心理学技巧，1秒钟停止胡思乱想"</a><span class="post-stat">收藏/赞比1.04</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d8ea9a000000002301dce1?xsec_token=YBEEmdtTPXdUD4qhSEboaJNBxo6px6QycnTlBW9iu65Ac=" target="_blank" class="xhs-link">"大脑不受控制的胡思乱想，立刻做1个动作"</a><span class="post-stat">收藏/赞比1.06</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6966e2ea000000000e00de81?xsec_token=YBwasXcYfwvqQ13aUZaT2dpJdXyhEFad4kO0JgTPLl3hQ=" target="_blank" class="xhs-link">"如何快速停止大脑的胡思乱想"</a><span class="post-stat">收藏/赞比1.31</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/68ef99be000000000302f9fb?xsec_token=YBNKRqeHps772RFriGijnI0TIu69XGTpBTQOXarDoHd0w=" target="_blank" class="xhs-link">"瞬间停止胡思乱想，摆脱担忧的念头"</a><span class="post-stat">2.5万赞，1万收藏</span></li>
+                    </ul>
+                    <div class="key-point"><strong>收藏/赞比数据极其惊人——方法类帖子的平均收藏比超过1.0。</strong> "两分钟骗过你的大脑"收藏比2.49意味着<strong>每个点赞的人平均收藏了2.5次</strong>——这在四个群体的所有子群中从未出现过。这说明<strong>她们对"即时可用的方法"有近乎饥渴的程度</strong>。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群2 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群2：职场焦虑→失眠 <span class="meta">69帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69a2c7c6000000001a0293d5?xsec_token=YBfX-WP2Yv5ojdViNsWOvC9NPd_DRXLFEW0MH-qelAyqQ=" target="_blank" class="xhs-link">"上班前的几个小时，我总是很焦虑且有些恐惧"</a><span class="post-stat">9.5万赞，2445评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69b688c1000000001d018995?xsec_token=YBN7R6kD0wgTKhNrloRLzr5AUs3jLhtHmjOdcS1P_I-wI=" target="_blank" class="xhs-link">"35岁无锡女生，上班上到心慌手抖——每天上班前焦虑到睡不着，心慌、手抖、不想说话，一想到要处理人际..."</a><span class="post-stat">456评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/696e26ad000000002103d234?xsec_token=YBnA8ZAHf2rYT4BEo03Fr1DcjGzeuecKkP4AjMv4R_xe0=" target="_blank" class="xhs-link">"写给正在'努力-焦虑-失眠'循环中挣扎的人——计划卡在半路，期待悬在半空，连刷手机都在胡思乱想"</a><span class="post-stat">975评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/695e1cc1000000002103c7bc?xsec_token=YB7DzJwUeTJ-q7vhEqbEa4LJyTC6Askl9ZfYORUp_AB5M=" target="_blank" class="xhs-link">"上班焦虑的朋友请看这条"</a><span class="post-stat">1.2万赞</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69b0d5670000000005030a75?xsec_token=YBdJyv3Zf4GNeVM2Oz622UNfS4LmIlY02GppWsw3aeE6o=" target="_blank" class="xhs-link">"允许一切发生——摸鱼就内疚，从接到任务开始就焦虑"</a></li>
+                    </ul>
+                    <div class="key-point"><strong>和人群3"内耗"中的职场子群有重叠，但这里更严重——她们已经出现身体症状（心慌手抖）和睡眠障碍。</strong> "努力-焦虑-失眠"循环是精准的用户画像——白天拼命→晚上复盘焦虑→睡不着→第二天状态更差→更拼命。35岁那帖的评论/赞比是3.86——极高，说明每个读到的人都在说"是我"。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群3 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群3：妈妈/哄娃失眠 <span class="meta">64帖，评论密度极高——平均149评论/帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69694880000000000e03d3a8?xsec_token=YBgirayatuOSK1DIN_WJ5MC5Goax5OPcAHhWuson7G7C0=" target="_blank" class="xhs-link">"没有什么能比凌晨三点的爆哭声让人更崩溃——容易惊醒，总是白天睡十分钟就醒，可以做到一整天抱着他睡，自己没有任何自由时间"</a><span class="post-stat"><strong>6161评论——全群体第一</strong></span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/691cd114000000001e00163d?xsec_token=YBoAK7z4EOv9YdXsG_gIIDRdJtEelFTle_NG_GvyxbF84=" target="_blank" class="xhs-link">"凌晨一点哄到四点的崩溃夜晚，想死的心都有了"</a><span class="post-stat">609评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/691613cf000000000d00ca05?xsec_token=YBxD--A6SlX3OE9IqK3OT9nwwH9gMwuzzZaux3mwelxhc=" target="_blank" class="xhs-link">"崩溃的妈妈，无助的娃——现在是凌晨0:32分，被一阵歇斯底里的吵闹声吵醒"</a><span class="post-stat">1017评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69ce22fd000000001a0345f2?xsec_token=YBHVr_ZfaJYLN9KUm6VMkEzvia9QnuqrpV9kWdvkYgKAc=" target="_blank" class="xhs-link">"今天没忍住崩溃了，所有人都认为带娃是一件很轻松的事，可是谁知道我哄娃到半夜才能入睡"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69ae4a3c000000000e00d692?xsec_token=YBKGOysvN7v2euEm4hOate6PMNpi62GHZkKRLN6MjTSqE=" target="_blank" class="xhs-link">"高敏感娃睡觉熬的不是夜，是妈妈的命"</a><span class="post-stat">收藏/赞比1.25</span></li>
+                    </ul>
+                    <div class="key-point"><strong>64帖产出9558条评论——平均每帖149条评论，是全部子群中最高的。</strong> 而且赞数极低（总赞仅6699），说明这些帖子<strong>几乎没有被推荐给大众，全是同类妈妈在评论区自发聚集</strong>。</div>
+                    <p>这是一个被算法完全忽视但用户极度活跃的群体。她们的失眠不是心理性的——是被孩子物理性地剥夺了睡眠，但长期睡眠剥夺导致了焦虑、抑郁、情绪失控。<strong>她们的需求不是"教我怎么停止胡思乱想"，而是"在长期睡眠剥夺的条件下如何维持基本的心理健康"</strong>。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群4 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群4：疑病/健康焦虑 <span class="meta">62帖，总评论1.2万——评论总量最高</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69231a97000000001d03913a?xsec_token=YBiZmeWwdf4Lh_hRrcAKKdgxtqDbTmEgCBykDzawIUx1I=" target="_blank" class="xhs-link">"千万不要过度关注自己的身体——不要稍微有一点点不舒服就开始胡思乱想"</a><span class="post-stat">5893赞，5432评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69089e1a000000000700d8bf?xsec_token=YBP350VjDGogbqZRBEO6OD1eJyQG2wiOiCYJdk5sYz00Y=" target="_blank" class="xhs-link">"别吓自己了，你很健康！"</a><span class="post-stat">6467赞，1915评论</span></li>
+                        <li>"停止过度关注自己的身体，你的身体很健康"<span class="post-stat">988赞，1428评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69843b3d000000000a03e4d0?xsec_token=YBj7JEiHpvE8bJwhxQevrGuyU0WzpgbjK8C-00G-TM_JA=" target="_blank" class="xhs-link">"你的担忧99%都不会发生！停止幻想灾难——刚犯个小错，脑内已经上演灾难大片；体检结果没出，已经默默写起遗书"</a><span class="post-stat">1155评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/698e5fdb000000001503897e?xsec_token=YBVM21TyyE9yIw7z2gimX_HQnG2rHOZLMTsbRXNPWmpiE=" target="_blank" class="xhs-link">"阴虚火旺这种情况咋办——晚上睡前有时会脸颊发热，入睡困难，脑子一直想事"</a><span class="post-stat">577评论</span></li>
+                    </ul>
+                    <div class="key-point"><strong>62帖产出12205条评论——总评论量最高的子群，且评论/赞比极高。</strong> "过度关注身体"这个帖子5432评论——说明<strong>大量用户在评论区描述自己的躯体症状寻求确认</strong>。</div>
+                    <p>这个子群揭示了一个隐藏的完整链条：<strong>焦虑→躯体化→疑病→更焦虑→更睡不着</strong>。她们不只是"想太多"，而是焦虑已经制造了真实的身体感受（胸闷、心悸、胃痛），然后她们开始怀疑自己得了大病，这个怀疑又加重了焦虑，形成死循环。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群5 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群5：焦虑症/就医 <span class="meta">49帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69d365410000000023024931?xsec_token=YBgAKtR6t1w4dkCHY5sKwCN8nr5-6NEDSZDH9Pb1N5q5w=" target="_blank" class="xhs-link">"焦虑症患者——医生说：为什么那么久了才来看。因为我以为问题不大。真心奉劝有睡眠障碍或者焦虑症/抑郁症的朋友..."</a><span class="post-stat">1111评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69da0390000000001a030581?xsec_token=YBNGuAo1jXTBDejrtnUFjlGy5BGqGdcU-dmjZ5Lb5e9R4=" target="_blank" class="xhs-link">"焦虑失眠睡不好，记住2个平价药"</a><span class="post-stat">收藏/赞比1.67</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69b272a4000000002203199c?xsec_token=YB2DnAJznkJP4Zpp4sddRXam_cyPLi1IwCE81-TQv8gsU=" target="_blank" class="xhs-link">"焦虑症入睡困难的都去喝这个，一喝一个好"</a><span class="post-stat">收藏/赞比1.17</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69c44fb300000000230204e4?xsec_token=YB6ozcGrppv1-jhAjr7UAsXQ0CFqAqyoegupdN5vDeIpM=" target="_blank" class="xhs-link">"失眠半个月了，每天睡不着，睡也就睡个3、4个小时，喝中药也没用，吃褪黑素也没用，真担心哪天猝死"</a><span class="post-stat">550评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69b016670000000015020136?xsec_token=YBiTcwkyop_PxKWd_pn45i6xoXmELR8kW6ASn5uDJkFUg=" target="_blank" class="xhs-link">"焦虑失眠最好的解药不是吃药，也不是找事干，而是持续在这四方面下功夫"</a><span class="post-stat">收藏/赞比1.07</span></li>
+                    </ul>
+                    <div class="key-point"><strong>已经在就医或正在犹豫要不要就医的群体。</strong> 注意收藏/赞比最高的全是"药/食疗/具体做法"类帖子（1.07-1.67）——她们对<strong>任何有实操性的解决方案</strong>都极度渴求。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群6 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群6：更年期失眠 <span class="meta">30帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/695520a10000000022033928?xsec_token=YBCRh4oJqfgELqLZWMS09rckZsy06ztn12E0O_Is0XW3w=" target="_blank" class="xhs-link">"严重的更年期综合症，每天夜里心悸失眠，严重到一个月叫了两次120。现在甚至恐惧睡觉"</a><span class="post-stat">收藏/赞比1.52——极高</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/691864ad0000000005013682?xsec_token=YBcfSObJgoFz-ivP9pheapN3axtota-jaQ9dtnd7S1jWE=" target="_blank" class="xhs-link">"1984年，41岁，更年期、焦虑、抑郁、失眠，大家都还好吗"</a><span class="post-stat">312评论——评论/赞比6.93</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/697c8e1d000000002103da19?xsec_token=YBy_wbnmCIkP9T665HgranVIwWzYSQnWJoCglEbVcVHjk=" target="_blank" class="xhs-link">"更年期焦虑症怎么办？"</a><span class="post-stat">评论/赞比6.75</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69ad60c4000000001503a1a1?xsec_token=YBZWwUI863ekiKP4PigGv2Z9TluWaWxbMdNtcaA82bCQo=" target="_blank" class="xhs-link">"关于40岁以后的一些身体状况"</a><span class="post-stat">评论/赞比6.39</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69ca27c8000000001f004ddb?xsec_token=YBcSFQVvV2ZG-onABs_Dof-mxYdz61b3GcEm4GssHKZxM=" target="_blank" class="xhs-link">"更年期失眠的苦终于得救了！！"</a><span class="post-stat">评论/赞比25.0</span></li>
+                    </ul>
+                    <div class="key-point"><strong>帖量不大（30帖），但评论/赞比全场最高——平均>6.0。</strong> 这意味着每一个看到帖子的更年期女性几乎都会留下评论。她们极度渴望同类交流，但在小红书上被算法推荐得很少（赞数普遍极低）。</div>
+                    <p>"恐惧睡觉"这个表述特别值得注意——<strong>从"睡不着"变成"怕睡觉"</strong>，这已经不是简单的失眠，而是对失眠本身的恐惧形成了新的焦虑层。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群7 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群7：适应不良性白日梦/幻想 <span class="meta">27帖，总赞16.9万——效率最高</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/6985e25d000000000a03d9c8?xsec_token=YBWuToHplFzAczsrZ6QmmkpD8ZcTTT5DTfwWwy_kHTpUs=" target="_blank" class="xhs-link">"睡前爱幻想背后的3个隐藏需求！"</a><span class="post-stat"><strong>9.8万赞</strong>——全群体第一爆款，4750评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d29ec9000000001b020513?xsec_token=YByhJ9_oCyl6mZDFEhmSRfdiOfLSdzYrCx69Nx_SkGZyU=" target="_blank" class="xhs-link">"我想专注于无聊的现实——从小学开始，我就会忍不住在脑子里幻想各种各样的剧情"</a><span class="post-stat">4.3万赞，2008评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6932d066000000001e03195b?xsec_token=YBWR1MDC5bIE92SJDPGCowPVNGDST3HXkO-aG8UlJEfQI=" target="_blank" class="xhs-link">"你睡前是否有个关不掉的'夜间剧场'"</a><span class="post-stat">7400赞，440评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d34fce000000001a034b03?xsec_token=YB-rj7WTpp_E03ArF3XyHiaeD65hmSElVFhfs5YWOftpQ=" target="_blank" class="xhs-link">"我一直以为自己有睡眠障碍，现在才知道是睡前妄想症"</a><span class="post-stat">8341赞，367评论</span></li>
+                    </ul>
+                    <div class="key-point"><strong>仅27帖但总赞16.9万——单帖效率远超其他子群。</strong> 这说明"睡前脑内放连续剧"是一个<strong>极其广泛但从未被正式命名过的现象</strong>。</div>
+                    <p>"我一直以为自己有睡眠障碍，现在才知道是睡前妄想症"——用户在自发给这个体验起名字。"适应不良性白日梦"（Maladaptive Daydreaming）是一个已有学术概念，但在中文互联网上几乎没有传播。课程如果能把这个概念引入并配上方法，相当于<strong>给一个16.9万人共鸣的痛苦第一次起了一个正式的名字</strong>。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群8 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群8：频率/声音/工具 <span class="meta">27帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69bc02fd0000000023021d1b?xsec_token=YBZXY_YjGyNGbFmF_SWQoTpNMmrTdJd0GE3htM702GqmE=" target="_blank" class="xhs-link">"好神奇！这个频率可以让你停止胡思乱想"</a><span class="post-stat">3.2万赞，3.2万收藏——收藏/赞比1.0</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6915759a000000000700114c?xsec_token=YBbw5VF353HwkCQlVcRvwx8FS2EKeCPtN9m8rPPC4G1IY=" target="_blank" class="xhs-link">"好神奇！这个频率能瞬间停止胡思乱想"</a><span class="post-stat">1.4万赞，1.9万收藏——收藏/赞比 <strong>1.32</strong></span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/692d7d36000000001e02475c?xsec_token=YBf0dHZ2y33br1JhyjWNwgCGtXrSQizajIF6p7LlTrZbU=" target="_blank" class="xhs-link">"这个频率瞬间停止胡思乱想"</a><span class="post-stat">收藏/赞比1.39</span></li>
+                    </ul>
+                    <div class="key-point"><strong>三帖合计4.6万赞、5.1万收藏。收藏/赞比全部>1.0，最高1.39。</strong> 用户对"频率/声音"类工具有极强的保存欲望——她们会真的在睡前打开来听。</div>
+                    <p>这类内容在专业心理学看来可能效度存疑，但它的用户需求是真实的——<strong>她们需要一个"外部工具"来帮助大脑关机，因为内部的意志力已经被验证为无效</strong>。课程如果包含"助眠音频/引导语"作为附加产品，命中的就是这个需求。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群9 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群9：灾难化思维/"自己吓自己" <span class="meta">17帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69843b3d000000000a03e4d0?xsec_token=YBj7JEiHpvE8bJwhxQevrGuyU0WzpgbjK8C-00G-TM_JA=" target="_blank" class="xhs-link">"你的担忧99%都不会发生"</a><span class="post-stat">多版本反复发布</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69843b3d000000000a03e4d0?xsec_token=YBj7JEiHpvE8bJwhxQevrGuyU0WzpgbjK8C-00G-TM_JA=" target="_blank" class="xhs-link">"你是不是也常这样：刚犯个小错，脑内已经上演灾难大片；面试还没消息，就先脑补自己要失业；体检结果没出，已经默默写起遗书"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69c665ba000000001b020323?xsec_token=YB_SiMgVfVh3I1nOP6mbbTWSRZgTND-VPMcAh3ijKOHJs=" target="_blank" class="xhs-link">"别瞎想了！你担心的事99%都不会发生"</a></li>
+                    </ul>
+                    <div class="key-point"><strong>和人群3"内耗"中的灾难化子群重叠。</strong> 但这里的特征是灾难化思维<strong>集中在睡前/夜间发作</strong>，白天也许能控制住，晚上躺下后"灾难大片"自动开机。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群10 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群10：躯体化/身体症状 <span class="meta">30帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69b688c1000000001d018995?xsec_token=YBN7R6kD0wgTKhNrloRLzr5AUs3jLhtHmjOdcS1P_I-wI=" target="_blank" class="xhs-link">"35岁无锡女生，上班上到心慌手抖"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/695520a10000000022033928?xsec_token=YBCRh4oJqfgELqLZWMS09rckZsy06ztn12E0O_Is0XW3w=" target="_blank" class="xhs-link">"严重的更年期综合症，每天夜里心悸失眠，一个月叫了两次120"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/68f4b70f0000000007002190?xsec_token=YBz2N38HSvHWHCZe1LZgyrSIBl0YT3u4RZjHslFmFu5tA=" target="_blank" class="xhs-link">"焦虑的躯体化症状来的时候经常被人当成是身体不适，去医院检查无果"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/698e5fdb000000001503897e?xsec_token=YBVM21TyyE9yIw7z2gimX_HQnG2rHOZLMTsbRXNPWmpiE=" target="_blank" class="xhs-link">"阴虚火旺——晚上睡前有时会脸颊发热，入睡困难"</a></li>
+                    </ul>
+                    <div class="key-point"><strong>这是前三个群体中几乎不存在的子群。</strong> 睡前思维剧场群体独有的特征——她们的焦虑已经产生了可感知的身体症状：心悸、手抖、胸闷、发热。这些症状又反过来加重失眠。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群11 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群11：复盘/反刍/情景再现 <span class="meta">13帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69a717cf0000000028022829?xsec_token=YBmi9tmCc6Eq1KUObnksLsmirrn364HC3F0SqCqDIaZao=" target="_blank" class="xhs-link">"失眠/求问infp怎样才能停止脑子里反复复盘情景再现的情况，因为白天没处理好事情，晚上睡觉一闭眼就控制不住自己开始各种..."</a><span class="post-stat">413评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69c34de30000000023027daf?xsec_token=YBE7HXKfh6cSwG5b0P-kl5TqzWscFhqxdsESWTSWXCekQ=" target="_blank" class="xhs-link">"太难了——1.过度思考 2.对环境敏感 3.复盘未完成的重要事项 4.睡前焦虑 5.报复性熬夜 6.无法睡前放松"</a><span class="post-stat">909评论</span></li>
+                    </ul>
+                    <div class="key-point"><strong>帖量少但描述极精准——用户已经能清晰区分"幻想"和"复盘"。</strong> "幻想"是脑子自己编剧情，"复盘"是白天真实发生的事在脑内反复重演。两者都导致失眠，但机制不同。课程如果能分别给出对应的工具（打断幻想 vs 消化复盘），会比笼统的"停止胡思乱想"精准得多。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群12 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群12：考试/学业→失眠 <span class="meta">7帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <ul class="post-list">
+                        <li>"考研党失眠——二七考研备战中，但严重失眠，已到影响正常生活的地步"<span class="post-stat">152评论</span></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69b18daf000000000800d1a7?xsec_token=YB-06af6NVsF1IObRac3NBAmNE3SOq_uCQMdiDUXWCRnM=" target="_blank" class="xhs-link">"夜深了，没睡的大学生在想啥"</a><span class="post-stat">721评论——评论/赞比7.43</span></li>
+                    </ul>
+                    <p>帖量小，但评论密度极高。考试焦虑→失眠是一条直接的链条。</p>
+                </div></div>
+            </div>
+
+            <!-- 子群13 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群13：失恋/关系→失眠 <span class="meta">2帖</span></span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <p>帖量极少，但在其他子群中（如"高敏感对男朋友太敏感→胡思乱想"）有间接体现。</p>
+                </div></div>
+            </div>
+
+        </div><!-- /accordion -->
+    </div>
+
+    <!-- 搜索标签体系 -->
+    <div class="section">
+        <h2>搜索标签体系</h2>
+
+        <h3>核心标签</h3>
+        <table>
+            <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+            <tbody>
+                <tr><td>#失眠</td><td>47</td><td>基础标签</td></tr>
+                <tr><td>#焦虑</td><td>42</td><td>和失眠几乎等频</td></tr>
+                <tr><td>#胡思乱想</td><td>21</td><td><em>独有核心词——前三群体里出现频率从未超过8</em></td></tr>
+                <tr><td>#睡眠 / #睡不着</td><td>36</td><td></td></tr>
+                <tr><td>#不要胡思乱想</td><td>10</td><td>自我命令式标签</td></tr>
+                <tr><td>#快速入睡</td><td>7</td><td>行动导向</td></tr>
+                <tr><td>#入睡困难 / #入睡难早醒</td><td>10</td><td>症状描述</td></tr>
+                <tr><td>#想睡个好觉</td><td>5</td><td>渴望</td></tr>
+                <tr><td>#找回消失的睡眠</td><td>4</td><td></td></tr>
+                <tr><td>#晚上睡不着白天睡不醒</td><td>4</td><td>精准描述日夜颠倒</td></tr>
+            </tbody>
+        </table>
+
+        <h3>伴随的身体/医学标签</h3>
+        <table>
+            <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+            <tbody>
+                <tr><td>#焦虑症</td><td>7</td><td><em>已经自我诊断/就医</em></td></tr>
+                <tr><td>#抑郁 / #抑郁症</td><td>14</td><td>和前三群体极少出现形成对比</td></tr>
+                <tr><td>#对抗焦虑症 / #与焦虑对抗</td><td>13</td><td></td></tr>
+                <tr><td>#战胜焦虑和抑郁</td><td>4</td><td></td></tr>
+                <tr><td>#正念</td><td>5</td><td></td></tr>
+                <tr><td>#高敏感</td><td>5</td><td>交叉</td></tr>
+            </tbody>
+        </table>
+
+        <div class="key-point"><strong>独特发现：这是四个群体中第一次出现"抑郁"高频标签（14次）。</strong> 高敏感群体和"抑郁"几乎不交叉（1帖），原生家庭和内耗群体也很少，但睡前思维剧场群体的"失眠-焦虑-抑郁"三角已经形成闭环。这说明她们中的一部分人<strong>已经跨过了"心理不适"进入了"准临床"状态</strong>。</div>
+    </div>
+
+    <!-- 互动行为规律 -->
+    <div class="section">
+        <h2>互动行为规律</h2>
+
+        <h3>收藏/赞比——"方法工具"的收藏比碾压所有群体</h3>
+
+        <p class="insight-text" style="margin-bottom:0.5rem"><strong>超高收藏/赞比（>1.2，"这个我今晚就要用"）：</strong></p>
+        <table>
+            <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+            <tbody>
+                <tr><td>两分钟骗过你的大脑</td><td><strong>2.49</strong></td><td>即时方法</td></tr>
+                <tr><td>焦虑失眠记住2个平价药</td><td>1.67</td><td>药物/食疗</td></tr>
+                <tr><td>凌晨早醒亲测好用方法</td><td>1.58</td><td>具体方法</td></tr>
+                <tr><td>更年期心悸失眠叫120</td><td>1.52</td><td>求助帖（但评论区方法被收藏）</td></tr>
+                <tr><td>频率瞬间停止胡思乱想</td><td>1.39</td><td>工具</td></tr>
+                <tr><td>频率能瞬间停止胡思乱想</td><td>1.32</td><td>工具</td></tr>
+                <tr><td>如何快速停止胡思乱想</td><td>1.31</td><td>方法</td></tr>
+                <tr><td>焦虑症入睡困难喝这个</td><td>1.17</td><td>食疗</td></tr>
+            </tbody>
+        </table>
+
+        <p class="insight-text" style="margin-top:1.5rem;margin-bottom:0.5rem"><strong>极低收藏/赞比（<0.05，鸡汤无效的铁证）：</strong></p>
+        <table>
+            <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+            <tbody>
+                <tr><td>你担心的事99%不会发生（多版本）</td><td>0.02-0.04</td><td>安慰鸡汤</td></tr>
+                <tr><td>不要胡思乱想啦没事哒</td><td>0.04</td><td>安慰鸡汤</td></tr>
+                <tr><td>不好的想法全部作废</td><td>0.03</td><td>许愿式表达</td></tr>
+                <tr><td>这段话治好了我的精神内耗</td><td>0.01</td><td>安慰鸡汤</td></tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <strong>规律极端化：</strong><br>
+            方法/工具类 → 收藏比 <strong>1.0-2.5</strong>（四个群体中最高）<br>
+            安慰鸡汤类 → 收藏比 <strong>0.01-0.04</strong>（四个群体中最低）<br><br>
+            <strong>这个群体是四个群体中"鸡汤免疫力"最强的——她们已经看够了"不要想太多"，只要"今晚能用的东西"。</strong>
+        </div>
+    </div>
+
+    <!-- 最强讨论触发 -->
+    <div class="section">
+        <h2>最强讨论触发</h2>
+        <ol class="numbered-list">
+            <li><strong>凌晨失眠实时帖</strong>："现在1:22分还没有睡"（评论/赞比38.0）——失眠者深夜在线互慰</li>
+            <li><strong>更年期帖</strong>："更年期失眠的苦终于得救了"（评论/赞比25.0）——同类极度渴望交流</li>
+            <li><strong>大学生夜间帖</strong>："夜深了没睡的大学生在想啥"（评论/赞比7.43）</li>
+            <li><strong>中年现状帖</strong>："41岁，更年期焦虑抑郁失眠"（评论/赞比6.93）</li>
+            <li><strong>疑病帖</strong>："千万不要过度关注身体"（评论/赞比0.92，但5432条评论——绝对量极高）</li>
+        </ol>
+    </div>
+
+    <!-- 与前三个群体的关键差异 -->
+    <div class="section">
+        <h2>与前三个群体的关键差异</h2>
+        <div class="comparison-wrap">
+            <table>
+                <thead>
+                    <tr><th>维度</th><th>高敏感</th><th>原生家庭</th><th>内耗</th><th>睡前思维剧场</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>群体核心</td><td>20-30岁职场女性</td><td>育儿期妈妈回望童年</td><td>多角色中年女性</td><td class="current">更年期+职场人+妈妈</td></tr>
+                    <tr><td>核心自我定位</td><td>"我是这种人格"</td><td>"我的痛苦有来源"</td><td>"我每天都很累"</td><td class="current">"我睡不着"</td></tr>
+                    <tr><td>与抑郁交叉</td><td>1%</td><td>3%</td><td>2%</td><td class="current">7.5%</td></tr>
+                    <tr><td>与躯体化交叉</td><td>0%</td><td>1%</td><td>1%</td><td class="current">4%</td></tr>
+                    <tr><td>凌晨活跃</td><td>微弱</td><td>无</td><td>微弱</td><td class="current">显著（凌晨0-2点44帖）</td></tr>
+                    <tr><td>最强收藏信号</td><td>极简生活方式（0.73）</td><td>自救指南（1.21）</td><td>书单（1.25）</td><td class="current">即时方法（2.49）</td></tr>
+                    <tr><td>鸡汤接受度</td><td>中</td><td>低</td><td>中</td><td class="current">极低（收藏比0.01-0.04）</td></tr>
+                    <tr><td>社群需求</td><td>低</td><td>中</td><td>高</td><td class="current">极高（凌晨互慰+更年期同类聚集）</td></tr>
+                    <tr><td>工具需求</td><td>中</td><td>低</td><td>中</td><td class="current">极高（频率/音频/药物/食疗）</td></tr>
+                    <tr><td>就医交叉</td><td>极低</td><td>低</td><td>低</td><td class="current">显著（49帖涉及就医）</td></tr>
+                    <tr><td>最强引流</td><td>共鸣帖</td><td>缺爱自测</td><td>自测+集体帖</td><td class="current">"胡思乱想"共鸣+方法帖</td></tr>
+                    <tr><td>独有子群</td><td>极简/天赋重构</td><td>代际传递/NPD</td><td>骂醒/书单</td><td class="current">疑病/躯体化/更年期/适应不良白日梦</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /page-container -->
+
+<script>
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+
+// Accordion
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const wasOpen = item.classList.contains('open');
+        // Close all in same accordion
+        item.closest('.accordion').querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+    });
+});
+</script>
+</body>
+</html>

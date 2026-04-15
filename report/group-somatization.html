@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>躯体化焦虑-就医彷徨者 — 心理课程用户洞察报告</title>
+    
+    
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES
+           =========================================== */
+        :root {
+            --bg-primary: #fbfaf7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-subtle: #ececef;
+            --border-hover: #dcdce0;
+
+            --text-primary: #1b1b1f;
+            --text-secondary: #4a4a55;
+            --text-muted: #8a8a96;
+
+            --accent-warm: #f5a524;
+            --accent-pink: #ff6b8a;
+
+            --path-deterioration: #ff6b8a;
+
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+
+            --title-size: clamp(2rem, 5vw, 3.5rem);
+            --h2-size: clamp(1.25rem, 3vw, 1.75rem);
+            --h3-size: clamp(1rem, 2vw, 1.25rem);
+            --body-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            --small-size: clamp(0.7rem, 1vw, 0.8rem);
+            --page-padding: clamp(1rem, 4vw, 3rem);
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           BASE
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ===========================================
+           LAYOUT
+           =========================================== */
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: var(--page-padding);
+        }
+
+        /* ===========================================
+           BACK LINK
+           =========================================== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--text-secondary); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* ===========================================
+           HEADER
+           =========================================== */
+        .detail-header {
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+
+        .header-number {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: rgba(232, 180, 184, 0.15);
+            line-height: 1;
+            margin-bottom: -0.5rem;
+        }
+
+        .header-title {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: var(--small-size);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--path-deterioration);
+            background: rgba(232, 180, 184, 0.08);
+            border: 1px solid rgba(232, 180, 184, 0.18);
+            padding: 0.3rem 0.75rem;
+            border-radius: 100px;
+        }
+        .badge .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--path-deterioration);
+        }
+
+        /* ===========================================
+           METRICS ROW
+           =========================================== */
+        .metrics-row {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+            flex-wrap: wrap;
+        }
+
+        .metric-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            min-width: 140px;
+        }
+
+        .metric-block .metric-value {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--accent-warm);
+            line-height: 1;
+        }
+
+        .metric-block .metric-label {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ===========================================
+           TABS
+           =========================================== */
+        .tabs-nav {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-warm);
+            transform: scaleX(0);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .tab-btn:hover { color: var(--text-secondary); }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+        }
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s var(--ease-out-expo);
+        }
+        .tab-panel.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===========================================
+           CONTENT CARDS
+           =========================================== */
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: clamp(1.25rem, 2.5vw, 2rem);
+            margin-bottom: 1rem;
+        }
+
+        .content-card h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .content-card p,
+        .content-card li {
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-card strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .content-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .content-card ul li {
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .content-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65em;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--accent-warm);
+        }
+
+        .highlight-quote {
+            border-left: 3px solid var(--path-deterioration);
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            background: rgba(232, 180, 184, 0.04);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .highlight-quote strong {
+            color: var(--path-deterioration);
+            font-style: normal;
+        }
+
+        /* ===========================================
+           TABLES
+           =========================================== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--small-size);
+        }
+
+        th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            white-space: nowrap;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 0.55rem 0.75rem;
+            border-bottom: 1px solid #f3f3f5;
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        td strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        td.num {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        td.highlight-cell {
+            color: var(--path-deterioration);
+            font-weight: 600;
+        }
+
+        .table-note {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ===========================================
+           USER JOURNEY
+           =========================================== */
+        .journey-steps {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .journey-steps::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-warm), var(--path-deterioration));
+            border-radius: 1px;
+        }
+
+        .journey-step {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.45em;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-warm);
+            z-index: 1;
+        }
+
+        .journey-step:last-child::before {
+            border-color: var(--path-deterioration);
+        }
+
+        .journey-step .step-title {
+            font-family: var(--font-display);
+            font-size: var(--body-size);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .journey-step .step-desc {
+            color: var(--text-secondary);
+            font-size: var(--small-size);
+            line-height: 1.65;
+        }
+
+        .journey-fork {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px dashed rgba(232, 180, 184, 0.3);
+        }
+
+        .journey-fork .fork-item {
+            color: var(--text-secondary);
+            font-size: var(--small-size);
+            margin-bottom: 0.4rem;
+            line-height: 1.65;
+        }
+        .journey-fork .fork-label {
+            color: var(--accent-warm);
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           ACCORDION
+           =========================================== */
+        .accordion-section {
+            margin-top: clamp(2rem, 4vw, 3rem);
+        }
+
+        .accordion-section-title {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .accordion-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            user-select: none;
+            gap: 1rem;
+        }
+
+        .accordion-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .accordion-num {
+            font-family: var(--font-display);
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            min-width: 1.5rem;
+        }
+
+        .accordion-title {
+            font-family: var(--font-display);
+            font-size: var(--body-size);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .accordion-meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .accordion-chevron {
+            width: 20px; height: 20px;
+            color: var(--text-muted);
+            transition: transform 0.3s var(--ease-out-expo);
+            flex-shrink: 0;
+        }
+
+        .accordion-item.open .accordion-chevron {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease-out-expo);
+        }
+
+        .accordion-item.open .accordion-body {
+            max-height: 2000px;
+        }
+
+        .accordion-content {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-secondary);
+            font-size: var(--small-size);
+            line-height: 1.7;
+        }
+
+        .accordion-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-content strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .accordion-content a {
+            color: var(--accent-warm);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+            transition: border-color 0.2s ease;
+        }
+        .accordion-content a:hover {
+            border-color: var(--accent-warm);
+        }
+
+        .accordion-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .accordion-content ul li {
+            padding-left: 1rem;
+            position: relative;
+            margin-bottom: 0.35rem;
+        }
+        .accordion-content ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--accent-warm);
+        }
+
+        /* ===========================================
+           COMPARISON TABLE SECTION
+           =========================================== */
+        .comparison-section {
+            margin-top: clamp(2rem, 4vw, 3rem);
+        }
+
+        .comparison-section h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .comparison-table-wrapper table {
+            min-width: 900px;
+        }
+
+        .comparison-table-wrapper th.current-col,
+        .comparison-table-wrapper td.current-col {
+            background: rgba(232, 180, 184, 0.06);
+            color: var(--path-deterioration);
+        }
+
+        /* ===========================================
+           TAGS SECTION
+           =========================================== */
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.75rem 0;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: #f3f3f5;
+            border: 1px solid var(--border-subtle);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+        .tag.primary {
+            color: var(--path-deterioration);
+            border-color: rgba(232, 180, 184, 0.25);
+            background: rgba(232, 180, 184, 0.06);
+        }
+        .tag.emotional {
+            color: var(--accent-warm);
+            border-color: rgba(212, 165, 116, 0.25);
+            background: rgba(212, 165, 116, 0.06);
+        }
+
+        /* ===========================================
+           BOOKMARK TABLE
+           =========================================== */
+        .bookmark-high { color: #7ec47e; font-weight: 600; }
+        .bookmark-low { color: var(--text-muted); }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out-expo),
+                        transform 0.6s var(--ease-out-expo);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 600px) {
+            .metrics-row { gap: 0.75rem; }
+            .metric-block { min-width: 100px; padding: 1rem 1.25rem; }
+            .tabs-nav { gap: 0; }
+            .tab-btn { padding: 0.6rem 0.75rem; font-size: var(--small-size); }
+            .accordion-header-left { gap: 0.5rem; }
+            .accordion-title { font-size: var(--small-size); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <!-- Back link -->
+        <a href="index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            返回总览
+        </a>
+
+        <!-- ==============================
+             HEADER
+             ============================== -->
+        <header class="detail-header reveal">
+            <div class="header-number">04</div>
+            <h1 class="header-title">躯体化焦虑-就医彷徨者</h1>
+            <p class="header-subtitle">就医前的认知准备</p>
+            <div class="badge"><span class="dot"></span>心理恶化路径</div>
+        </header>
+
+        <!-- ==============================
+             METRICS
+             ============================== -->
+        <div class="metrics-row reveal">
+            <div class="metric-block">
+                <div class="metric-value">4.5%</div>
+                <div class="metric-label">发帖量占比</div>
+            </div>
+            <div class="metric-block">
+                <div class="metric-value">5.0%</div>
+                <div class="metric-label">互动率</div>
+            </div>
+            <div class="metric-block">
+                <div class="metric-value">24%</div>
+                <div class="metric-label">抑郁共现率</div>
+            </div>
+            <div class="metric-block">
+                <div class="metric-value">14</div>
+                <div class="metric-label">子场景群</div>
+            </div>
+        </div>
+
+        <!-- ==============================
+             TABS
+             ============================== -->
+        <nav class="tabs-nav reveal">
+            <button class="tab-btn active" data-tab="who">她们是谁</button>
+            <button class="tab-btn" data-tab="pain">痛苦时刻</button>
+            <button class="tab-btn" data-tab="comorbid">共现问题</button>
+            <button class="tab-btn" data-tab="journey">用户旅程</button>
+        </nav>
+
+        <!-- TAB: 她们是谁 -->
+        <div class="tab-panel active" id="tab-who">
+            <div class="content-card reveal">
+                <h3>七个群体中第一个出现显著男性声音的群体</h3>
+                <p>虽然女性仍然是主体，但帖子中出现了明确的男性描述 -- "双9硕毕业工作两年半，某top tier1在职""28岁第一次去精神科"。职场人标签（23帖）和学生标签（4帖）的比例远高于前几个群体。</p>
+
+                <div class="highlight-quote">
+                    <strong>和前六个群体的根本差异：</strong>这是唯一一个"跨过心理不适、进入身体症状"的群体。前六个群体的痛苦是心理层面的（敏感/内耗/崩溃/暴食），但这个群体的焦虑已经<strong>制造了真实的、可感知的身体症状</strong> -- 心慌、手抖、胸闷、心悸、头晕、胃食管反流。她们/他们去医院检查，结果一切正常 -- 这反而加重了恐惧。
+                </div>
+            </div>
+
+            <div class="content-card reveal">
+                <h3>受众标签分布</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>受众</th><th>帖量</th><th>说明</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>女性</td><td class="num">25</td><td>主体，但占比低于前六群体</td></tr>
+                            <tr><td>更年期女性</td><td class="num">23</td><td></td></tr>
+                            <tr><td><strong>职场人</strong></td><td class="num">23</td><td><strong>和女性并列 -- 说明职场压力是主要触发器</strong></td></tr>
+                            <tr><td>妈妈/家长</td><td class="num">9</td><td></td></tr>
+                            <tr><td>心理咨询来访者</td><td class="num">7</td><td>已在寻求帮助</td></tr>
+                            <tr><td>学生</td><td class="num">4</td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-card reveal">
+                <h3>生活阶段</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>阶段</th><th>帖量</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>更年期</td><td class="num">23</td></tr>
+                            <tr><td>学生期</td><td class="num">4</td></tr>
+                            <tr><td>育儿期</td><td class="num">3</td></tr>
+                            <tr><td>中年阶段</td><td class="num">3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: 痛苦时刻 -->
+        <div class="tab-panel" id="tab-pain">
+            <div class="content-card reveal">
+                <h3>发帖时间双高峰：10:00 与 21:00</h3>
+                <p><strong>10:00 高峰（21帖）</strong>对应"到公司/上课后焦虑发作"。</p>
+                <p><strong>21:00 高峰（28帖）</strong>对应"一天结束后的身体扫描和担忧"。</p>
+
+                <div class="highlight-quote">
+                    和前六群体对比的独有特征：<strong>07:00-08:00有显著活跃（16帖）</strong> -- 这是"上班前焦虑"的时段。"上班前的几个小时，我总是很焦虑且有些恐惧"（9.5万赞）精准描述了这个时段。
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: 共现问题 -->
+        <div class="tab-panel" id="tab-comorbid">
+            <div class="content-card reveal">
+                <h3>共现问题频率</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>共现问题</th><th>频次</th><th>占比</th><th>说明</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>焦虑</td><td class="num">231</td><td class="num">82%</td><td></td></tr>
+                            <tr><td><strong>抑郁</strong></td><td class="num highlight-cell">67</td><td class="num highlight-cell">24%</td><td><strong>七个群体中最高 -- 超过妈妈群体的15%</strong></td></tr>
+                            <tr><td><strong>失眠</strong></td><td class="num highlight-cell">61</td><td class="num highlight-cell">22%</td><td>仅次于人群4</td></tr>
+                            <tr><td>人格测试</td><td class="num">29</td><td class="num">10%</td><td>"焦虑自测"类内容</td></tr>
+                            <tr><td>学习压力</td><td class="num">26</td><td class="num">9%</td><td></td></tr>
+                            <tr><td>职场焦虑</td><td class="num">26</td><td class="num">9%</td><td></td></tr>
+                            <tr><td><strong>更年期</strong></td><td class="num">23</td><td class="num">8%</td><td></td></tr>
+                            <tr><td>心理咨询</td><td class="num">10</td><td class="num">4%</td><td>部分人已在咨询</td></tr>
+                            <tr><td><strong>强迫</strong></td><td class="num highlight-cell">8</td><td class="num highlight-cell">3%</td><td>七个群体中最高</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-card reveal">
+                <h3>三个独有信号</h3>
+                <ul>
+                    <li><strong>抑郁共现24%</strong> -- 几乎每4个人中就有1个，远超其他群体。说明这个群体的心理状态已经比较严重。</li>
+                    <li><strong>强迫共现3%</strong> -- "停不下来的身体扫描"本质上是强迫性的。</li>
+                    <li><strong>人格测试共现10%</strong> -- 她们在疯狂做自测来判断"我到底是什么问题"。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB: 用户旅程 -->
+        <div class="tab-panel" id="tab-journey">
+            <div class="content-card reveal">
+                <h3>从症状出现到两个分叉</h3>
+                <div class="journey-steps">
+                    <div class="journey-step">
+                        <div class="step-title">1. 症状出现</div>
+                        <div class="step-desc">某天突然心慌/手抖/胸闷 -- 以为是身体问题 -- 去医院</div>
+                    </div>
+                    <div class="journey-step">
+                        <div class="step-title">2. 检查无果</div>
+                        <div class="step-desc">心电图/血检/CT全部正常 -- "那我为什么难受？" -- 更焦虑</div>
+                    </div>
+                    <div class="journey-step">
+                        <div class="step-title">3. 反复就医</div>
+                        <div class="step-desc">换医院/换科室 -- 反复检查 -- 反复正常 -- "会不会漏检了？"</div>
+                    </div>
+                    <div class="journey-step">
+                        <div class="step-title">4. 焦虑叠加</div>
+                        <div class="step-desc">开始对症状本身焦虑 -- 身体扫描变成强迫行为 -- "我是不是得了什么大病" -- 疑病</div>
+                    </div>
+                    <div class="journey-step">
+                        <div class="step-title">5. 犹豫期</div>
+                        <div class="step-desc">有人建议看精神科 -- 但"不想留就诊记录""不想吃药""怕被当精神病" -- 卡在这一步</div>
+                    </div>
+                    <div class="journey-step">
+                        <div class="step-title">6. 两个分叉</div>
+                        <div class="step-desc"></div>
+                        <div class="journey-fork">
+                            <div class="fork-item"><span class="fork-label">a. 就医</span> -- 被诊断焦虑症 -- 开药 -- 纠结吃不吃 -- "吃第四天，生不如死"</div>
+                            <div class="fork-item"><span class="fork-label">b. 不就医</span> -- 在小红书搜自救方法 -- <strong>课程介入点：就医前的教育和导航</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================
+             ACCORDION: 14 SUB-SCENARIOS
+             ============================== -->
+        <div class="accordion-section reveal">
+            <h2 class="accordion-section-title">14个子场景群</h2>
+
+            <!-- 子群1 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">01</span>
+                        <span class="accordion-title">焦虑症就医/吃药</span>
+                    </div>
+                    <span class="accordion-meta">173帖 / 占62%</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <p><strong>所有七个群体中最具"就医"特征的子群。</strong></p>
+                        <ul>
+                            <li>"第一次心理咨询止于价格 -- 抑郁情绪已经很久了，工作的压力家庭的不可言说躯体化的反应，但又不想去医院留下就诊记录"（1932评论）</li>
+                            <li>"焦虑症患者 -- 医生说：为什么那么久了才来看。因为我以为问题不大"（1111评论）</li>
+                            <li>"2.27确诊了中度抑郁和焦虑症，医生开了药，不敢吃"（398评论）</li>
+                            <li>"吃第四天，生不如死 -- 重度焦虑吃药今天第四天，心慌手抖，恶心想吐，头晕头痛眼花，呼吸不上来"</li>
+                            <li>"焦虑症吃药是利大于弊吗 -- 纠结很久要不要吃药"</li>
+                            <li>"有焦虑症的宝宝能正常工作吗？"（487评论）</li>
+                            <li>"从医院里查出来的抑郁症会是装的吗？"（581评论）</li>
+                            <li>"焦虑症康复日记 -- 已经坚持吃药一年啦"</li>
+                        </ul>
+                        <p><strong>173帖中最反复出现的三个犹豫：</strong></p>
+                        <ul>
+                            <li><strong>"不想留就诊记录"</strong> -- 精神科就诊可能影响保险/工作/社会评价</li>
+                            <li><strong>"不敢吃药"</strong> -- 对精神科药物的恐惧</li>
+                            <li><strong>"吃了药副作用太大"</strong> -- 初期副作用让很多人中途停药</li>
+                        </ul>
+                        <p>课程对这个子群的价值不是替代治疗，而是做<strong>"就医前的认知教育"</strong>：躯体化是什么？什么时候需要就医？精神科就诊流程是什么？药物副作用的正确预期是什么？</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群2 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">02</span>
+                        <span class="accordion-title">躯体化症状识别</span>
+                    </div>
+                    <span class="accordion-meta">89帖 / 总赞11.9万</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"抑郁久了，躯体化的你是这样吗"（3.1万赞，3019评论）</li>
+                            <li>"当你出现躯体化的表现"（3.9万赞，2509评论）</li>
+                            <li>"抑郁焦虑的101个躯体化表现"（1.7万赞，358评论）</li>
+                            <li>"明明是焦虑，为什么会引发躯体症状？"（收藏/赞比0.99）</li>
+                            <li>"焦虑症，是被吓出来的，祸根却不在大脑"（收藏/赞比1.01）</li>
+                            <li>"植物神经紊乱恢复之后，太舒服了！"（收藏/赞比1.21）</li>
+                        </ul>
+                        <p><strong>这些帖子的功能和原生家庭群体的"创伤命名"一样 -- 给一种说不清的痛苦起一个名字。</strong>"躯体化"这个词本身就是对她们经历的最重要的命名 -- "原来我的身体症状不是身体的问题，是焦虑的表现"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群3 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">03</span>
+                        <span class="accordion-title">方法/自救</span>
+                    </div>
+                    <span class="accordion-meta">48帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"我用最笨的办法治好了我的焦虑躯体化"（收藏/赞比1.13）</li>
+                            <li>"如何才能做到不害怕焦虑症的躯体症状"（收藏/赞比1.06）</li>
+                            <li>"焦虑失眠最好的解药，不是吃药，也不是找事干，而是持续在这四方面下功夫"（收藏/赞比1.07）</li>
+                            <li>"瞬间停止胡思乱想，摆脱担忧的念头"（2.5万赞）</li>
+                            <li>"因为一瓶镁片我老公说我终于正常了"（收藏/赞比0.98）</li>
+                        </ul>
+                        <p><strong>"因为一瓶镁片我老公说我终于正常了" -- 这种"一个小动作改变了一切"的叙事在这个群体中极具传播力。</strong>收藏/赞比全部>0.95。她们对"可操作的具体方案"有极强的保存意愿。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群4 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">04</span>
+                        <span class="accordion-title">疑病/健康焦虑</span>
+                    </div>
+                    <span class="accordion-meta">34帖 / 评论密度极高</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"别吓自己了，你很健康！"（6467赞，1915评论）</li>
+                            <li>"你不用再疑病、恐病、焦虑啦！"（4075赞，456评论）</li>
+                            <li>"是谁天天疑病又恐惧去检查......是我啊"（358评论）</li>
+                            <li>"终于鼓起勇气做了体检 -- 焦虑疑病了两年，一度一想到医院和体检就惊恐发作"</li>
+                            <li>"大家会不会对身体健康问题陷入无限焦虑，疯狂查资料，去医院检查"</li>
+                        </ul>
+                        <p><strong>疑病是这个群体独有的深度子群。</strong>典型循环：身体有一点不适 -> 上网查 -> "这是不是XX癌？" -> 极度恐惧 -> 去医院 -> 检查正常 -> 暂时安心 -> 身体又有一点不适 -> 重复。<strong>她们知道自己在"自己吓自己"，但知道不等于能停下来。</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群5 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">05</span>
+                        <span class="accordion-title">职场躯体化</span>
+                    </div>
+                    <span class="accordion-meta">37帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"上班前的几个小时，我总是很焦虑且有些恐惧"（<strong>9.5万赞</strong>，2445评论 -- 全群体第一爆款）</li>
+                            <li>"现在的状态算不算是工作导致的躯体化 -- 双9硕毕业工作两年半，某top tier1在职。上班胸闷气短，对环境突发的事件和声音会应激"（322评论）</li>
+                            <li>"35岁无锡女生，上班上到心慌手抖 -- 每天上班前焦虑到睡不着"（456评论）</li>
+                        </ul>
+                        <p><strong>"上班前的几个小时"获得9.5万赞 -- 全群体最大爆款。</strong>收藏/赞比极低（0.07）-- 纯共鸣帖，不包含方法。课程如果能做一个"上班前10分钟焦虑应急包"，切入的就是这个9.5万人共鸣的场景。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群6 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">06</span>
+                        <span class="accordion-title">更年期躯体化</span>
+                    </div>
+                    <span class="accordion-meta">23帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"更年期的疼 -- 持续的喉咙不适、肩颈疼痛和胸闷让我怀疑自己是否处于更年期综合症或躯体化焦虑症"（941评论，收藏/赞比1.03）</li>
+                            <li>"严重的更年期综合症，每天夜里心悸失眠，严重到一个月叫了两次120"（收藏/赞比1.52）</li>
+                        </ul>
+                        <p><strong>收藏/赞比极高（1.03-1.52），评论/赞比也极高。</strong>她们分不清"这是更年期的正常反应还是焦虑症"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群7 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">07</span>
+                        <span class="accordion-title">精神科就医流程</span>
+                    </div>
+                    <span class="accordion-meta">23帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"准备去看精神科了，想请问一下第一次去大概会做什么检查以及费用"</li>
+                            <li>"28岁第一次去精神科"（3113赞，275收藏）</li>
+                            <li>"问问硕博生精神压力太大，去医院看应该挂什么科"</li>
+                            <li>"失眠别硬扛 -- 沈阳心理科看诊全流程分享"</li>
+                        </ul>
+                        <p><strong>这23帖描述的是一个非常具体的信息缺口：精神科就医的实操指南。</strong>"挂什么科""费用多少""第一次做什么检查" -- 这些问题在医院官网上找不到直白的答案。课程如果包含一个"就医导航"模块，填补的就是这个信息真空。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群8 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">08</span>
+                        <span class="accordion-title">康复日记</span>
+                    </div>
+                    <span class="accordion-meta">19帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"焦虑症康复日记 -- 已经坚持吃药一年啦，正常工作社交啦"</li>
+                            <li>"五个月了 -- 吃药第五个月了，纪念一下"</li>
+                            <li>"更年期症状全来了，我用半年走出来"</li>
+                        </ul>
+                        <p><strong>帖量小但角色独特 -- 这些是"过来人"的声音。</strong>她们的存在对于犹豫要不要就医的人有巨大的安慰作用。课程如果能收集这类"康复叙事"作为内容素材，会比专家讲解更有说服力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群9 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">09</span>
+                        <span class="accordion-title">强迫思维</span>
+                    </div>
+                    <span class="accordion-meta">14帖</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <ul>
+                            <li>"瞬间停止胡思乱想，摆脱担忧的念头"（2.5万赞）</li>
+                            <li>"不回应就可以重塑大脑回路！"</li>
+                            <li>"为什么你永远'想不通'？ -- 这个念头到底是必须要处理的现实隐患，还是该忽略的强迫思维？"</li>
+                            <li>"有人能讲一下看精神科的流程吗 -- 不是抑郁症，是强迫症，脑子里一直有侵入性的想法，反复洗手，3年了没干预"</li>
+                        </ul>
+                        <p><strong>这是七个群体中唯一一个出现"强迫症"作为主诉的子群。</strong>帖量仅14条但描述极度精准 -- "侵入性的想法""3年了没干预"。和"高敏感"的"想太多"完全不同 -- 这里的"想"是不可控的、侵入性的、让人痛苦的。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群10: 搜索标签体系 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">10</span>
+                        <span class="accordion-title">搜索标签体系</span>
+                    </div>
+                    <span class="accordion-meta">核心标签分析</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr><th>标签</th><th>频率</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>#焦虑症</strong></td><td class="num">33</td><td>第一高频 -- 已经在用"症"这个字</td></tr>
+                                    <tr><td>#对抗焦虑症</td><td class="num">28</td><td>"对抗"暗示她们把焦虑症视为需要战斗的敌人</td></tr>
+                                    <tr><td>#焦虑</td><td class="num">28</td><td></td></tr>
+                                    <tr><td>#抑郁 / #抑郁症</td><td class="num">24</td><td></td></tr>
+                                    <tr><td>#躯体化</td><td class="num">14</td><td></td></tr>
+                                    <tr><td>#战胜焦虑和抑郁</td><td class="num">13</td><td></td></tr>
+                                    <tr><td>#与焦虑对抗</td><td class="num">12</td><td></td></tr>
+                                    <tr><td>#焦虑症躯体化</td><td class="num">12</td><td>组合标签</td></tr>
+                                    <tr><td>#失眠</td><td class="num">10</td><td></td></tr>
+                                    <tr><td>#心理治疗</td><td class="num">7</td><td></td></tr>
+                                    <tr><td>#强迫症</td><td class="num">5</td><td></td></tr>
+                                    <tr><td><strong>#躯体化我恨你</strong></td><td class="num">4</td><td>极具情感色彩的标签</td></tr>
+                                    <tr><td>#惊恐发作</td><td class="num">4</td><td>临床级别描述</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>"#焦虑症"（33次）是这个群体的第一标签 -- 这是七个群体中唯一一个把"症"作为核心身份标签的群体。</strong></p>
+                        <p>"#躯体化我恨你" -- 这个标签出现了4次，极具情感色彩。说明躯体化带给她们的不只是痛苦，还有愤怒 -- <strong>"为什么我的身体在背叛我？"</strong></p>
+                        <div class="tags-list">
+                            <span class="tag primary">#焦虑症</span>
+                            <span class="tag primary">#对抗焦虑症</span>
+                            <span class="tag primary">#躯体化</span>
+                            <span class="tag emotional">#躯体化我恨你</span>
+                            <span class="tag">#焦虑</span>
+                            <span class="tag">#抑郁症</span>
+                            <span class="tag">#失眠</span>
+                            <span class="tag">#惊恐发作</span>
+                            <span class="tag">#强迫症</span>
+                            <span class="tag">#心理治疗</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群11: 收藏行为 - 超高收藏 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">11</span>
+                        <span class="accordion-title">超高收藏帖 (收藏/赞比 >1.0)</span>
+                    </div>
+                    <span class="accordion-meta">互动行为规律</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>更年期心悸失眠叫120</td><td class="num bookmark-high">1.52</td><td>严重症状求助</td></tr>
+                                    <tr><td>对抗焦虑吃对的食物</td><td class="num bookmark-high">1.24</td><td>食物方案</td></tr>
+                                    <tr><td>植物神经紊乱恢复</td><td class="num bookmark-high">1.21</td><td>康复故事</td></tr>
+                                    <tr><td>焦虑症入睡困难喝这个</td><td class="num bookmark-high">1.17</td><td>具体偏方</td></tr>
+                                    <tr><td>强迫症治疗超全干货</td><td class="num bookmark-high">1.16</td><td>治疗方法</td></tr>
+                                    <tr><td>我用最笨的办法治好了焦虑躯体化</td><td class="num bookmark-high">1.13</td><td>个人方法</td></tr>
+                                    <tr><td>焦虑失眠的解药持续在四方面下功夫</td><td class="num bookmark-high">1.07</td><td>系统方法</td></tr>
+                                    <tr><td>不害怕焦虑症的躯体症状</td><td class="num bookmark-high">1.06</td><td>认知方法</td></tr>
+                                    <tr><td>更年期的疼</td><td class="num bookmark-high">1.03</td><td>症状共鸣+方法</td></tr>
+                                    <tr><td>焦虑症是被吓出来的</td><td class="num bookmark-high">1.01</td><td>归因解释</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 子群12: 收藏行为 - 极低收藏 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">12</span>
+                        <span class="accordion-title">极低收藏帖 (收藏/赞比 <0.1)</span>
+                    </div>
+                    <span class="accordion-meta">互动行为规律</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>上班前我总是很焦虑</td><td class="num bookmark-low">0.07</td><td>9.5万赞但仅6662收藏</td></tr>
+                                    <tr><td>胡思乱想全部破呸呸呸</td><td class="num bookmark-low">0.04</td><td>许愿式</td></tr>
+                                    <tr><td>终于鼓起勇气做了体检</td><td class="num bookmark-low">0.00</td><td>纯记录</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>规律：康复故事/具体偏方/治疗方法的收藏比>1.0，纯共鸣/许愿式/纯记录的收藏比<0.1。</strong></p>
+                        <p>这个群体有一个独有特征 -- <strong>"严重症状求助帖"的收藏比也极高（1.52）</strong>。这在其他群体不常见。说明看到别人描述严重症状的用户也在保存，因为"这可能就是我以后会经历的"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholders for remaining sub-groups implied by "14个子场景群" -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">13</span>
+                        <span class="accordion-title">惊恐发作</span>
+                    </div>
+                    <span class="accordion-meta">临床级描述</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <p>使用"#惊恐发作"标签（4次），描述突发性的极端恐惧体验。这是躯体化焦虑的急性爆发形态 -- 与慢性的身体扫描不同，惊恐发作是一次性的、压倒性的。</p>
+                        <p><strong>"终于鼓起勇气做了体检 -- 焦虑疑病了两年，一度一想到医院和体检就惊恐发作"</strong> -- 惊恐发作甚至阻止了她们去做本应缓解焦虑的体检。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="accordion-header-left">
+                        <span class="accordion-num">14</span>
+                        <span class="accordion-title">药物信息需求</span>
+                    </div>
+                    <span class="accordion-meta">课程介入点</span>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-content">
+                        <p>围绕精神科用药的信息需求帖子：<strong>"焦虑症吃药是利大于弊吗""不敢吃药""吃第四天，生不如死"</strong>。</p>
+                        <p>核心矛盾是<strong>信息缺口</strong> -- 医生开药时往往没有时间详细解释副作用的持续时间和正常范围，用户只能到社交媒体碎片化地搜索。课程如果包含<strong>"药物副作用的正确预期"</strong>模块，将精准填补这个缺口。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================
+             COMPARISON TABLE
+             ============================== -->
+        <div class="comparison-section reveal">
+            <h2>与前六个群体的关键差异</h2>
+            <div class="comparison-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>维度</th>
+                            <th>高敏感</th>
+                            <th>原生家庭</th>
+                            <th>内耗</th>
+                            <th>睡前思维</th>
+                            <th>妈妈</th>
+                            <th>情绪进食</th>
+                            <th class="current-col">躯体化</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>群体核心</strong></td>
+                            <td>20-30职场女性</td>
+                            <td>育儿妈妈</td>
+                            <td>多角色中年</td>
+                            <td>更年期+职场</td>
+                            <td>妈妈</td>
+                            <td>年轻女性</td>
+                            <td class="current-col"><strong>职场人+更年期</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>痛苦层面</strong></td>
+                            <td>心理</td>
+                            <td>心理</td>
+                            <td>心理</td>
+                            <td>心理+睡眠</td>
+                            <td>角色</td>
+                            <td>身体+心理</td>
+                            <td class="current-col"><strong>身体症状为主</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>抑郁交叉</strong></td>
+                            <td>1%</td>
+                            <td>3%</td>
+                            <td>2%</td>
+                            <td>7.5%</td>
+                            <td>15%</td>
+                            <td>1.5%</td>
+                            <td class="current-col highlight-cell"><strong>24%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>强迫交叉</strong></td>
+                            <td>0%</td>
+                            <td>0%</td>
+                            <td>1%</td>
+                            <td>1.3%</td>
+                            <td>0%</td>
+                            <td>0%</td>
+                            <td class="current-col highlight-cell"><strong>3%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>男性声音</strong></td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td>微弱</td>
+                            <td>微弱</td>
+                            <td>微弱</td>
+                            <td>无</td>
+                            <td class="current-col"><strong>有</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>就医行为</strong></td>
+                            <td>极少</td>
+                            <td>极少</td>
+                            <td>极少</td>
+                            <td>有</td>
+                            <td>少</td>
+                            <td>极少</td>
+                            <td class="current-col"><strong>核心议题</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>独有标签</strong></td>
+                            <td>#钝感力</td>
+                            <td>#断亲</td>
+                            <td>#日签</td>
+                            <td>#胡思乱想</td>
+                            <td>#情绪管理</td>
+                            <td>#暴食</td>
+                            <td class="current-col"><strong>#焦虑症 #躯体化</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>最强收藏</strong></td>
+                            <td>极简</td>
+                            <td>自救指南</td>
+                            <td>书单</td>
+                            <td>即时方法</td>
+                            <td>每日练习</td>
+                            <td>食物清单</td>
+                            <td class="current-col"><strong>康复方法+药物信息</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>独有子群</strong></td>
+                            <td>极简/天赋</td>
+                            <td>NPD/代际</td>
+                            <td>骂醒/书单</td>
+                            <td>白日梦/疑病</td>
+                            <td>丈夫求助</td>
+                            <td>ed/节食循环</td>
+                            <td class="current-col"><strong>就医流程/吃药纠结/康复日记</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==============================
+         JS: Tabs + Accordion + Scroll Reveal
+         ============================== -->
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+                btn.classList.add('active');
+                document.getElementById('tab-' + tabId).classList.add('active');
+
+                // Trigger reveal for newly visible elements
+                document.getElementById('tab-' + tabId).querySelectorAll('.reveal').forEach(el => {
+                    observer.observe(el);
+                });
+            });
+        });
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasOpen = item.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+
+                // Toggle clicked
+                if (!wasOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

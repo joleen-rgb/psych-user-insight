@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高敏感自我厌恶者 - 心理课程用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-subtle: #ececef;
+            --border-hover: #dcdce0;
+            --text-primary: #1b1b1f;
+            --text-secondary: #4a4a55;
+            --text-muted: #8a8a96;
+            --accent-warm: #f5a524;
+            --accent-pink: #ff6b8a;
+            --accent-gold: #8b6cef;
+            --accent-rose: #ff6b8a;
+            --path-deterioration: #ff6b8a;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: clamp(1rem, 4vw, 3rem);
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: clamp(0.75rem, 1vw, 0.85rem);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--text-secondary); }
+        .back-link .arrow { transition: transform 0.3s ease; }
+        .back-link:hover .arrow { transform: translateX(-3px); }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 2.5rem;
+        }
+        .group-number {
+            font-family: var(--font-display);
+            font-size: clamp(0.75rem, 1vw, 0.85rem);
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .group-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .group-subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        .path-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            background: rgba(232, 180, 184, 0.08);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            color: var(--path-deterioration);
+        }
+        .path-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--path-deterioration);
+        }
+
+        /* Metrics bar */
+        .metrics-bar {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        .metric-value {
+            font-weight: 700;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-primary);
+        }
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .metric-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border-subtle);
+        }
+        .metric-persona {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active {
+            color: var(--accent-warm);
+            border-bottom-color: var(--accent-warm);
+        }
+        .tab-panel {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Content blocks */
+        .content-block {
+            margin-bottom: 2rem;
+        }
+        .content-block h3 {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .content-block p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+        .content-block strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Tables */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: clamp(0.75rem, 1.1vw, 0.88rem);
+        }
+        .styled-table thead th {
+            background: #f3f3f5;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .styled-table tbody td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .styled-table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Journey steps */
+        .journey-steps {
+            list-style: none;
+            position: relative;
+            padding-left: 2rem;
+        }
+        .journey-steps::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border-subtle);
+        }
+        .journey-step {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+        }
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-warm);
+        }
+        .journey-step:last-child::before {
+            border-color: var(--accent-rose);
+            background: var(--accent-rose);
+        }
+        .journey-step .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .journey-step .step-desc {
+            color: var(--text-secondary);
+            font-size: clamp(0.75rem, 1.1vw, 0.88rem);
+        }
+
+        /* Section divider */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: 2.5rem 0;
+        }
+
+        /* Sub-scenarios section header */
+        .sub-section-header {
+            font-family: var(--font-display);
+            font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        .accordion-item:hover {
+            border-color: var(--border-hover);
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+        .accordion-header:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .accordion-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .accordion-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .accordion-meta {
+            font-size: clamp(0.7rem, 1vw, 0.78rem);
+            color: var(--text-muted);
+        }
+        .accordion-chevron {
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: transform 0.4s var(--ease-out-expo);
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        .accordion-item.active .accordion-chevron {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--ease-out-expo);
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+        .accordion-body {
+            padding: 0 1.5rem 1.25rem 1.5rem;
+        }
+        .accordion-body p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+        .accordion-body strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Quote links */
+        .quote-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        .quote-list li {
+            margin-bottom: 0.6rem;
+            padding-left: 1rem;
+            position: relative;
+            line-height: 1.7;
+        }
+        .quote-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+        }
+        .quote-list li a {
+            color: var(--accent-pink);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(232, 180, 184, 0.2);
+            transition: border-color 0.3s ease;
+        }
+        .quote-list li a:hover {
+            border-bottom-color: var(--accent-pink);
+        }
+
+        /* Highlight block */
+        .highlight-block {
+            background: rgba(212, 165, 116, 0.06);
+            border-left: 3px solid var(--accent-warm);
+            padding: 1rem 1.25rem;
+            margin-top: 0.75rem;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: clamp(0.8rem, 1.2vw, 0.92rem);
+            line-height: 1.7;
+        }
+
+        /* Tag cloud */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tag-item {
+            font-size: clamp(0.72rem, 1vw, 0.82rem);
+            padding: 0.3rem 0.75rem;
+            border-radius: 100px;
+            background: #f3f3f5;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .tag-item .tag-count {
+            color: var(--accent-warm);
+            font-weight: 600;
+            margin-left: 0.25rem;
+        }
+
+        /* Interaction analysis cards */
+        .interaction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 600px) {
+            .interaction-grid { grid-template-columns: 1fr; }
+        }
+        .interaction-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .interaction-card h4 {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        .interaction-card ul {
+            list-style: none;
+        }
+        .interaction-card ul li {
+            font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        .interaction-card ul li .ratio {
+            color: var(--accent-warm);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .high-save .ratio { color: var(--accent-warm); }
+        .low-save .ratio { color: var(--text-muted); }
+
+        /* Co-occurrence bar */
+        .co-occur-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .co-occur-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+            color: var(--text-secondary);
+        }
+        .co-occur-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: var(--accent-pink);
+        }
+        .co-occur-pct {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <!-- Back link -->
+        <a href="index.html" class="back-link reveal">
+            <span class="arrow">&larr;</span> 返回总览
+        </a>
+
+        <!-- Header -->
+        <header class="page-header reveal">
+            <div class="group-number">01</div>
+            <h1 class="group-title">高敏感自我厌恶者</h1>
+            <p class="group-subtitle">生存策略，而非治愈</p>
+            <div class="path-badge">
+                <span class="dot"></span>心理恶化路径
+            </div>
+        </header>
+
+        <!-- Metrics bar -->
+        <div class="metrics-bar reveal">
+            <div class="metric">
+                <span class="metric-value">2.0%</span>
+                <span class="metric-label">发帖量占比</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric">
+                <span class="metric-value">23.1%</span>
+                <span class="metric-label">互动率</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-persona">20-30岁女性，既厌恶又依赖"高敏感"这个标签</div>
+        </div>
+
+        <!-- Tab navigation -->
+        <nav class="tabs reveal">
+            <button class="tab-btn active" data-tab="who">她们是谁</button>
+            <button class="tab-btn" data-tab="pain">痛苦时刻</button>
+            <button class="tab-btn" data-tab="cooccur">共现问题</button>
+            <button class="tab-btn" data-tab="journey">用户旅程</button>
+        </nav>
+
+        <!-- Tab: 她们是谁 -->
+        <div class="tab-panel active" id="tab-who">
+            <div class="content-block">
+                <h3>压倒性的女性群体</h3>
+                <p>没有一条帖子是男性视角。爆款标题直接指向女性：<strong>"高敏感乖乖女戒掉弱者气息的秘密"（2.6万赞）</strong>、<strong>"高敏感女生不被拿捏的8条超绝心法"（1.7万赞）</strong>。核心hashtag：#女性成长（12次）、#女生必看、#强女思维。</p>
+            </div>
+            <div class="content-block">
+                <h3>生活阶段分布</h3>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>生活阶段</th>
+                            <th>帖量</th>
+                            <th>备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>未标注（大量20-30岁职场/关系场景）</td>
+                            <td>112</td>
+                            <td>"大二在读""在互联网公司当运营""对男朋友太敏感"</td>
+                        </tr>
+                        <tr>
+                            <td>育儿期</td>
+                            <td>4</td>
+                            <td>"高敏感妈妈"亚群</td>
+                        </tr>
+                        <tr>
+                            <td>学生期</td>
+                            <td>3</td>
+                            <td>校园场景反复出现</td>
+                        </tr>
+                        <tr>
+                            <td>更年期</td>
+                            <td>1</td>
+                            <td>几乎不相关</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: 痛苦时刻 -->
+        <div class="tab-panel" id="tab-pain">
+            <div class="content-block">
+                <h3>痛苦时刻 -- 发帖时间</h3>
+                <p><strong>18:00-21:00是绝对高峰（48帖，占40%）。</strong> 白天"撑着"社交，晚上独处后痛苦爆发。凌晨也有零星（00:00-05:00共8帖），对应失眠/深夜胡思乱想。</p>
+            </div>
+        </div>
+
+        <!-- Tab: 共现问题 -->
+        <div class="tab-panel" id="tab-cooccur">
+            <div class="content-block">
+                <h3>共现问题 -- 她们还在为什么痛苦</h3>
+
+                <div class="co-occur-list">
+                    <div class="co-occur-item">
+                        <span>焦虑</span>
+                        <div class="co-occur-bar" style="width:120px;"></div>
+                        <span class="co-occur-pct">100%</span>
+                    </div>
+                    <div class="co-occur-item">
+                        <span>内耗</span>
+                        <div class="co-occur-bar" style="width:36px;"></div>
+                        <span class="co-occur-pct">30%</span>
+                    </div>
+                    <div class="co-occur-item">
+                        <span>自我成长</span>
+                        <div class="co-occur-bar" style="width:23px;"></div>
+                        <span class="co-occur-pct">19%</span>
+                    </div>
+                    <div class="co-occur-item">
+                        <span>原生家庭</span>
+                        <div class="co-occur-bar" style="width:8px;"></div>
+                        <span class="co-occur-pct">6%</span>
+                    </div>
+                    <div class="co-occur-item">
+                        <span>依恋关系</span>
+                        <div class="co-occur-bar" style="width:8px;"></div>
+                        <span class="co-occur-pct">6%</span>
+                    </div>
+                    <div class="co-occur-item">
+                        <span>职场焦虑</span>
+                        <div class="co-occur-bar" style="width:6px;"></div>
+                        <span class="co-occur-pct">5%</span>
+                    </div>
+                </div>
+
+                <div class="highlight-block">
+                    关键：和"抑郁"几乎不交叉（仅1帖）。她们的自我定位不是"我有心理疾病"，而是"我这种人格让我活得很累"。
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: 用户旅程 -->
+        <div class="tab-panel" id="tab-journey">
+            <div class="content-block">
+                <h3>用户旅程</h3>
+                <ol class="journey-steps">
+                    <li class="journey-step">
+                        <div class="step-title">1. 命名痛苦</div>
+                        <div class="step-desc">搜"为什么我总想太多" &rarr; 遇到"高敏感的人在学校根本活不下去" &rarr; "是我！" &rarr; 学到标签</div>
+                    </li>
+                    <li class="journey-step">
+                        <div class="step-title">2. 标签认同</div>
+                        <div class="step-desc">搜"高敏感人格" &rarr; 大量消费描述性内容 &rarr; 开始自称"本人高敏感"</div>
+                    </li>
+                    <li class="journey-step">
+                        <div class="step-title">3. 天赋or诅咒的纠结</div>
+                        <div class="step-desc">想相信是天赋，但日常体验确实是痛苦 &rarr; 这个阶段停留最长</div>
+                    </li>
+                    <li class="journey-step">
+                        <div class="step-title">4. 寻找出路</div>
+                        <div class="step-desc">搜"高敏感怎么办" &rarr; 收藏大量方法帖，但碎片化不构成可执行系统</div>
+                    </li>
+                    <li class="journey-step">
+                        <div class="step-title">5. 系统性解决</div>
+                        <div class="step-desc">大部分人停在第4步 -- 这是课程介入的点</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="section-divider">
+
+        <!-- Sub-scenario groups -->
+        <h2 class="sub-section-header reveal">8个子场景群</h2>
+
+        <!-- Accordion: Sub-group 1 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群1：内耗/思维停不下来</div>
+                    <div class="accordion-meta">52帖，最大子群</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/696f71e4000000002200a91d?xsec_token=YBLbfjHlUoFGEuESIuY_uzym-vknHKAQXqhd4qTUlDSYM=" target="_blank">"有的人虽然表面上看着好像若无其事，甚至什么也没干，但是一直在高强度地头脑风暴，在没人知道的角落里偷偷力竭了"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69a84d7f000000001503b722?xsec_token=YBauWFNzvIrYo_-xptUih5mElBCdbJmK51YQ1b4LsWpkA=" target="_blank">"脑子就没停过"</a>（2317赞，hashtag: #心灵脆弱敏感小女孩）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69020be70000000007001926?xsec_token=YB3kE5fs9M0a5Jsu_VNzU_O0ruGcml4JmUvB66Nkyqw64=" target="_blank">"高敏感人如何让脑子安静下来——一件小事，别人一句无心的评价，你的大脑立刻开始分析隐藏含义、自动脑补一百种可能"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69db7603000000001b000404?xsec_token=YBwZLU29ssa-iQVKfLLLukJRSH-o3ut349xaL-FQZjJUg=" target="_blank">"书本的文字和声音都是放大三倍向我袭来......怎么才能让脑子停下来？自己吓自己快把自己吓吐了"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d9e51d000000001f004cdb?xsec_token=YBguAf34dgEetk8CogttbreoaHOgM2DX6XL0y-f8Z_GUU=" target="_blank">"高敏感人：身体在休息，脑子在加班"</a></li>
+                    </ul>
+                    <div class="highlight-block">核心体验不是"想太多"，而是大脑对一切信息自动做100倍处理，停不下来。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 2 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群2：天赋重构/赋能</div>
+                    <div class="accordion-meta">28帖，总赞10.7万最高</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69c29de2000000001f00770c?xsec_token=YBn3eA1Le7oCK3UP8oPs70C0X38MNgK6XFb_L4MNXuVzc=" target="_blank">"高敏感+极简=王炸"</a>（6.3万赞）-- 全场最高</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d3a465000000002301ee3d?xsec_token=YBBu2AqXGCPs_8VA81-nZVYCDSW3y0o3xt-xYbxOfZNy4=" target="_blank">"高敏感乖乖女戒掉弱者气息的秘密"</a>（2.6万赞，收藏比0.92）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69bd16ff000000001d01d4f3?xsec_token=YB6CtBGxL7-HQ12ZaGoNe8fVoPW04CgT0K2ZwxP3tF7SM=" target="_blank">"AI替代不了的能力，偏偏长在高敏感的人身上"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69cfa7c50000000022028f43?xsec_token=YBD5AajyKDtpElKhcRfrdso7VFgHT4ueDr6XeOqGubQnc=" target="_blank">"高敏感+低认知=内耗；高敏感+高认知=开挂"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d8a536000000002003a5d7?xsec_token=YBzrYZj8IFq0WZVJ614e6F8nEJkk7HkD_VatIFJt0wB-8=" target="_blank">"听我一句劝：高敏感人的出路是创造作品"</a></li>
+                    </ul>
+                    <div class="highlight-block">"极简"出现4次，但这4帖总赞13.8万 -- 占全部121帖总赞的30%。"极简"在这里不是断舍离，而是降低信息输入量、降低大脑处理负荷的生存策略。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 3 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群3：方法求助</div>
+                    <div class="accordion-meta">27帖，讨论密度最高</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69ca275800000000230122e5?xsec_token=YBoE-U8eQcGZn4rf0WNNK07BNAh1Pz1G8YGgON8NB0K8c=" target="_blank">"有没有大佬分享自己怎么从高敏感性格中走出来的"</a>（833评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d19d32000000001a023416?xsec_token=YB5LDXl1lZ1wOXT-mkW_3HAFUY49YULKpF-Tr84hsLQ_w=" target="_blank">"内核很稳是什么感觉？怎么达到？想提升内核，但没有具体的方向"</a>（493评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6958c0b7000000001e03ab5d?xsec_token=YB66lO6VZC9XC9Zq7sczxyJu_V0T_QLuv6vGZUkbyQ0T4=" target="_blank">"对男朋友太敏感了，有一点不对劲就胡思乱想，怎么调节"</a>（603评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d2097b000000001b000f69?xsec_token=YBIk6p8Tx5i9LBpbHJ-U_ogIJcskarHQ7NclU_rU8oZ9c=" target="_blank">"所有人都说高敏感要调整心态。但没人告诉你具体怎么做。告诉自己'别在意'，强迫自己'大度一点'，结果越忍越痛"</a></li>
+                    </ul>
+                    <div class="highlight-block">求助帖的评论/赞比（0.34）远高于赋能帖（0.005） -- 求助激发真实对话，赋能激发被动消费。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 4 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群4：人际关系/社交困难</div>
+                    <div class="accordion-meta">17帖</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69cbf2a6000000001f0029a6?xsec_token=YBtso5Iuqd4U3c8J5LAro0Gh_7bxkbxM0Pk8-tnZuMLZk=" target="_blank">"现实中谁愿意跟高敏感的人一起玩。感觉自己像一个疯子"</a>（1019评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/696cebd0000000002203ae4a?xsec_token=YB1q2oKz_OmOHmWZuy7BR_oL9FvBoUfQx548YatTQo2Wk=" target="_blank">"高敏感人会讨厌身边大部分人"</a>（2万赞）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6901de72000000000301e78d?xsec_token=YBDaX1Kqxwsz_g8Bjd4kAQGPc_YYkoVINxRjfO52x0lcs=" target="_blank">"我会在和朋友相处时，观察她们玩的开不开心，尽量细致地对待她们；但转头又觉得，想太多会变成讨好型"</a></li>
+                    </ul>
+                    <div class="highlight-block">不是"不会社交"，而是"社交时进行过度的心理劳动" -- 一边互动一边监控对方微表情。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 5 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群5：身体/低精力/皮质醇</div>
+                    <div class="accordion-meta">17帖</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69d6667b00000000220019bc?xsec_token=YBNOOkwhdsb2nN0zgmRtfSFwVTr_53eDI-NcgFDTO1aBI=" target="_blank">"高敏感就是容易低精力"</a>（3783赞，收藏比0.80）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69ba91710000000022026ea4?xsec_token=YBz4pQHhp2p1AHnqdyefD_wYr5yX4horswPQlH1RsISqM=" target="_blank">"高敏感人群健康第一步：降低皮质醇！"</a>（6263赞，收藏比0.65）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d8ccde0000000023027efc?xsec_token=YBnM4yAZBT0U_QccAomCEGmnQ4mr3wLuTq3PxusOte-gg=" target="_blank">"易疲劳体质是童年创伤留下的后遗症"</a></li>
+                    </ul>
+                    <div class="highlight-block">帖量不大但收藏/赞比全场最高（0.6-0.8）。用户对"高敏感的身体维度解释"有极强保存和行动意愿。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 6 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群6：恋爱/亲密关系</div>
+                    <div class="accordion-meta">10帖</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/6958c0b7000000001e03ab5d?xsec_token=YB66lO6VZC9XC9Zq7sczxyJu_V0T_QLuv6vGZUkbyQ0T4=" target="_blank">"对男朋友太敏感了，有一点不对劲就胡思乱想"</a>（603评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/6961580f000000000e03c1cb?xsec_token=YB3nPCv--EqU3oGtv8YXazxrMYOvk2V151oLNYkcLZNCI=" target="_blank">"爱是高敏感人的陷阱——翻来覆去手脚还是冰凉，心里空空的"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69036b0c0000000003036d17?xsec_token=YBJpMn5hOwM7fO7vrQ8FiNJ4aUn6h605ISBSHEiwvGAmg=" target="_blank">"不被及时回应而产生的被抛弃感，是童年创伤"</a></li>
+                    </ul>
+                    <div class="highlight-block">高敏感在亲密关系中表现为焦虑型依恋 -- 过度解读伴侣每一个信号。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 7 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群7：自我厌恶/标签认同危机</div>
+                    <div class="accordion-meta">6帖</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/68fe129400000000070011c3?xsec_token=YBrlkPilDoQJZMwZt4jA2H-ekKXMFbhjgwqCWNwdcQn2I=" target="_blank">"我始终觉得高敏感不是一种天赋而是惩罚"</a>（510评论）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d913ea000000001e00eb77?xsec_token=YBTIFL7DS1s-bvUyFd6cIvMygYQfUOW36u7xsuPkiCc4w=" target="_blank">"网上全是假高敏感人！"</a></li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69c5146e000000001a0310ec?xsec_token=YBOJE3_gQz8XKMUwgLsmJhD1rwtcYgSw165mb6JSAsmNA=" target="_blank">"别不承认了！高敏感有时候就是有一点小心眼——本质就是爱计较、爱记仇"</a></li>
+                    </ul>
+                    <div class="highlight-block">存在"反高敏感标签"的声音。当"天赋"叙事被过度传播后，真正痛苦的人反而被冒犯 -- "你们把我的痛苦包装成天赋，但我真的在受苦"。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Sub-group 8 -->
+        <div class="accordion-item reveal">
+            <div class="accordion-header">
+                <div class="accordion-header-left">
+                    <div class="accordion-title">子群8：育儿/妈妈</div>
+                    <div class="accordion-meta">4帖，小众但信号极强</div>
+                </div>
+                <span class="accordion-chevron">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="quote-list">
+                        <li><a href="https://www.xiaohongshu.com/explore/69ae4a3c000000000e00d692?xsec_token=YBKGOysvN7v2euEm4hOate6PMNpi62GHZkKRLN6MjTSqE=" target="_blank">"高敏感娃睡觉熬的不是夜，是妈妈的命"</a>（<strong>收藏/赞比1.25 -- 全场最高</strong>）</li>
+                        <li><a href="https://www.xiaohongshu.com/explore/69d65a41000000001b001fc3?xsec_token=YBNOOkwhdsb2nN0zgmRtfSF83Z580SGjjRfehWnTQDU7Q=" target="_blank">"高敏感人格的产后自救"</a>（评论/赞比0.42 -- 讨论强度极高）</li>
+                    </ul>
+                    <div class="highlight-block">两类人："自己是高敏感的妈妈"和"孩子是高敏感的妈妈"。方法渴求极强。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="section-divider">
+
+        <!-- 搜索标签体系 -->
+        <div class="content-block reveal">
+            <h3>搜索标签体系</h3>
+
+            <p><strong>她们如何称呼自己：</strong></p>
+            <div class="tag-cloud">
+                <span class="tag-item">#高敏感<span class="tag-count">28</span></span>
+                <span class="tag-item">#高敏感人格<span class="tag-count">22</span></span>
+                <span class="tag-item">#高度敏感人群<span class="tag-count">13</span></span>
+                <span class="tag-item">#高度敏感者<span class="tag-count">11</span></span>
+            </div>
+            <p>不用临床术语"HSP"（仅1帖），用的是中文自造标签。</p>
+
+            <p style="margin-top:1.25rem;"><strong>伴随的痛苦标签：</strong></p>
+            <div class="tag-cloud">
+                <span class="tag-item">#女性成长<span class="tag-count">12</span></span>
+                <span class="tag-item">#讨好型人格<span class="tag-count">3</span></span>
+                <span class="tag-item">#钝感力<span class="tag-count">2</span></span>
+                <span class="tag-item">#原生家庭<span class="tag-count">3</span></span>
+                <span class="tag-item">#INFJ<span class="tag-count">2</span></span>
+                <span class="tag-item">#一人公司<span class="tag-count">2</span></span>
+            </div>
+            <p>"钝感力" -- "如果我能钝感就好了"。"原生家庭" -- 归因路径。"INFJ" -- 与MBTI绑定。"一人公司" -- 逃离社交的职业想象。</p>
+
+            <p style="margin-top:1.25rem;"><strong>渴望标签：</strong></p>
+            <div class="tag-cloud">
+                <span class="tag-item">#天赋<span class="tag-count">3</span></span>
+                <span class="tag-item">#认知觉醒<span class="tag-count">3</span></span>
+                <span class="tag-item">#大大方方做自己<span class="tag-count">2</span></span>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="section-divider">
+
+        <!-- 互动行为分析 -->
+        <div class="content-block reveal">
+            <h3>互动行为分析：什么被收藏 vs 什么只被点赞</h3>
+
+            <div class="interaction-grid">
+                <div class="interaction-card high-save">
+                    <h4>高收藏/赞比（>0.7，"保存反复看"）</h4>
+                    <ul>
+                        <li><span>育儿具体场景</span><span class="ratio">1.25</span></li>
+                        <li><span>权威背书的方法</span><span class="ratio">1.13</span></li>
+                        <li><span>两个标签关系解释</span><span class="ratio">1.04</span></li>
+                        <li><span>乖乖女戒弱者气息</span><span class="ratio">0.92</span></li>
+                        <li><span>低精力的生理解释</span><span class="ratio">0.80</span></li>
+                    </ul>
+                </div>
+                <div class="interaction-card low-save">
+                    <h4>低收藏/赞比（<0.15，"看完就走"）</h4>
+                    <ul>
+                        <li><span>高敏感的人在学校根本活不下去</span><span class="ratio">0.10</span></li>
+                        <li><span>过度在意他人是什么体验</span><span class="ratio">0.12</span></li>
+                        <li><span>"感觉自己像疯子"</span><span class="ratio">0.12</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-block">结论：纯共鸣点赞高但不被收藏；框架/方法/生理解释点赞可能不最高，但收藏极高。课程结构应该是"先说中 &rarr; 再给框架"。</div>
+        </div>
+
+    </div>
+
+    <!-- JS: Tabs, Accordion, Scroll Reveal -->
+    <script>
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('active');
+            });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

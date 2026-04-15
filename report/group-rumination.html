@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内耗思维反刍者 - 心理课程用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-subtle: #ececef;
+            --border-hover: #dcdce0;
+            --text-primary: #1b1b1f;
+            --text-secondary: #4a4a55;
+            --text-muted: #8a8a96;
+            --accent-warm: #f5a524;
+            --accent-pink: #ff6b8a;
+            --path-deterioration: #ff6b8a;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+            --title-size: clamp(2rem, 5vw, 3.5rem);
+            --h2-size: clamp(1.25rem, 3vw, 1.75rem);
+            --h3-size: clamp(1rem, 2vw, 1.25rem);
+            --body-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            --small-size: clamp(0.7rem, 1vw, 0.8rem);
+            --page-padding: clamp(1rem, 4vw, 3rem);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: var(--page-padding);
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: var(--small-size);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: 0.4rem 0;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--text-secondary); }
+        .back-link .arrow { transition: transform 0.3s ease; }
+        .back-link:hover .arrow { transform: translateX(-3px); }
+
+        /* Header */
+        .page-header {
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+        .page-header .number {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: rgba(232,180,184,0.15);
+            line-height: 1;
+            margin-bottom: -0.5rem;
+        }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .page-header .subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            margin-bottom: 1rem;
+        }
+        .path-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: var(--small-size);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            background: rgba(232,180,184,0.08);
+            border: 1px solid rgba(232,180,184,0.2);
+            color: var(--path-deterioration);
+        }
+        .path-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--path-deterioration);
+        }
+
+        /* Metrics bar */
+        .metrics-bar {
+            display: flex;
+            gap: clamp(1.5rem, 3vw, 3rem);
+            padding: 1.25rem 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        .metric-value {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .metric-label {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+        .metric-note {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            bottom: -1px;
+        }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active {
+            color: var(--accent-pink);
+            border-bottom-color: var(--accent-pink);
+        }
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s var(--ease-out-expo);
+        }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: var(--small-size);
+        }
+        .data-table th {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table td:first-child { color: var(--text-primary); }
+        .data-table td strong, .data-table th strong {
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+        .data-table .highlight-row td {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Section headings */
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .section-subheading {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Content blocks */
+        .content-block {
+            margin-bottom: 1.5rem;
+        }
+        .content-block p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+        .content-block p strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .content-block .highlight {
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+
+        /* Key insight box */
+        .insight-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--accent-pink);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .insight-box strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin: 1rem 0;
+        }
+        .accordion-item {
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            background: var(--bg-card);
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        .accordion-item:hover {
+            border-color: var(--border-hover);
+        }
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            font-weight: 500;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            text-align: left;
+            gap: 1rem;
+            transition: background 0.2s ease;
+        }
+        .accordion-header:hover {
+            background: var(--bg-card-hover);
+        }
+        .accordion-header .acc-title {
+            flex: 1;
+        }
+        .accordion-header .acc-meta {
+            color: var(--text-muted);
+            font-size: var(--small-size);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .accordion-header .acc-icon {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            transition: transform 0.35s var(--ease-out-expo);
+            flex-shrink: 0;
+        }
+        .accordion-item.open .accordion-header .acc-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--ease-out-expo);
+        }
+        .accordion-item.open .accordion-body {
+            max-height: 2000px;
+        }
+        .accordion-content {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .accordion-content p {
+            margin-bottom: 0.75rem;
+        }
+        .accordion-content strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Post links */
+        .post-list {
+            list-style: none;
+            margin: 0.75rem 0;
+        }
+        .post-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            line-height: 1.6;
+        }
+        .post-list li:last-child { border-bottom: none; }
+        .post-list a {
+            color: var(--accent-warm);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212,165,116,0.2);
+            transition: all 0.2s ease;
+        }
+        .post-list a:hover {
+            color: #e8c49a;
+            border-bottom-color: rgba(212,165,116,0.5);
+        }
+        .post-list .post-stat {
+            color: var(--text-muted);
+            font-size: var(--small-size);
+        }
+
+        /* Journey steps */
+        .journey-steps {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .journey-steps::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-pink), var(--accent-warm));
+            border-radius: 2px;
+        }
+        .journey-step {
+            position: relative;
+            padding: 0.75rem 0;
+            padding-left: 1rem;
+        }
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -1.75rem;
+            top: 1.1rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-pink);
+        }
+        .journey-step .step-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--body-size);
+        }
+        .journey-step .step-desc {
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        .journey-step.fork {
+            padding-left: 0;
+            margin-left: 1rem;
+        }
+        .journey-fork {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+        }
+        .journey-fork .fork-option {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .journey-fork .fork-option strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .journey-fork .fork-option.recommended {
+            border-color: rgba(232,180,184,0.3);
+            background: rgba(232,180,184,0.04);
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: var(--small-size);
+        }
+        .comparison-table th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 0.6rem 0.6rem;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .comparison-table td {
+            padding: 0.5rem 0.6rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table td:first-child {
+            color: var(--text-muted);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .comparison-table td:last-child {
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+        .comparison-table td strong {
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+
+        /* Signals list */
+        .signals-list {
+            list-style: none;
+            margin: 0.75rem 0;
+        }
+        .signals-list li {
+            padding: 0.4rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .signals-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            opacity: 0.6;
+        }
+        .signals-list li strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Tag pills */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.75rem 0;
+        }
+        .tag-pill {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 100px;
+            background: #f3f3f5;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .tag-pill.featured {
+            background: rgba(232,180,184,0.08);
+            border-color: rgba(232,180,184,0.2);
+            color: var(--accent-pink);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out-expo),
+                        transform 0.6s var(--ease-out-expo);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .metrics-bar { flex-wrap: wrap; gap: 1rem; }
+            .tabs-nav { gap: 0; }
+            .tab-btn { padding: 0.6rem 0.75rem; font-size: var(--small-size); }
+            .comparison-table { display: block; overflow-x: auto; }
+            .accordion-header .acc-meta { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <!-- Back link -->
+        <a href="index.html" class="back-link reveal">
+            <span class="arrow">&larr;</span>
+            返回总览
+        </a>
+
+        <!-- Header -->
+        <header class="page-header reveal">
+            <div class="number">02</div>
+            <h1>内耗思维反刍者</h1>
+            <p class="subtitle">系统方法，替代碎片鸡汤</p>
+            <span class="path-badge">
+                <span class="dot"></span>
+                心理恶化路径
+            </span>
+        </header>
+
+        <!-- Metrics bar -->
+        <div class="metrics-bar reveal">
+            <div class="metric">
+                <span class="metric-value">10.3%</span>
+                <span class="metric-label">发帖量占比</span>
+                <span class="metric-note">633帖 / 三群体中体量最大</span>
+            </div>
+            <div class="metric">
+                <span class="metric-value">8.1%</span>
+                <span class="metric-label">互动率</span>
+            </div>
+            <div class="metric">
+                <span class="metric-value">15</span>
+                <span class="metric-label">子场景群</span>
+            </div>
+        </div>
+
+        <!-- Tabs navigation -->
+        <nav class="tabs-nav reveal" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="who" aria-selected="true">她们是谁</button>
+            <button class="tab-btn" role="tab" data-tab="pain" aria-selected="false">痛苦时刻</button>
+            <button class="tab-btn" role="tab" data-tab="comorbid" aria-selected="false">共现问题</button>
+            <button class="tab-btn" role="tab" data-tab="scenarios" aria-selected="false">子场景群</button>
+            <button class="tab-btn" role="tab" data-tab="tags" aria-selected="false">搜索标签</button>
+            <button class="tab-btn" role="tab" data-tab="behavior" aria-selected="false">互动行为</button>
+            <button class="tab-btn" role="tab" data-tab="journey" aria-selected="false">用户旅程</button>
+            <button class="tab-btn" role="tab" data-tab="compare" aria-selected="false">群体对比</button>
+        </nav>
+
+        <!-- ============================== -->
+        <!-- TAB: 她们是谁 -->
+        <!-- ============================== -->
+        <div class="tab-panel active" id="tab-who" role="tabpanel">
+            <div class="content-block reveal">
+                <p><strong>633帖是三个人群里体量最大的，也是人群构成最杂的。</strong>如果说高敏感是一个精准的"身份标签"，原生家庭是一个明确的"归因"，那"内耗"更像是一个<strong>人人都能往里装的容器</strong>——职场人、妈妈、学生、中年人、分手者都在用这个词。</p>
+            </div>
+
+            <h3 class="section-subheading reveal">受众标签分布</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>受众</th><th>帖量</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>女性</td><td>75</td><td>仍然以女性为主体</td></tr>
+                    <tr class="highlight-row"><td>妈妈/家长</td><td><strong>47</strong></td><td><strong>远高于高敏感（2）和原生家庭（6）</strong></td></tr>
+                    <tr><td>职场人</td><td>43</td><td>第三大人群</td></tr>
+                    <tr><td>高敏感人群</td><td>36</td><td>高度交叉</td></tr>
+                    <tr><td>心理咨询来访者</td><td>20</td><td>少数已在咨询</td></tr>
+                    <tr><td>关系困扰人群</td><td>13</td><td></td></tr>
+                    <tr><td>学生</td><td>12</td><td></td></tr>
+                    <tr><td>更年期女性</td><td>12</td><td>比高敏感和原生家庭都多</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subheading reveal">生活阶段</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>阶段</th><th>帖量</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row"><td>育儿期</td><td><strong>54</strong></td><td><strong>最大标记群体</strong></td></tr>
+                    <tr><td>中年阶段</td><td>23</td><td>显著存在（高敏感仅0，原生家庭仅2）</td></tr>
+                    <tr><td>学生期</td><td>12</td><td></td></tr>
+                    <tr><td>更年期</td><td>4</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box reveal">
+                <strong>关键差异：这个群体比前两个群体"年龄更大、角色更多"。</strong>高敏感群体是20-30岁的单身/职场女性为主，原生家庭有一批育儿期妈妈，而"内耗"群体里育儿期（54）+中年阶段（23）+更年期（4）加起来占了绝对多数。<strong>她们不是在成长中迷茫的年轻女性，更多是在多重角色中被压垮的中年女性。</strong>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 痛苦时刻 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-pain" role="tabpanel">
+            <div class="content-block reveal">
+                <p><strong>与前两个群体的关键差异：内耗群体的发帖分布更"全天候"。</strong>高敏感和原生家庭集中在18-21点，但内耗群体从早上8点就开始活跃。<strong>她们的内耗不只在独处时发生，而是渗透在全天的每个角色切换中</strong>：送完孩子内耗、上班内耗、午休内耗、下班前内耗、晚上带娃内耗。</p>
+            </div>
+
+            <div class="insight-box reveal">
+                <strong>20:00-21:00是绝对高峰（144帖，占23%）</strong>——孩子睡了/一天终于结束后的崩溃时刻。<strong>凌晨0点有18帖</strong>，对应失眠。
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 共现问题 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-comorbid" role="tabpanel">
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>共现问题</th><th>频次</th><th>占比</th><th>与前两群体对比</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>622</td><td>98%</td><td>和高敏感一样几乎100%</td></tr>
+                    <tr><td>自我成长</td><td>111</td><td>18%</td><td></td></tr>
+                    <tr class="highlight-row"><td><strong>亲子育儿</strong></td><td><strong>76</strong></td><td><strong>12%</strong></td><td><strong>远高于高敏感（3%），和原生家庭（22%）接近</strong></td></tr>
+                    <tr><td>学习压力</td><td>63</td><td>10%</td><td>学生+考试亚群</td></tr>
+                    <tr><td>依恋关系</td><td>51</td><td>8%</td><td></td></tr>
+                    <tr class="highlight-row"><td>失眠</td><td>48</td><td><strong>8%</strong></td><td><strong>远高于前两个群体</strong></td></tr>
+                    <tr><td>职场焦虑</td><td>46</td><td>7%</td><td></td></tr>
+                    <tr><td>高敏感</td><td>36</td><td>6%</td><td>交叉</td></tr>
+                    <tr class="highlight-row"><td>身材焦虑</td><td>19</td><td><strong>3%</strong></td><td>前两个群体几乎没有</td></tr>
+                    <tr><td>暴食</td><td>7</td><td>1%</td><td>前两个群体没有</td></tr>
+                    <tr class="highlight-row"><td>强迫</td><td>5</td><td><strong>1%</strong></td><td><strong>独有交叉</strong></td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subheading reveal">三个独有信号</h3>
+            <ul class="signals-list reveal">
+                <li><strong>失眠共现8%</strong>——内耗群体的"想太多"比高敏感更直接导致睡眠问题</li>
+                <li><strong>身材焦虑+暴食共现</strong>——内耗延伸到了"身体管理"领域</li>
+                <li><strong>强迫共现</strong>——部分人的反刍已经接近病理级别</li>
+            </ul>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 子场景群 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-scenarios" role="tabpanel">
+            <div class="accordion reveal">
+
+                <!-- 子群1 -->
+                <div class="accordion-item open">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群1：方法/自救指南</span>
+                        <span class="acc-meta">167帖 / 总赞21.9万</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <p>这是内耗群体和前两个群体最大的区别——<strong>她们对"方法"的渴求是压倒性的</strong>（167/633=26%的帖子都在寻找或提供方法）。</p>
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69cb6a8e000000001d01ba9c?xsec_token=YBtso5Iuqd4U3c8J5LAro0Gsj2CmdM8u-Wtp4QlmLHZSs=" target="_blank">"为什么有的人从来不内耗——很佩服一点都不内耗的人，怎么做到的啊啊啊"</a> <span class="post-stat">983评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69d653260000000022002517?xsec_token=YBFEheYfG4MBXnV9_u2ZmPq1jDf8jYMtkaxAoRYDm2FPE=" target="_blank">"大家都说人生要先爱自己，可到底怎么做才算爱"</a> <span class="post-stat">2.2万赞</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69c39d790000000021013ba9?xsec_token=YBrSiVIEoQx3T7bcq4UyDa6FVWJCVMivEp1YTzTy_MWQE=" target="_blank">"精神内耗、灾难化焦虑如何自救？重塑杏仁核"</a> <span class="post-stat">收藏/赞比1.01</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69d3d47d000000001f007df8?xsec_token=YB69GhJ3QOyO52lp8xJPgtrEsbikDjzxIo53zGdf78Nhk=" target="_blank">"我从极致拧巴变成敞亮人的心路历程belike"</a> <span class="post-stat">1.9万赞 / before&amp;after叙事</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>"爱自己到底怎么做"是这个群体的终极困惑。</strong>反复听到"要爱自己""要停止内耗"，但完全不知道具体操作是什么。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群2：育儿/妈妈内耗</span>
+                        <span class="acc-meta">75帖 / 第二大子群</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/698da314000000001503a3f7?xsec_token=YBABlm9-6R-BRpDKYaqbb6tYNyCDAsZMJ3EwzV15qZ3Fk=" target="_blank">"跟育儿嫂吵了两回架，内耗好几天了——每个月11000，一年14万"</a> <span class="post-stat">1150评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69b88f0e000000001b002fb6?xsec_token=YBhdM8kK8xGLzEQq7JR2tIe26GfuzbrbiUiheQtYxaLyA=" target="_blank">"全职妈妈根本不需要赚钱——很多全职妈妈最内耗的点就是：我没赚钱，我没用"</a> <span class="post-stat">404评论</span></li>
+                                <li>"妈妈的人生没有平衡，只有不内耗" <span class="post-stat">370评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/693510a1000000001e03b6ad?xsec_token=YBxp2rZJVMaN9Vh0dxcI0flr669dcq48NOS8vG8SWjb5Q=" target="_blank">"内耗型家人是家庭衰败的祸根"</a> <span class="post-stat">收藏/赞比1.09</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69d9f19c000000001a029b19?xsec_token=YBG7rZ32XhQ3GSVgG8L-R9n3dDiN2LUJ8gvYsmtv6bqKQ=" target="_blank">"教孩子：拒绝内耗，不内耗的育儿方法"</a> <span class="post-stat">收藏/赞比1.08</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69db293b000000001a0268b4?xsec_token=YBaK6pk7Togwanx77ItRVbikUAL-dBQ9sfSf4YbgSHI7w=" target="_blank">"二胎妈妈实测——松弛感育儿的秘密武器"</a> <span class="post-stat">收藏/赞比1.02</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>妈妈亚群在前两个群体里是边缘角色，在"内耗"群体里是核心力量（75帖，占12%）。</strong>她们的内耗来源极具体：和育儿嫂的矛盾、全职妈妈的价值感缺失、"不赚钱=没用"的自我审判。收藏/赞比最高的几乎全是育儿方法帖（1.02-1.09），<strong>妈妈对"不内耗的育儿方法"有极强的付费信号</strong>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群3：职场内耗</span>
+                        <span class="acc-meta">63帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69c34f750000000022003b48?xsec_token=YBcXZ4L68Rp73_qxhSo9hojSAHfROvcPyN0XtdR-OUYNI=" target="_blank">"如果工作让你每天都不开心，压力很大，时常在崩溃的边缘，但你需要这份收入，也不知道接下来还可以做什么"</a> <span class="post-stat">233评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69b0d5670000000005030a75?xsec_token=YBdJyv3Zf4GNeVM2Oz622UNfS4LmIlY02GppWsw3aeE6o=" target="_blank">"允许一切发生——摸鱼就内疚，从接到任务开始就焦虑，长期处于神经绷紧的状态"</a> <span class="post-stat">591评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69d3d47d000000001f007df8?xsec_token=YB69GhJ3QOyO52lp8xJPgtrEsbikDjzxIo53zGdf78Nhk=" target="_blank">"我从极致拧巴变成敞亮人的心路历程"</a> <span class="post-stat">1.9万赞</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>职场内耗的核心不是"工作太多"，而是"工作过程中的情绪劳动太重"。</strong>摸鱼内疚、被领导叫一次名字就提心吊胆——全是心理消耗。"我需要这份收入但每天都在崩溃边缘"——无法"逃"只能"扛"的困境。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群4：睡前胡思乱想</span>
+                        <span class="acc-meta">60帖 / 总评论7711 / 评论密度最高</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/6985e25d000000000a03d9c8?xsec_token=YBWuToHplFzAczsrZ6QmmkpD8ZcTTT5DTfwWwy_kHTpUs=" target="_blank">"睡前爱幻想背后的3个隐藏需求！"</a> <span class="post-stat">9.8万赞 / 4750评论 / 全内耗群体第一爆款</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69bc02fd0000000023021d1b?xsec_token=YBZXY_YjGyNGbFmF_SWQoTpNMmrTdJd0GE3htM702GqmE=" target="_blank">"好神奇！这个频率可以让你停止胡思乱想"</a> <span class="post-stat">3.2万赞=3.2万收藏 / 收藏/赞比&approx;1.0</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/691aee1f000000001b020112?xsec_token=YBPFM3lWDk03wfWq1ReLvnS4w9n1wZHKuX8D15BDNPYyQ=" target="_blank">"别再自己吓自己啦！脑子里疯狂上演最坏剧情"</a> <span class="post-stat">4099赞 / 2368评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/6948aac8000000001e011bbe?xsec_token=YBQbAh0qIxFoKdKdJbv8xMPKc_3aRf5l6BN016OwLN3NU=" target="_blank">"每晚躺在床上都感觉脑子里还在想东西，闭眼躺一个小时还是感觉很清醒"</a></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>60帖产生了7711条评论——引爆力最强的子群。</strong>"睡前脑子停不下来"是一个远超心理学圈子的大众痛点。课程如果把"睡前关机"做成独立模块，不需要任何心理学标签就能获客。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群5：认知翻转/"被骂醒"</span>
+                        <span class="acc-meta">54帖 / 总赞18.3万</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69132d820000000003013577?xsec_token=YBcrS-bYshhPEnnBiLwzrzkYK7iaM-hnBncJVbSC77Qxc=" target="_blank">"被这段话骂醒了~"</a> <span class="post-stat">1.7万赞 / 1047评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/697b3fac000000002203ab4d?xsec_token=YBfJvI8fouW0Eah26wiJmQxwOj_FPPbIjTXg65wN06XUw=" target="_blank">"同一句话，不同心态"</a> <span class="post-stat">2.2万赞 / "内耗是我，治愈也是我"</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69188ec00000000004006393?xsec_token=YBGl3lKBoU5Ih9TFEtUp7oINvDBIbl99_d7CUZsQdIxFI=" target="_blank">"我停止讨好所有人之后，反而获得更加透彻了！"</a> <span class="post-stat">2.8万赞</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/693ee631000000001e026b3a?xsec_token=YBoBso--tldtHgybc9y1a7A-nk7IgkLWq-RJZT8OHPBe8=" target="_blank">"她突然变得很厉害，结束了一段内耗的关系"</a> <span class="post-stat">8103赞</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>"骂醒"是这个群体独有的消费偏好。</strong>高敏感群体要的是"温柔的理解"，原生家庭群体要的是"精准的命名"，但内耗群体要的是<strong>"一句狠话把我从反刍里拽出来"</strong>。
+                            </div>
+                            <p>但这类内容收藏/赞比很低（0.03-0.16）。<strong>被"骂醒"是一瞬间的事，维持不住。</strong>课程的价值——不是一次性的认知翻转，而是可重复使用的思维工具。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群6 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群6：讨好/在意他人评价</span>
+                        <span class="acc-meta">49帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/691dc88b000000000d00ccbf?xsec_token=YBtHeHqwEeDw4YjSecVsCTReEpZW2dKJXD0LKfBwdi5Zo=" target="_blank">"没有提供情绪价值的义务"</a> <span class="post-stat">3.7万赞</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69c274f20000000023004d77?xsec_token=YBHrbhieGXDzlXMNEXt_aVj4qhj59r-j-jhiFf7_ixUqM=" target="_blank">"永远不要去思考别人，因为注意力是一种宇宙货币"</a> <span class="post-stat">9.6万赞</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69bd7ad000000000210397d1?xsec_token=YBXO6t7NTQssMv1Zh0oO8hl3d639MsArirbjq94MR2Pvw=" target="_blank">"太在意一个朋友了怎么办——我总是因为这段友谊内耗自己，可是我放不下你"</a> <span class="post-stat">296评论</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>和高敏感群体的"社交疲惫"不同，核心问题不是"感知太多"，而是"把别人的评价当成了自己的评价标准"。</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群7 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群7：关系/友情内耗</span>
+                        <span class="acc-meta">38帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/692ceaa0000000001f00a8bc?xsec_token=YB797Y420CHcDuwTU8fQSi9lgX0JdQoavZId1rL8QKU5k=" target="_blank">"有没有愿意互相倾诉的？关于友情的，很内耗每天都很煎熬"</a> <span class="post-stat">939评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69c349a0000000001a02f7a8?xsec_token=YBxR5zw80NkINza0Wi_0p1I6hcjSS6446VhhMKNtuppkA=" target="_blank">"求分手搭子！——被内耗得快焦虑了"</a> <span class="post-stat">834评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69036829000000000402b1a1?xsec_token=YBJpMn5hOwM7fO7vrQ8FiNJ6euv6XLNXmkIYq6wkRZWxk=" target="_blank">"敏感内耗bot——就想给咱们这样的人，弄个能踏踏实实说话的小地方"</a> <span class="post-stat">670评论</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>友情内耗是一个被严重低估的话题。</strong>市面上关系类课程全是讲恋爱/婚姻的，但这里清晰地显示——<strong>友情中的内耗（"我在意她但她好像不在意我"）是很多年轻女性的核心痛苦</strong>。用户自发创建互助社群（"敏感内耗bot"），说明她们需要的不只是课程，还有一个"同类社群"。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群8 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群8：书单/课程/工具</span>
+                        <span class="acc-meta">34帖 / 收藏/赞比极高</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/6905fc37000000000700119e?xsec_token=YB4ka_YvY81OO7Wk3_oeVjdQNUx2zOkyNRJHxh8zTr0sg=" target="_blank">"停止内耗！24本心理学书单救赎指南"</a> <span class="post-stat">收藏/赞比1.02</span></li>
+                                <li>"早点看到也不至于那么内耗了——绝版书" <span class="post-stat">收藏/赞比1.02</span></li>
+                                <li>"私藏——30本治愈书单，专治内耗焦虑迷茫" <span class="post-stat">收藏/赞比1.25</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69b2f60d0000000004002cf3?xsec_token=YBpTJcXjphGQzV6SbxDxobAQurua2ucuIn0HRJsVbqvPQ=" target="_blank">"内耗退退退 《被讨厌的勇气》心理课绝了"</a> <span class="post-stat">收藏/赞比1.10</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>书单帖的收藏/赞比是全场最高的类型（平均>1.0）。</strong>这传递了一个清晰信号：<strong>她们已经在主动寻找"系统性学习路径"</strong>，但书太慢太散。课程正好是"比帖子系统、比书快"的中间产品。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群9 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群9：灾难化思维/"自己吓自己"</span>
+                        <span class="acc-meta">18帖 / 评论密度第三高</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69089e1a000000000700d8bf?xsec_token=YBP350VjDGogbqZRBEO6OD1eJyQG2wiOiCYJdk5sYz00Y=" target="_blank">"别吓自己了，你很健康！"</a> <span class="post-stat">6467赞 / 1915评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69843b3d000000000a03e4d0?xsec_token=YBj7JEiHpvE8bJwhxQevrGuyU0WzpgbjK8C-00G-TM_JA=" target="_blank">"你的担忧99%都不会发生"</a> <span class="post-stat">多版本反复发布</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/693a6887000000001e0132a4?xsec_token=YBAQgGr3mAcxI2XG2ro5JwOYDTDD6f4xG_UiCWpRlfuHQ=" target="_blank">"停止过度的关注自己的身体，你的身体很健康"</a> <span class="post-stat">988赞 / 1428评论</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>仅18帖但产生了5329条评论——平均每帖296评论，是全部子群里最高的。</strong>"灾难化思维/疑病"是一个评论区极度活跃的话题——用户在疯狂寻求安慰和确认。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群10 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群10：婚姻/婆媳内耗</span>
+                        <span class="acc-meta">15帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69302187000000001d03adb5?xsec_token=YBiOYT-ndqItMoX_pLr20OIZpGxRcX-fc2W6U_oCtLAhA=" target="_blank">"和公婆同住，是一件非常消耗心力的事情"</a> <span class="post-stat">1895评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69d25a170000000023021cf5?xsec_token=YBIk6p8Tx5i9LBpbHJ-U_ogEBgta-pQi5gLMlcTzoob2k=" target="_blank">"结婚20年才懂，好的婚姻都是'各玩各的'"</a> <span class="post-stat">325评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69bfe7d8000000001b0200d2?xsec_token=YByTRd8baw5P8G6p6q_J7cMxhS2wA_4_RMoW4oOiWutB4=" target="_blank">"我离婚了，用经历告诉你内耗婚姻不要离"</a> <span class="post-stat">收藏/赞比1.03</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>视角不是在抱怨婚姻，而是在找"婚姻中不内耗的策略"。</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群11 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群11：中年/人生意义</span>
+                        <span class="acc-meta">31帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69a65082000000000e00cd12?xsec_token=YBYIYc8YdInfAuoklf0H-zuHDP70uC6vZZlOhmYYa33To=" target="_blank">"1989年出生，37岁了，聊聊大家的现状——焦虑，迷茫，内耗"</a> <span class="post-stat">1425评论 / 极低赞但评论爆</span></li>
+                            </ul>
+                            <p>类似帖在多个年龄段反复出现（31岁、37岁、40岁、41岁、45岁、46岁、52岁）</p>
+                            <div class="insight-box">
+                                <strong>在前两个群体里几乎不存在。</strong>不是具体的心理问题，而是<strong>"活到中年了，不知道这一切是为了什么"的存在性焦虑</strong>。评论/赞比高达6.99——用户在寻找同龄人。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群12 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群12：生理化解释</span>
+                        <span class="acc-meta">15帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69a983ab00000000220306b8?xsec_token=YBm1x0wrjdHhr_TVt0f9WWYOSi9qaSVytHdLG7txGJIgo=" target="_blank">"为什么意志力难以干预生理性焦虑"</a> <span class="post-stat">2.5万赞 / 502评论</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69c39d790000000021013ba9?xsec_token=YBrSiVIEoQx3T7bcq4UyDa6FVWJCVMivEp1YTzTy_MWQE=" target="_blank">"精神内耗、灾难化焦虑如何自救？重塑杏仁核"</a> <span class="post-stat">收藏/赞比1.01</span></li>
+                                <li><a href="https://www.xiaohongshu.com/explore/69ad92a70000000016008e1b?xsec_token=YBH7VReoCfwoXa6qhXAk4K1AzlHj9wuMYe0ekF8xjX25w=" target="_blank">"大脑停不下来，是神经系统的一种'病'"</a></li>
+                            </ul>
+                            <div class="insight-box">
+                                <strong>2.5万赞的"意志力难以干预生理性焦虑"是全群体第三大爆款。</strong>"杏仁核"帖的收藏/赞比达1.01——<strong>生理解释类内容是最强的"从共鸣到行动"转化器</strong>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群13 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群13：高敏感交叉</span>
+                        <span class="acc-meta">59帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <p>和人群1高度重叠。高敏感人群中30%同时被标记为"内耗"，内耗群体中6%同时是"高敏感"。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群14 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群14：分手/失恋内耗</span>
+                        <span class="acc-meta">8帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <ul class="post-list">
+                                <li><a href="https://www.xiaohongshu.com/explore/69c349a0000000001a02f7a8?xsec_token=YBxR5zw80NkINza0Wi_0p1I6hcjSS6446VhhMKNtuppkA=" target="_blank">"求分手搭子！——被内耗得快焦虑了"</a> <span class="post-stat">834评论</span></li>
+                            </ul>
+                            <div class="insight-box">
+                                帖量小但评论密度高。<strong>用户需要的不是"怎么挽回"，而是"怎么在分手后停止反刍"。</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子群15 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="acc-title">子群15：内核稳定追求</span>
+                        <span class="acc-meta">14帖</span>
+                        <span class="acc-icon">&#9660;</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <p>和高敏感群体的"内核稳定"子群完全重叠——"内核稳定"是跨群体的共同渴望目标。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 搜索标签 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-tags" role="tabpanel">
+            <h3 class="section-subheading reveal">核心标签</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>标签</th><th>频率</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>#内耗</td><td>62</td><td>基础标签</td></tr>
+                    <tr class="highlight-row"><td>#拒绝内耗</td><td>23</td><td><strong>行动宣言——"我要停止"</strong></td></tr>
+                    <tr><td>#停止内耗</td><td>18</td><td></td></tr>
+                    <tr><td>#焦虑</td><td>31</td><td>内耗和焦虑几乎等价使用</td></tr>
+                    <tr class="highlight-row"><td>#心理日签 / #日签</td><td>36</td><td><strong>说明她们在用"每日一句"的方式自我安慰</strong></td></tr>
+                    <tr><td>#停止内耗过一个不累的人生</td><td>9</td><td>一个完整句子作为标签——说明多痛</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subheading reveal">身份/角色标签</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>标签</th><th>频率</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>#女性成长</td><td>32</td><td>和前两个群体一致</td></tr>
+                    <tr><td>#大大方方做自己</td><td>12</td><td>渴望标签</td></tr>
+                    <tr class="highlight-row"><td>#人间清醒</td><td>12</td><td><strong>"清醒"是她们渴望的终极状态</strong></td></tr>
+                    <tr><td>#讨好型人格</td><td>8</td><td></td></tr>
+                    <tr><td>#高敏感 / #高敏感人格</td><td>11</td><td>交叉</td></tr>
+                    <tr><td>#原生家庭</td><td>11</td><td>交叉</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box reveal">
+                <strong>#心理日签/#日签 出现36次——全场最高频的非心理学标签。</strong>这说明"内耗"群体有一个前两个群体没有的行为模式：<strong>每天刷一条"治愈语录"来给自己打气</strong>。她们不是在系统性学习，而是在用碎片化的鸡汤维持日常运转。这是课程要替代的东西。
+            </div>
+
+            <div class="insight-box reveal">
+                <strong>另一个独特标签：#胡思乱想（8次）和 #强迫思维（4次）和 #强迫（4次）。</strong>高敏感和原生家庭群体里从没出现"强迫"这个词。说明内耗群体中有一个亚群，她们的"想太多"已经接近强迫性思维的程度。
+            </div>
+
+            <h3 class="section-subheading reveal">标签云</h3>
+            <div class="tag-cloud reveal">
+                <span class="tag-pill featured">#内耗</span>
+                <span class="tag-pill featured">#心理日签</span>
+                <span class="tag-pill">#女性成长</span>
+                <span class="tag-pill">#焦虑</span>
+                <span class="tag-pill featured">#拒绝内耗</span>
+                <span class="tag-pill">#停止内耗</span>
+                <span class="tag-pill">#大大方方做自己</span>
+                <span class="tag-pill">#人间清醒</span>
+                <span class="tag-pill">#高敏感</span>
+                <span class="tag-pill">#原生家庭</span>
+                <span class="tag-pill">#讨好型人格</span>
+                <span class="tag-pill">#停止内耗过一个不累的人生</span>
+                <span class="tag-pill featured">#胡思乱想</span>
+                <span class="tag-pill featured">#强迫思维</span>
+                <span class="tag-pill featured">#强迫</span>
+                <span class="tag-pill">#日签</span>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 互动行为 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-behavior" role="tabpanel">
+            <h3 class="section-subheading reveal">最高收藏/赞比（>1.0，"反复看的自救手册"）</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>30本治愈书单</td><td><strong>1.25</strong></td><td>书单</td></tr>
+                    <tr><td>内心平静到可怕的10种表现</td><td><strong>1.12</strong></td><td>状态描写（目标画像）</td></tr>
+                    <tr><td>《被讨厌的勇气》心理课绝了</td><td><strong>1.10</strong></td><td>课程推荐</td></tr>
+                    <tr><td>内耗型家人是家庭衰败的祸根</td><td><strong>1.09</strong></td><td>育儿方法</td></tr>
+                    <tr><td>不内耗的育儿方法</td><td><strong>1.08</strong></td><td>育儿方法</td></tr>
+                    <tr><td>为什么别人语气不好你就特别难受</td><td><strong>1.06</strong></td><td>命名</td></tr>
+                    <tr><td>重塑杏仁核</td><td><strong>1.01</strong></td><td>生理解释+方法</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subheading reveal">最低收藏/赞比（&lt;0.05）</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>你担心的事99%不会发生（多版本）</td><td>0.02-0.04</td><td>安慰鸡汤</td></tr>
+                    <tr><td>所有的焦虑都是虚惊一场</td><td>0.02</td><td>安慰鸡汤</td></tr>
+                    <tr><td>这段话治好了我的精神内耗</td><td>0.01</td><td>安慰鸡汤</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box reveal">
+                <strong>规律极清晰：</strong>
+                <ul class="signals-list" style="margin-top:0.5rem">
+                    <li><strong>书单/课程推荐</strong> &rarr; 收藏比>1.0（用户在找"学习路径"）</li>
+                    <li><strong>命名+生理解释</strong> &rarr; 收藏比>0.8（"原来是这样"的顿悟存储）</li>
+                    <li><strong>育儿方法</strong> &rarr; 收藏比>1.0（妈妈群体最强付费信号）</li>
+                    <li><strong>安慰鸡汤/梗图</strong> &rarr; 收藏比&lt;0.05（流量大但无行动价值）</li>
+                </ul>
+            </div>
+
+            <div class="content-block reveal">
+                <p><strong>"你担心的事99%不会发生"被至少5个不同的人反复发布，每次都有赞但收藏比都在0.02-0.04。</strong>这是"鸡汤无效"的最直接证据——看的时候觉得对，关掉就忘了。</p>
+            </div>
+
+            <h3 class="section-subheading reveal">最强讨论触发</h3>
+            <table class="data-table reveal">
+                <thead>
+                    <tr><th>类型</th><th>示例</th><th>评论/赞比</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row"><td><strong>自测</strong></td><td>"内耗指数测试""你最近累了吗"</td><td><strong>8.77-17.08</strong></td></tr>
+                    <tr><td>年龄段集体倾诉</td><td>"37岁了，聊聊大家"</td><td>6.99</td></tr>
+                    <tr><td>具体生活困境</td><td>"跟育儿嫂吵架内耗好几天"</td><td>6.93</td></tr>
+                    <tr><td>搭子/互助</td><td>"求分手搭子""有没有愿意互相倾诉的"</td><td>3.64-6.09</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 用户旅程 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-journey" role="tabpanel">
+            <div class="journey-steps reveal">
+                <div class="journey-step">
+                    <span class="step-label">1. 日常累积</span>
+                    <p class="step-desc">每天在职场/育儿/关系中累积情绪劳动 &rarr; 晚上20:00爆发 &rarr; 搜"内耗""焦虑怎么办"</p>
+                </div>
+                <div class="journey-step">
+                    <span class="step-label">2. 鸡汤打卡</span>
+                    <p class="step-desc">刷到"你担心的事99%不会发生" &rarr; 点赞 &rarr; 当下觉得好一点 &rarr; 第二天又陷入 &rarr; <strong>循环</strong></p>
+                </div>
+                <div class="journey-step">
+                    <span class="step-label">3. 被骂醒的瞬间</span>
+                    <p class="step-desc">偶然遇到"被这段话骂醒了" &rarr; 认知翻转 &rarr; 但维持不了</p>
+                </div>
+                <div class="journey-step">
+                    <span class="step-label">4. 寻找系统解法</span>
+                    <p class="step-desc">开始存书单 &rarr; "24本书""30本书" &rarr; 但太多了不知道从哪看 &rarr; 也没时间看</p>
+                </div>
+                <div class="journey-step">
+                    <span class="step-label">5. 两个分叉</span>
+                </div>
+            </div>
+
+            <div class="journey-fork reveal">
+                <div class="fork-option recommended">
+                    <strong>a. 遇到生理解释</strong>（"不是你意志力弱，是杏仁核"）&rarr; 获得"去病耻化"的解放感 &rarr; <strong>课程的最佳切入角度</strong>
+                </div>
+                <div class="fork-option">
+                    <strong>b. 留在鸡汤循环里</strong> &rarr; 每天刷日签 &rarr; 维持现状
+                </div>
+            </div>
+
+            <div class="insight-box reveal">
+                <strong>课程介入点在第4步和第5步之间</strong>——她们已经在存书单了，说明有系统学习的意愿，但需要一个"比帖子系统、比书快、带生理解释"的产品。
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- TAB: 群体对比 -->
+        <!-- ============================== -->
+        <div class="tab-panel" id="tab-compare" role="tabpanel">
+            <h3 class="section-subheading reveal">与前两个群体的关键差异</h3>
+            <div style="overflow-x:auto">
+                <table class="comparison-table reveal">
+                    <thead>
+                        <tr>
+                            <th>维度</th>
+                            <th>高敏感</th>
+                            <th>原生家庭</th>
+                            <th>内耗</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>群体核心</td>
+                            <td>20-30岁单身/职场女性</td>
+                            <td>育儿期妈妈回望童年</td>
+                            <td><strong>多角色中年女性</strong></td>
+                        </tr>
+                        <tr>
+                            <td>核心自我定位</td>
+                            <td>"我是这种人格"</td>
+                            <td>"我的痛苦有一个来源"</td>
+                            <td><strong>"我每天都很累但说不清为什么"</strong></td>
+                        </tr>
+                        <tr>
+                            <td>最大子群</td>
+                            <td>思维停不下来</td>
+                            <td>为人父母视角</td>
+                            <td><strong>方法/自救指南（167帖）</strong></td>
+                        </tr>
+                        <tr>
+                            <td>独有消费偏好</td>
+                            <td>温柔理解</td>
+                            <td>精准命名</td>
+                            <td><strong>"被骂醒"+书单</strong></td>
+                        </tr>
+                        <tr>
+                            <td>与育儿交叉</td>
+                            <td>3%</td>
+                            <td>22%</td>
+                            <td><strong>12%（75帖是妈妈）</strong></td>
+                        </tr>
+                        <tr>
+                            <td>与失眠交叉</td>
+                            <td>2%</td>
+                            <td>1%</td>
+                            <td><strong>8%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>与身材焦虑交叉</td>
+                            <td>0%</td>
+                            <td>0%</td>
+                            <td><strong>3%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>日签/鸡汤消费</td>
+                            <td>无</td>
+                            <td>无</td>
+                            <td><strong>36次hashtag——每日打卡式消费</strong></td>
+                        </tr>
+                        <tr>
+                            <td>社群需求</td>
+                            <td>低</td>
+                            <td>中（倾诉场）</td>
+                            <td><strong>高（"搭子""bot""互相倾诉"）</strong></td>
+                        </tr>
+                        <tr>
+                            <td>最强引流</td>
+                            <td>共鸣帖</td>
+                            <td>缺爱自测</td>
+                            <td><strong>自测+年龄段集体贴</strong></td>
+                        </tr>
+                        <tr>
+                            <td>最强付费信号</td>
+                            <td>极简生活方式</td>
+                            <td>自救指南/代际传递</td>
+                            <td><strong>书单/育儿方法/生理解释</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================== -->
+    <!-- JS: Tabs, Accordion, Scroll reveal -->
+    <!-- ============================== -->
+    <script>
+        // Tabs
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        const tabMap = {
+            'who': 'tab-who',
+            'pain': 'tab-pain',
+            'comorbid': 'tab-comorbid',
+            'scenarios': 'tab-scenarios',
+            'tags': 'tab-tags',
+            'behavior': 'tab-behavior',
+            'journey': 'tab-journey',
+            'compare': 'tab-compare'
+        };
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabButtons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+                tabPanels.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+                const panel = document.getElementById(tabMap[btn.dataset.tab]);
+                if (panel) {
+                    panel.classList.add('active');
+                    // Trigger reveal for newly visible elements
+                    panel.querySelectorAll('.reveal').forEach(el => {
+                        observer.observe(el);
+                    });
+                }
+            });
+        });
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

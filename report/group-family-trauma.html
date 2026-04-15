@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 原生家庭创伤命名者 - 用户洞察</title>
+
+<style>
+:root {
+    --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+    --border-subtle: #ececef; --border-hover: #dcdce0;
+    --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+    --accent-warm: #f5a524; --accent-pink: #ff6b8a; --accent-gold: #8b6cef;
+    --path-awakening: #4aa3df; --path-independent: #8b6cef;
+    --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.8; min-height: 100vh; overflow-x: hidden; }
+a { color: var(--accent-warm); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; padding: 24px 0 0 0; transition: color 0.3s; }
+.back-link:hover { color: var(--text-primary); text-decoration: none; }
+.back-link::before { content: '←'; font-size: 1.1rem; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+.page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 32px; }
+.header-number { font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: rgba(184,196,232,0.15); line-height: 1; }
+.header-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin: -12px 0 8px; }
+.header-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 16px; }
+.path-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; background: rgba(184,196,232,0.1); color: #b8c4e8; border: 1px solid rgba(184,196,232,0.2); }
+.metrics-bar { display: flex; gap: 32px; padding: 20px 24px; margin-bottom: 32px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); }
+.metric-item { text-align: center; }
+.metric-value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--accent-warm); }
+.metric-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border-subtle); flex-wrap: wrap; }
+.tab-btn { padding: 12px 24px; background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo); position: relative; top: 1px; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent-warm); }
+.tab-content { display: none; padding: 32px 0; animation: fadeIn 0.4s var(--ease-out-expo); }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section { margin-bottom: 40px; }
+.section-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: var(--bg-card); color: var(--text-secondary); font-weight: 500; border-bottom: 1px solid var(--border-subtle); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+tr:hover td { background: var(--bg-card-hover); }
+.insight-box { background: var(--bg-card); border-left: 3px solid var(--accent-warm); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.insight-box strong { color: var(--text-primary); }
+.post-list { list-style: none; margin: 12px 0; }
+.post-list li { padding: 10px 16px; margin: 6px 0; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border-subtle); font-size: 0.9rem; transition: border-color 0.3s; }
+.post-list li:hover { border-color: var(--border-hover); }
+.post-list li a { color: var(--accent-warm); }
+.post-stat { color: var(--text-muted); font-size: 0.8rem; }
+.accordion { margin: 16px 0; }
+.accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--bg-card); cursor: pointer; font-weight: 500; font-size: 0.95rem; transition: background 0.3s; user-select: none; }
+.accordion-header:hover { background: var(--bg-card-hover); }
+.accordion-arrow { transition: transform 0.3s var(--ease-out-expo); font-size: 0.8rem; color: var(--text-muted); }
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo), padding 0.3s; }
+.accordion-item.open .accordion-body { max-height: 5000px; padding: 16px 20px; }
+p { margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">返回总览</a>
+
+    <div class="page-header">
+        <div class="header-number">10</div>
+        <h1 class="header-title">原生家庭创伤命名者</h1>
+        <div class="header-subtitle">为痛苦命名是最强的认知钩子</div>
+        <span class="path-badge">认知觉醒路径</span>
+    </div>
+
+    <div class="metrics-bar">
+        <div class="metric-item">
+            <div class="metric-value">2.6%</div>
+            <div class="metric-label">发帖量占比</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-value">17.1%</div>
+            <div class="metric-label">互动率</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="who">她们是谁</button>
+        <button class="tab-btn" data-tab="pain">痛苦时刻</button>
+        <button class="tab-btn" data-tab="cooccur">共现问题</button>
+        <button class="tab-btn" data-tab="journey">用户旅程</button>
+        <button class="tab-btn" data-tab="scenes">子场景群</button>
+        <button class="tab-btn" data-tab="more">标签与互动</button>
+    </div>
+
+    <!-- 她们是谁 -->
+    <div class="tab-content active" id="tab-who">
+        <div class="section">
+            <div class="insight-box">
+                同样是<strong>以女性为绝对主体</strong>的群体。核心hashtag：#女性成长（15次）、#女性力量、#女孩要独立。帖子中出现的具体身份——"被原生家庭消耗的女孩""长期被父母欺负的女性""一个运气很好的女性，却说自己一无是处"。
+            </div>
+            <p>与高敏感群体有一个关键差异：<strong>这个群体有明确的"两代人"视角</strong>。34帖是"为人父母"的视角——说明有相当比例的用户已经为人母，正在<strong>试图不让自己的创伤传递给下一代</strong>。</p>
+
+            <h3 class="section-title">生活阶段分布</h3>
+            <table>
+                <thead><tr><th>生活阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>育儿期</td><td>27</td><td>最大标记群体——已为人父母</td></tr>
+                    <tr><td>中年阶段</td><td>2</td><td></td></tr>
+                    <tr><td>学生期</td><td>2</td><td></td></tr>
+                    <tr><td>未标注</td><td>127</td><td>大量20-35岁女性</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>这是一个"正在做妈妈的人回望自己童年"的群体，而不仅仅是"年轻人在控诉父母"。</strong>
+            </div>
+
+            <h3 class="section-title">与高敏感群体的关键差异</h3>
+            <table>
+                <thead><tr><th>维度</th><th>高敏感</th><th>原生家庭</th></tr></thead>
+                <tbody>
+                    <tr><td>核心自我定位</td><td>"我这种人格让我活得累"</td><td>"我的痛苦有一个来源"</td></tr>
+                    <tr><td>与育儿的交叉</td><td>3%（几乎无）</td><td><strong>22%（核心群体）</strong></td></tr>
+                    <tr><td>核心需求</td><td>生存策略/减负</td><td>命名模式/打断传递</td></tr>
+                    <tr><td>身体维度</td><td>强（皮质醇/精力）</td><td>弱</td></tr>
+                    <tr><td>关系维度</td><td>社交疲惫</td><td>依恋模式/婚姻重现</td></tr>
+                    <tr><td>最强引流形态</td><td>共鸣帖</td><td><strong>缺爱自测</strong>（评论/赞比33.6）</td></tr>
+                    <tr><td>最强付费信号</td><td>极简生活方式</td><td>自救指南/代际传递阻断</td></tr>
+                    <tr><td>权威引用</td><td>无特定KOL</td><td><strong>武志红</strong>（4次）</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 痛苦时刻 -->
+    <div class="tab-content" id="tab-pain">
+        <div class="section">
+            <h3 class="section-title">痛苦时刻——发帖时间</h3>
+            <div class="insight-box">
+                <strong>和高敏感群体高度重叠：18:00-21:00高峰。</strong> 但有一个区别——上午11点有一个小高峰（10帖），高敏感群体没有。这可能对应<strong>育儿期妈妈在孩子午睡/上学后的空窗时间</strong>。
+            </div>
+        </div>
+    </div>
+
+    <!-- 共现问题 -->
+    <div class="tab-content" id="tab-cooccur">
+        <div class="section">
+            <h3 class="section-title">共现问题</h3>
+            <table>
+                <thead><tr><th>共现问题</th><th>频次</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>60</td><td>38%——没有高敏感那么绝对</td></tr>
+                    <tr><td>亲子育儿</td><td>35</td><td><strong>22%——远高于高敏感群体（3%）</strong></td></tr>
+                    <tr><td>内耗</td><td>24</td><td>15%</td></tr>
+                    <tr><td>自我成长</td><td>24</td><td>15%</td></tr>
+                    <tr><td>依恋关系</td><td>17</td><td>11%——原生家庭→关系模式的链条</td></tr>
+                    <tr><td>高敏感</td><td>7</td><td>4%——两个群体有交叉</td></tr>
+                    <tr><td>婚姻冲突</td><td>6</td><td>4%——原生家庭模式在婚姻中重现</td></tr>
+                    <tr><td>NPD</td><td>3</td><td>小众但话语极具穿透力</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>与高敏感群体的关键区别：亲子育儿共现高达22%。</strong> 她们不只是"回望创伤的受害者"，很多人同时是"正在育儿、害怕重复创伤的母亲"。
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户旅程 -->
+    <div class="tab-content" id="tab-journey">
+        <div class="section">
+            <h3 class="section-title">用户旅程</h3>
+            <ul class="post-list">
+                <li><strong>1. 创伤觉醒</strong> → 某次与父母的冲突/某次在婚姻中的崩溃 → 搜"压抑的原生家庭" → 进入倾诉场</li>
+                <li><strong>2. 模式命名</strong> → 遇到"不敢麻烦别人不是性格好""过度独立是心理防御" → "原来我这个行为有名字！"</li>
+                <li><strong>3. 归因链建立</strong> → "我的讨好/过度独立/不配得感 → 来自原生家庭的有条件的爱/控制/忽视" → 获得解释框架</li>
+                <li><strong>4. 行动犹豫</strong> → 知道了为什么，但不知道怎么办 → "断亲？和解？怎么不传递给孩子？" → 收藏方法帖但不成系统</li>
+                <li><strong>5. 系统性解决</strong> → <strong>课程介入点——特别是"如何打断代际传递"这个角度，是最未被满足的</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 子场景群 -->
+    <div class="tab-content" id="tab-scenes">
+        <div class="section">
+            <h3 class="section-title">10个子场景群</h3>
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群1：亲子关系——为人父母视角（34帖，最大子群）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="insight-box">这是这个群体最独特的发现——<strong>她们不只是在控诉自己的父母，她们同时在审视自己作为父母的角色</strong>。</div>
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69a6e873000000001d013c94" target="_blank">"面对孩子崩溃，是自己的心理问题"</a> <span class="post-stat">3.8万赞，5019评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/698706e7000000001a030e6b" target="_blank">"先学会接住自己，才能真正接住孩子"</a> <span class="post-stat">收藏/赞比1.07</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/690b575b000000000303826c" target="_blank">"能量太低的孩子，父母都有一个不太好的习惯"</a> <span class="post-stat">收藏/赞比1.00</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/692ebf9f000000000d00c5de" target="_blank">"父母的功能之一就是'被憎恨'"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/692eba06000000001e02332b" target="_blank">"太'听话'的孩子，很难拥有强大的人生内核"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/693b94c5000000001e007e59" target="_blank">"少给孩子苦难，你就胜利了"</a> <span class="post-stat">4529赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>核心焦虑是："我会不会变成我的父母？"</strong> 她们在学习心理学知识，不是为了治愈自己的童年，而是为了<strong>不在自己的孩子身上重复</strong>。课程如果能直接打这个痛点——"如何打断代际创伤传递"——会极其精准。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群2：控制型父母/窒息感（28帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/690cb9e7000000000301aba8" target="_blank">"让人窒息绝望的父母"</a> <span class="post-stat">1781评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/696f77a1000000001a03636e" target="_blank">"想听听大家的原生家庭，我好崩溃"</a> <span class="post-stat">1986评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d78552000000001a027a31" target="_blank">"我妈是怎么折磨我的"</a> <span class="post-stat">1049评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d7b1810000000021010eb9" target="_blank">"你被爸妈打的最惨的是哪次"</a> <span class="post-stat">135评论——低赞但评论密集，纯倾诉场</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69832a090000000022038760" target="_blank">"一边尽孝，一边愤怒：令人窒息的还债式亲情"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>核心矛盾不是"恨父母"，而是"既恨又觉得应该孝顺"的撕裂。</strong> "还债式亲情"精准命名了这种体验。评论/赞比极高（平均>1.0），说明这类帖子变成了<strong>用户自发的互助倾诉场</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群3：方法/自救/疗愈（28帖，总赞12.4万最高）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69bf98f40000000021004ae7" target="_blank">"被原生家庭伤害了怎么办？自救指南来了"</a> <span class="post-stat">收藏/赞比1.21——全场最高级别</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/693a91bf000000001f004f24" target="_blank">"缺爱的人：《如何0消费主义爱自己》"</a> <span class="post-stat">1.6万赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6960a553000000001a01fca2" target="_blank">"自信的前提不是优秀，而是丢了主体性"</a> <span class="post-stat">7897赞，收藏比0.95</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6975c1510000000021028c55" target="_blank">"余华老师的话打破了我的原生家庭内耗"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/694e0d6a000000001e000018" target="_blank">"需求被压抑太久，不知道怎么表达——用'我感受+我需要'表达"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>收藏/赞比整体极高（平均>0.8），远高于控制型父母的纯倾诉帖（&lt;0.2）。</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群4：创伤命名/心理防御（26帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p>这些帖子在做的事情是：<strong>给一种模糊的痛苦起一个精确的名字</strong>。</p>
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69c26573000000002200cc56" target="_blank">"不敢麻烦别人，不是性格好"</a> <span class="post-stat">4.5万赞——命名"过度独立"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69b275ad000000000c0145cc" target="_blank">"过度独立，其实是一种心理防御"</a> <span class="post-stat">6918赞——命名"回避型依恋"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/695b79140000000021032846" target="_blank">"你不是天生坚强，你是不敢倒下"</a> <span class="post-stat">7766赞——命名"假性坚强"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6964cf97000000001a023870" target="_blank">"为什么你总是紧张？因为没把自己当真实的人"</a> <span class="post-stat">3383赞——命名"主体性缺失"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d3bd98000000001a033219" target="_blank">"很多人一辈子的紧绷源于从小父母的客体凝视"</a> <span class="post-stat">840赞，收藏比1.05——命名"客体化"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d76e2b000000001a02a2ab" target="_blank">"为什么别人语气不好你就特别难受？"</a> <span class="post-stat">5519赞，收藏比1.06——命名"关系中的过度警觉"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69415c84000000001e02a663" target="_blank">"明明是小事，为什么你会瞬间暴躁到失控？——真正的愤怒是对被忽视的渴望"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>这是整个原生家庭群体里最有课程价值的内容形态。</strong> 每一个"命名"帖都在做同一件事：把用户长期以来说不清的痛苦，用一个精准的心理学概念标记出来。收藏/赞比全部>0.8——用户把这些概念存下来作为自我理解的工具。
+                        </div>
+                        <p>课程如果按这个逻辑组织——每一课命名一个模式（过度独立/讨好/假性坚强/客体化/配得感打折），每个命名后面跟识别和改写方法——天然匹配用户已有的学习行为。</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群5：缺爱/配得感（15帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69d486130000000023010b58" target="_blank">"测一测你的缺爱指数"</a> <span class="post-stat">2756评论——极低赞但评论爆炸</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69b687c8000000001a02f98e" target="_blank">"超准心理测试：你的缺爱指数有多高"</a> <span class="post-stat">1633评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/691d8212000000001b030508" target="_blank">"当父母的爱带着条件，人的配得感就会打折"</a> <span class="post-stat">9520赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69469511000000001b023430" target="_blank">"突然发现缺爱的人，是赚不到大钱的"</a> <span class="post-stat">8471赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69aea5b8000000001a02a879" target="_blank">"大后期人格！你需要跳出缺爱的认知陷阱"</a> <span class="post-stat">1万赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"缺爱"是这个群体的超级关键词。</strong> 两条"缺爱指数自测"帖的评论量（2756+1633）远超赞数——用户疯狂参与自测，这是引流钩子的绝佳形态。"缺爱的人赚不到大钱"——把缺爱和现实利益挂钩，传播力比纯心理学叙事强得多。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群6：过度独立/不敢依赖（15帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69c26573000000002200cc56" target="_blank">"不敢麻烦别人，不是性格好"</a> <span class="post-stat">4.5万赞，2218评论——全群体第一爆款</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69549313000000002102aadb" target="_blank">"什么都自己扛的人不是天生坚强，是身后无人"</a> <span class="post-stat">2447赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69b275ad000000000c0145cc" target="_blank">"过度独立，其实是一种心理防御"</a> <span class="post-stat">6918赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/695b79140000000021032846" target="_blank">"你不是天生坚强，你是不敢倒下"</a> <span class="post-stat">7766赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"过度独立"是这个群体最独特的自我命名。</strong> 她们把自己"太能扛""从不求人"的行为重新定义为一种创伤反应，而非美德。"不敢麻烦别人不是性格好"之所以成为第一爆款（4.5万赞），是因为它精准翻转了一个社会层面的正面评价——<strong>"你以为我性格好？不是，我是被吓的。"</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群7：断亲/物理隔离（8帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69663cbb0000000021032f9b" target="_blank">"为什么主包建议所有人不要和父母住在一起——因为你缴纳的是精神房租"</a> <span class="post-stat">2.8万赞，1570评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6970c64f0000000021033180" target="_blank">"人生建议：不要和父母反复纠缠"</a> <span class="post-stat">5564赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6983d9f2000000000b013f9f" target="_blank">"大家都是什么原因跟父母断亲的"</a> <span class="post-stat">评论/赞比1.78——纯倾诉/互助场</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"精神房租"这个比喻极其精准——把和父母同住的情感成本翻译成了经济语言。</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群8：讨好/乖孩子/听话（12帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/6922ad0c000000001d03bd54" target="_blank">"越听话的孩子，活得越压抑"</a> <span class="post-stat">6708赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/692eba06000000001e02332b" target="_blank">"太听话的孩子，很难拥有强大的人生内核"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/694ea1fa000000001f008567" target="_blank">"拒绝就是拒绝，没有砍价的余地"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"听话"在这个群体里被重新定义为一个创伤标签。</strong> 不是泛泛的"讨好所有人"，而是<strong>"从小被训练成讨好父母"这个特定机制</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群9：NPD/有毒父母（9帖，小众但话语锋利）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/6966d4b8000000000b00ab55" target="_blank">"一个人如果混的不好，往往父母是NPD+飞猴"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69da2d42000000001f006dea" target="_blank">"活在自恋父母身边，一生都在被消耗"</a></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>帖量仅9条但用词极度尖锐——"NPD""飞猴""伥鬼""情感孤岛"。</strong> 这是整个群体里"创伤程度最深"的亚群，已经在使用临床/准临床术语。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群10：婚姻中重现原生家庭模式（8帖，被严重低估）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69a7fe8c000000001d0244d5" target="_blank">"原生家庭吃你，社会就会吃你，婚姻也会吃你"</a> <span class="post-stat">2118赞，收藏比0.87</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ce4cc100000000220298f0" target="_blank">"那个让你愤怒的伴侣，藏着你没有活出的自己"</a> <span class="post-stat">收藏比0.87</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>帖量少（8帖）且总互动低，但收藏/赞比极高（0.87），说明触达到的用户几乎全在保存。</strong> 把原生家庭和婚姻打通的叙事可能比单独讲其中任何一个都更有力。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 标签与互动 -->
+    <div class="tab-content" id="tab-more">
+        <div class="section">
+            <h3 class="section-title">搜索标签体系——核心标签</h3>
+            <table>
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#原生家庭</td><td>45</td><td>基础标签</td></tr>
+                    <tr><td>#压抑的原生家庭</td><td>8</td><td>情绪强化</td></tr>
+                    <tr><td>#摆脱原生家庭枷锁</td><td>7</td><td>"枷锁"隐喻——被困住</td></tr>
+                    <tr><td>#走出原生家庭</td><td>7</td><td>出路导向</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-title">归因/命名标签</h3>
+            <table>
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#回避型依恋人格 / #回避型人格</td><td>6</td><td>用依恋理论标签命名自己的关系模式</td></tr>
+                    <tr><td>#心理创伤</td><td>3</td><td></td></tr>
+                    <tr><td>#过度独立</td><td>2</td><td>独特的自我命名</td></tr>
+                    <tr><td>#听话</td><td>2</td><td>"听话"成了一个创伤标签</td></tr>
+                    <tr><td>#断亲</td><td>3</td><td>行动导向标签</td></tr>
+                    <tr><td>#武志红</td><td>4</td><td><strong>权威引用——武志红是这个群体的第一KOL</strong></td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-title">行动/渴望标签</h3>
+            <table>
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#女性成长</td><td>15</td><td>把原生家庭痛苦放在"女性觉醒"框架下</td></tr>
+                    <tr><td>#自我成长</td><td>5</td><td></td></tr>
+                    <tr><td>#认知觉醒</td><td>3</td><td></td></tr>
+                    <tr><td>#独立</td><td>3</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">互动行为规律</h3>
+            <p><strong>极高收藏（>0.9）：</strong></p>
+            <p style="color:var(--text-secondary); font-size:0.9rem;">被原生家庭伤害了怎么办？自救指南（1.21）| 先学会接住自己才能接住孩子（1.07）| 为什么别人语气不好你就特别难受（1.06）| 客体凝视（1.05）| 主体性（0.95）</p>
+            <p><strong>极低收藏（&lt;0.2）：</strong></p>
+            <p style="color:var(--text-secondary); font-size:0.9rem;">夜晚被妈妈抛弃（0.18）——5.4万赞但只有9800收藏 | 不要和父母住一起（0.18）| 我妈是怎么折磨我的（0.11）</p>
+            <div class="insight-box">
+                <strong>规律完全一致：情绪宣泄/故事类帖子流量大但不被存，"命名+方法"类帖子被疯狂收藏。</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">最强讨论触发</h3>
+            <ul class="post-list">
+                <li><strong>缺爱自测</strong>："测一测你的缺爱指数"（评论/赞比33.6）</li>
+                <li><strong>集体倾诉场</strong>："想听听大家的原生家庭"（评论/赞比1.10）</li>
+                <li><strong>争议命题</strong>："终于有人问出我想问的了！——大多数都是负面的"（评论/赞比1.12）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+</script>
+</body>
+</html>

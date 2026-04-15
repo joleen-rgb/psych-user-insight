@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全职妈妈情绪废墟 - 用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+            --border-subtle: #ececef; --border-hover: #dcdce0;
+            --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+            --accent-warm: #f5a524; --accent-pink: #ff6b8a;
+            --path-lifecycle: #2ec27e;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary); color: var(--text-primary);
+            font-family: var(--font-body); font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            line-height: 1.75; -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--path-lifecycle); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .page-container { max-width: 960px; margin: 0 auto; padding: clamp(1rem, 4vw, 3rem); }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* Header */
+        .hero { margin-bottom: 3rem; }
+        .hero-number {
+            font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700; color: rgba(168,196,184,0.15); line-height: 1;
+        }
+        .hero-title {
+            font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700; color: var(--text-primary); margin-top: -0.5rem;
+        }
+        .hero-subtitle {
+            font-family: var(--font-body); font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--text-secondary); margin-top: 0.5rem;
+        }
+        .path-badge {
+            display: inline-block; margin-top: 1rem; padding: 0.25rem 0.85rem;
+            border: 1px solid var(--path-lifecycle); border-radius: 999px;
+            font-size: 0.75rem; color: var(--path-lifecycle); letter-spacing: 0.05em;
+        }
+
+        /* Metrics bar */
+        .metrics-bar {
+            display: flex; gap: 2rem; flex-wrap: wrap;
+            padding: 1.25rem 1.5rem; background: var(--bg-card);
+            border: 1px solid var(--border-subtle); border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+        .metric { display: flex; flex-direction: column; }
+        .metric-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--path-lifecycle); }
+        .metric-label { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem; overflow-x: auto; }
+        .tab-btn {
+            background: none; border: none; padding: 0.75rem 1.25rem;
+            font-family: var(--font-body); font-size: 0.85rem; color: var(--text-muted);
+            cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--path-lifecycle); border-bottom-color: var(--path-lifecycle); }
+        .tab-panel { display: none; animation: fadeIn 0.4s var(--ease-out-expo); }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Content sections */
+        .section-block { margin-bottom: 2.5rem; }
+        .section-block h2 {
+            font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.35rem);
+            font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);
+        }
+        .section-block h3 {
+            font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
+            color: var(--accent-warm); margin: 1.5rem 0 0.75rem;
+        }
+        p, .content-text { color: var(--text-secondary); margin-bottom: 1rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .data-table th {
+            text-align: left; padding: 0.6rem 0.75rem; font-weight: 500;
+            color: var(--text-muted); border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        /* Accordion */
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+        .accordion-header {
+            width: 100%; background: var(--bg-card); border: none; padding: 1rem 1.25rem;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; color: var(--text-primary); font-family: var(--font-body);
+            font-size: 0.9rem; font-weight: 500; transition: background 0.3s;
+        }
+        .accordion-header:hover { background: var(--bg-card-hover); }
+        .accordion-header .arrow { transition: transform 0.3s var(--ease-out-expo); color: var(--text-muted); font-size: 0.8rem; }
+        .accordion-item.open .accordion-header .arrow { transform: rotate(180deg); }
+        .accordion-body {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo);
+            background: var(--bg-card);
+        }
+        .accordion-item.open .accordion-body { max-height: 5000px; }
+        .accordion-content { padding: 0 1.25rem 1.25rem; }
+        .accordion-content p { color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+        /* Quote / user voice */
+        .user-voice {
+            border-left: 2px solid var(--path-lifecycle); padding: 0.5rem 0 0.5rem 1rem;
+            margin: 0.75rem 0; color: var(--text-secondary); font-size: 0.85rem;
+        }
+        .user-voice a { color: var(--text-secondary); }
+        .user-voice a:hover { color: var(--path-lifecycle); }
+
+        /* Insight box */
+        .insight {
+            background: rgba(168,196,184,0.06); border: 1px solid rgba(168,196,184,0.15);
+            border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0;
+            color: var(--text-secondary); font-size: 0.85rem;
+        }
+
+        /* Time chart (ASCII preserved) */
+        .time-chart {
+            background: var(--bg-card); border-radius: 8px; padding: 1.25rem;
+            font-family: 'Courier New', monospace; font-size: 0.75rem;
+            line-height: 1.6; color: var(--text-secondary); overflow-x: auto;
+            white-space: pre; margin: 1rem 0;
+        }
+
+        /* Journey steps */
+        .journey { counter-reset: step; margin: 1rem 0; }
+        .journey-step {
+            position: relative; padding: 0 0 1.5rem 2.5rem; color: var(--text-secondary);
+        }
+        .journey-step::before {
+            counter-increment: step; content: counter(step);
+            position: absolute; left: 0; top: 0;
+            width: 1.6rem; height: 1.6rem; border-radius: 50%;
+            background: rgba(168,196,184,0.12); color: var(--path-lifecycle);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 600;
+        }
+        .journey-step::after {
+            content: ''; position: absolute; left: 0.75rem; top: 1.8rem;
+            width: 1px; height: calc(100% - 1.8rem); background: var(--border-subtle);
+        }
+        .journey-step:last-child::after { display: none; }
+
+        /* Comparison table scroll */
+        .table-scroll { overflow-x: auto; margin: 1rem 0; }
+        .table-scroll table { min-width: 700px; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .metrics-bar { flex-direction: column; gap: 1rem; }
+            .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        返回总览
+    </a>
+
+    <header class="hero">
+        <div class="hero-number">05</div>
+        <h1 class="hero-title">全职妈妈情绪废墟</h1>
+        <p class="hero-subtitle">每日微练习与不崩溃的育儿法</p>
+        <span class="path-badge">生命周期路径</span>
+    </header>
+
+    <div class="metrics-bar">
+        <div class="metric">
+            <span class="metric-value">9.0%</span>
+            <span class="metric-label">发帖量占比</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">7.0%</span>
+            <span class="metric-label">互动率</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="who" role="tab">她们是谁</button>
+        <button class="tab-btn" data-tab="pain" role="tab">痛苦时刻</button>
+        <button class="tab-btn" data-tab="cooccur" role="tab">共现问题</button>
+        <button class="tab-btn" data-tab="journey" role="tab">用户旅程</button>
+        <button class="tab-btn" data-tab="diff" role="tab">群体差异</button>
+        <button class="tab-btn" data-tab="scenes" role="tab">子场景群</button>
+        <button class="tab-btn" data-tab="tags" role="tab">标签与互动</button>
+    </div>
+
+    <!-- TAB: 她们是谁 -->
+    <div class="tab-panel active" id="tab-who">
+        <div class="section-block">
+            <h2>她们是谁</h2>
+            <p><strong>这是四个人群中唯一一个身份边界极其清晰的群体——她们就是"妈妈"。</strong> 不需要用人格标签（高敏感）、归因标签（原生家庭）、状态标签（内耗）来识别，"妈妈/家长"就是她们唯一的身份入口。</p>
+
+            <h3>受众标签分布</h3>
+            <table class="data-table">
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>妈妈/家长</td><td>313</td><td><strong>绝对主体</strong></td></tr>
+                    <tr><td>女性</td><td>73</td><td></td></tr>
+                    <tr><td>更年期女性</td><td>48</td><td>妈妈+更年期双重身份</td></tr>
+                    <tr><td>职场人</td><td>29</td><td>职场妈妈亚群</td></tr>
+                    <tr><td>心理咨询来访者</td><td>18</td><td>少数已在咨询</td></tr>
+                    <tr><td>学生</td><td>18</td><td>帖子里提到的"孩子"的标签，不是妈妈本人</td></tr>
+                    <tr><td>老师/班主任</td><td>11</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <h3>生活阶段</h3>
+            <table class="data-table">
+                <thead><tr><th>阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>育儿期</td><td>330</td><td><strong>绝对主体</strong></td></tr>
+                    <tr><td>产后</td><td>67</td><td>产后抑郁亚群</td></tr>
+                    <tr><td>更年期</td><td>41</td><td>更年期+育儿叠加</td></tr>
+                    <tr><td>中年阶段</td><td>27</td><td></td></tr>
+                    <tr><td>学生期</td><td>18</td><td>孩子处于学生阶段</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>和前四个群体的根本差异：</strong>前四个群体的痛苦是"关于自己"的（我太敏感/我的原生家庭/我内耗/我睡不着），这个群体的痛苦是"关于角色"的——她们不是因为"自己有问题"而痛苦，而是因为"妈妈这个角色"正在摧毁她们。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 痛苦时刻 -->
+    <div class="tab-panel" id="tab-pain">
+        <div class="section-block">
+            <h2>痛苦时刻——发帖时间</h2>
+            <div class="time-chart">07:00  ■■■■■■■■■■■■■        (13)  — 送完孩子
+10:00  ■■■■■■■■■■■■■■■■■■■■■■■  (23)  — 上午空窗
+11:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (33)  — ★上午高峰
+12:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (34)  — ★午间
+17:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (38)
+18:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (45)
+19:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (48) ★★最高峰
+20:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (47) ★★
+21:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (45) ★
+22:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  (45) ★
+23:00  ■■■■■■■■■■■■■■■■■■■■■■■■■■■  (27)
+00:00  ■■■■■■■■  (8)
+01:00  ■■■■■■  (6)</div>
+
+            <div class="insight">
+                <strong>和所有前四个群体的最大差异：这个群体有两个高峰。</strong><br><br>
+                1. <strong>上午10:00-12:00高峰（90帖，16%）</strong>——这是"把孩子送走/孩子午睡后"的空窗时间。前四个群体在上午几乎没有活动，但妈妈群体的上午是一个独立的痛苦窗口。<br><br>
+                2. <strong>晚间19:00-22:00高峰（185帖，33%）</strong>——孩子睡后/一天结束后的崩溃时刻。注意22:00仍有45帖（和21:00持平），说明很多妈妈的"自由时间"要到很晚才开始。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 共现问题 -->
+    <div class="tab-panel" id="tab-cooccur">
+        <div class="section-block">
+            <h2>共现问题</h2>
+            <table class="data-table">
+                <thead><tr><th>共现问题</th><th>频次</th><th>占比</th><th>与前四群体对比</th></tr></thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>367</td><td>66%</td><td>不是100%——说明有1/3妈妈的问题不用"焦虑"框架</td></tr>
+                    <tr><td><strong>抑郁</strong></td><td><strong>84</strong></td><td><strong>15%</strong></td><td><strong>远超前四群体（最高7.5%）</strong></td></tr>
+                    <tr><td>内耗</td><td>76</td><td>14%</td><td></td></tr>
+                    <tr><td>学习压力</td><td>70</td><td>13%</td><td>孩子的学习压力传导到妈妈身上</td></tr>
+                    <tr><td><strong>失眠</strong></td><td><strong>46</strong></td><td><strong>8%</strong></td><td></td></tr>
+                    <tr><td><strong>更年期</strong></td><td><strong>41</strong></td><td><strong>7%</strong></td><td>独有的显著交叉</td></tr>
+                    <tr><td>原生家庭</td><td>35</td><td>6%</td><td>"我会不会变成我妈"</td></tr>
+                    <tr><td>职场焦虑</td><td>35</td><td>6%</td><td>职场妈妈</td></tr>
+                    <tr><td>婚姻冲突</td><td>16</td><td>3%</td><td></td></tr>
+                    <tr><td>躯体化</td><td>3</td><td>0.5%</td><td>低于预期</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>最关键的差异：抑郁共现15%——是所有五个群体中最高的。</strong> 高敏感1%、原生家庭3%、内耗2%、睡前思维7.5%，而妈妈群体直接跳到15%。这不是"情绪低落"级别的抑郁——帖子里出现了"我不想活了""一死了之""想死的心都有了"这样的表述。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 用户旅程 -->
+    <div class="tab-panel" id="tab-journey">
+        <div class="section-block">
+            <h2>用户旅程</h2>
+            <div class="journey">
+                <div class="journey-step">
+                    <strong>角色吞噬期</strong> — 产后/全职带娃 → 逐渐失去自我时间、社交、收入 → "我是谁"变成了"我是XX的妈妈"
+                </div>
+                <div class="journey-step">
+                    <strong>孤独积累期</strong> — 不敢发朋友圈 → 没人理解 → 深夜刷小红书寻找同类 → 在评论区找到"原来不是只有我这样"
+                </div>
+                <div class="journey-step">
+                    <strong>情绪失控期</strong> — 对孩子发火 → 自责 → "我是不是一个坏妈妈" → 搜"情绪管理""带娃崩溃" → 收藏方法帖
+                </div>
+                <div class="journey-step">
+                    <strong>代际恐惧期</strong> — 意识到自己在重复父母的模式 → "我会不会变成我妈" → 开始搜原生家庭/心理学内容
+                </div>
+                <div class="journey-step">
+                    <strong>系统求助期</strong> — 两个方向：<br>
+                    a. 自我导向 → 搜书单/课程/心理咨询 → <strong>课程介入点</strong><br>
+                    b. 被子女/丈夫代购 → 子女搜"妈妈更年期怎么办"/丈夫搜"老婆抑郁怎么办" → <strong>第二付费入口</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 群体差异 -->
+    <div class="tab-panel" id="tab-diff">
+        <div class="section-block">
+            <h2>与前四个群体的关键差异</h2>
+            <div class="table-scroll">
+            <table class="data-table">
+                <thead><tr><th>维度</th><th>高敏感</th><th>原生家庭</th><th>内耗</th><th>睡前思维</th><th>妈妈</th></tr></thead>
+                <tbody>
+                    <tr><td>群体核心</td><td>20-30岁职场女性</td><td>育儿妈妈回望童年</td><td>多角色中年女性</td><td>更年期+职场</td><td><strong>妈妈（唯一身份）</strong></td></tr>
+                    <tr><td>痛苦来源</td><td>人格特质</td><td>过去的创伤</td><td>说不清的累</td><td>脑子停不下来</td><td><strong>角色过载</strong></td></tr>
+                    <tr><td>与抑郁交叉</td><td>1%</td><td>3%</td><td>2%</td><td>7.5%</td><td><strong>15%</strong></td></tr>
+                    <tr><td>上午活跃度</td><td>极低</td><td>有小高峰</td><td>有</td><td>低</td><td><strong>显著高峰</strong></td></tr>
+                    <tr><td>独有标签</td><td>#钝感力</td><td>#断亲</td><td>#日签</td><td>#胡思乱想</td><td><strong>#情绪管理 #当妈妈是一场修行</strong></td></tr>
+                    <tr><td>独有付费入口</td><td>无</td><td>无</td><td>无</td><td>无</td><td><strong>丈夫+子女代购</strong></td></tr>
+                    <tr><td>最强收藏信号</td><td>极简（0.73）</td><td>自救指南（1.21）</td><td>书单（1.25）</td><td>即时方法（2.49）</td><td><strong>每日练习/抄写（1.40）</strong></td></tr>
+                    <tr><td>最强讨论触发</td><td>共鸣帖</td><td>缺爱自测</td><td>自测+年龄帖</td><td>凌晨失眠帖</td><td><strong>丈夫求助帖（2179评论/帖）</strong></td></tr>
+                    <tr><td>危险信号</td><td>低</td><td>低</td><td>低</td><td>中</td><td><strong>高（"不想活了"频繁出现）</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 子场景群 -->
+    <div class="tab-panel" id="tab-scenes">
+        <div class="section-block">
+            <h2>14个子场景群</h2>
+            <div class="accordion">
+
+                <!-- 子群1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群1：情绪失控/打孩子后的自责（100帖，最大子群）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <p>这是所有五个群体的所有子群中<strong>帖量最大的单一子群</strong>。</p>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6952a74e000000001e02381c">"大家带娃很累、情绪不稳定的时候怎么解压——明明不想发脾气，但是却控制不住自己，发完脾气或者打了娃，自己却难过好久好久"</a>（893评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69467d05000000001e02786f">"带娃没耐心的本质——又一次，我在深夜对着不肯睡觉的四岁女儿发了火。看着她委屈的眼泪，我突然意识到——这已经是我们今天第七次了"</a>（571评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6923d80f000000001e03b725">"监控下的一幕，孩子哭闹不止妈妈情绪崩溃，不料竟做出如此举动"</a>（3012评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b52eb6000000001a032c97">"怎么能不崩溃呢？从她出生到现在，妈妈一直带在身边，好像从来没有真正喘息过"</a>（840评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69bc18c600000000220014aa">"每天晚上哄睡到想要掐死孩子——一忍再忍，我拍屁股一万遍，唱儿歌一万遍！她翻来覆去，扭来扭去，猝不及防砸向我的鼻梁"</a>（692评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b7f3d7000000001a035fd2">"情绪暴躁的妈妈，每天抄写一遍，坚持21天！"</a>（收藏/赞比<strong>1.40</strong>——全群体最高级别）</div>
+                        <div class="insight"><strong>核心循环：疲惫→失控→发火/打孩子→自责→更疲惫。</strong> 100帖都在描述这个循环的不同阶段。注意"情绪暴躁的妈妈每天抄写一遍"这个帖出现了多个版本（至少3次），每次收藏/赞比都>1.2——说明<strong>妈妈们在疯狂寻找"不发火的方法"，而且愿意执行具体的每日练习</strong>。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群2：产后抑郁（68帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d7e12f000000001a024589">"仅五个月，我就迎来如此严重的产后抑郁——怀孕之后有段时间一直很开心...生完孩子全家都很开心...然后一切变了"</a>（941评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69a25fa7000000001a01fca6">"0人能逃过产后抑郁。我想知道到底多乐天的人，生完孩子才能不崩溃"</a>（426评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69049fb00000000003020675">"那些帮我撑过产后第一年困境的话——这一切都是暂时的，都会过去"</a>（349评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68f1d4a3000000000700a1a5">"产后抑郁是如何毁掉一个女人的"</a>（2.1万赞，321评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69378139000000000d0381a5">"感觉自己有点产后抑郁了，就是觉得每天都是在照顾娃，没有一点自己，时常在想自己为啥要生娃，但又觉得不该这么想"</a>（评论/赞比12.67）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6940e3cc000000001f00ae00">"产后出现问题——产后抑郁的你们，最后怎么跟自己和解"</a>（评论/赞比15.89）</div>
+                        <div class="insight"><strong>产后帖的评论/赞比极高（12-16），说明每一个发帖的产后妈妈都获得了大量同类回应。</strong> 但赞数普遍很低（&lt;1000），说明算法不推这类内容——<strong>产后妈妈在平台上是一个"暗网社群"，她们通过评论区互相找到彼此</strong>。<br><br>"但又觉得不该这么想"——这句话是产后抑郁群体最核心的心理状态：<strong>痛苦+对痛苦的愧疚。</strong> 她们觉得自己"不应该不开心"，这个二次否定让她们更难开口求助。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群3：全职妈妈身份消失感（65帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c1473a000000001b020ffc">"带娃好累啊，没地方述说，不敢发朋友圈，不敢发抖音。太累了，这辈子都不会劝别人生孩子"</a>（2397评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68fe1d9d0000000004016198">"不用工作，在家带娃做家务，为啥不开心呢？"</a>（2180评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ce690100000000230109a7">"全职主妇崩溃只在一瞬间"</a>（2488评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/693e4ae0000000001e036d7c">"全职妈妈崩溃日常"</a>（1075评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69abe66f00000000260329d9">"时间会惩罚每一个在家带娃的女人无一例外。没有收入没有社交没有自由，24小时在线全年无休"</a>（758评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c8777600000000230205e1">"被一位宝妈的评论破防了：女人的青春才几年啊！光是带孩子，就要占据我好多年"</a>（1179评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b690620000000023013585">"85年，41岁，已经没有人联系我了——失业6个月，现在是全职妈妈"</a>（928评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69509a6a000000001f007628">"40岁感悟：家庭生活真的太吞噬时间了——有两天，老公孩子都不在，过了最近最舒服的两天"</a>（647评论）</div>
+                        <div class="insight"><strong>"没有收入没有社交没有自由"——这9个字是全职妈妈痛苦的完整概括。</strong> 注意"不敢发朋友圈，不敢发抖音"——她们连表达痛苦的出口都没有，小红书成了唯一的"匿名树洞"。<br><br>"过了最近最舒服的两天"——当老公和孩子不在时才"最舒服"，这不是对家人的不爱，而是对<strong>长期角色过载的极度渴望暂停</strong>。课程如果能创造一个"只属于妈妈自己的30分钟"的产品框架，命中的就是这个需求。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群4：职场妈妈夹缝（52帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cb3f970000000023011521">"辅导娃写作业到深夜，我俩抱头痛哭——我上班远，每天到家都快8点了，从6点半到8点这一个半小时..."</a>（982评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6911d3450000000004021979">"中年少女——作为40+职场妈妈，我曾在无数个深夜焦虑到失眠，担心孩子的升学规划，工作遭遇的瓶颈期"</a>（876评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6915cf2b0000000007030650">"妈妈的人生没有平衡，只有不内耗——曾经全职五年不上班，每天都掰着手指头盼娃上幼儿园。想着等他上学了，我得赶紧找个班上"</a>（370评论）</div>
+                        <div class="insight"><strong>职场妈妈的独特痛苦是"时间"——从到家到孩子睡着之间只有几个小时，要同时完成做饭、辅导作业、情感连接。</strong> 全职妈妈的痛苦是"身份消失"，职场妈妈的痛苦是"时间粉碎"。两种妈妈都累，但累法完全不同。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群5：更年期+育儿叠加（41帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/698a6cae000000000c0343be">"妈妈更年期，整夜整夜没睡意，试过很多药打过很多针都没用"</a>（598评论——子女发帖）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68fd6bb6000000000301a6a2">"妈妈48岁了，每天晚上都睡不着，失眠非常严重"</a>（907评论——子女发帖，收藏/赞比1.32）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6955e8e10000000022039ca1">"妈妈49岁，晚上没有觉，通宵两晚上就是不困"</a>（收藏/赞比1.32）</div>
+                        <div class="user-voice">"更年期天天烦躁怎么破——说的是我妈妈，今年57了"（评论/赞比12.0——子女发帖）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b7ed48000000002202a9ff">"我们的妈妈，正在经历最痛苦的10年"</a>（收藏/赞比<strong>1.62</strong>——全群体最高）</div>
+                        <div class="insight"><strong>41帖中大量是子女视角——"我妈妈""帮妈妈问"。</strong> 这是一个独特的"代购者"入口：<strong>子女是为妈妈寻找解决方案的人，也可能是课程的实际付费者。</strong><br><br>"我们的妈妈，正在经历最痛苦的10年"收藏/赞比1.62——全五个群体的所有帖子中最高的收藏比之一。说明这个命名（"最痛苦的10年"）精准打中了一个巨大的共鸣。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群6 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群6：婚姻+育儿双压（35帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b18ad50000000005030287">"谁的婚姻都有灰——快凌晨了，我睡不着，因为老公又是以一句'我就这样'结束了沟通，然后响起呼噜声。我想要赌气，可是宝宝在床上还喊着妈妈抱抱"</a>（1480评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/695abb54000000002200b31e">"我和妈妈的一次艰难但真实的对话——今晚和我妈妈聊了很久，我知道我说的很多话一定刺痛了她"</a>（581评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68eef3330000000007037cad">"妈妈的情绪是如何被破坏的？"</a>（收藏/赞比1.36）</div>
+                        <div class="insight"><strong>"老公呼噜声+宝宝喊妈妈抱抱"——这是一个极其精准的微场景，每个育儿期妈妈都经历过。</strong> 她的愤怒无法指向老公（宝宝需要她），也无法指向宝宝（孩子无辜），只能吞下去变成失眠。课程如果能拆解这种"愤怒无处安放"的具体场景并给出处理方法，比笼统的"情绪管理"有效得多。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群7 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群7：高三家长濒崩（10帖，评论爆炸——总评论10577）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68f9d5390000000004029b6d">"高三妈妈深夜崩溃的瞬间——刚把娃房间的灯关了，自己坐在客厅偷偷掉眼泪。早上5点半爬起来熬银耳羹"</a>（3439评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69affd4c0000000015033322">"43岁的高一家长，已经崩溃到无法呼吸了！"</a>（2057评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cf3ea4000000001b002f8f">"48岁高三家长，已经崩溃到无法呼吸了！"</a>（1289评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ba5f6c000000001e00ef22">"46岁高三家长一夜没合眼，快崩溃了"</a>（812评论）</div>
+                        <div class="insight"><strong>仅10帖但产出10577条评论——平均每帖1058评论，是所有五个群体所有子群中单帖评论密度最高的。</strong> 几乎同一个标题被不同人反复发（43岁/46岁/48岁），每条都爆——说明这是一个<strong>标准化的痛苦场景</strong>。<br><br>她们的年龄（43-50岁）正好和更年期重叠。高三孩子的升学压力+自己的更年期+对孩子未来的过度担责，三重压力同时发生。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群8 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群8：代际传递恐惧（25帖，总赞8.1万——效率最高）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69a6e873000000001d013c94">"面对孩子崩溃，是自己的心理问题"</a>（3.8万赞，5019评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/698706e7000000001a030e6b">"先学会接住自己，才能真正接住孩子"</a>（收藏/赞比1.07）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d391d5000000001a032b23">"我几乎完全不批评孩子了"</a>（收藏/赞比1.38）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/697043e7000000002103ca27">"有以下表现说明其实你已经过度育儿了"</a>（收藏/赞比1.28）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69467d05000000001e02786f">"带娃没耐心的本质——又一次，我在深夜对着四岁女儿发了火"</a></div>
+                        <div class="insight"><strong>25帖总赞8.1万——单帖效率远超其他子群。</strong> 收藏/赞比全部>1.0。这是和人群2"原生家庭"交叉最深的子群——她们正在做的事是<strong>"一边当妈妈，一边学习如何不成为自己的妈妈"</strong>。<br><br>"面对孩子崩溃，是自己的心理问题"——这个标题3.8万赞，说明<strong>"问题不在孩子，在我自己"这个认知翻转有极强的共鸣力</strong>。但它同时也可能加重自责。课程需要在"你需要改变"和"你已经很努力了"之间找到平衡。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群9 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群9：哄睡/睡眠剥夺崩溃（20帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69694880000000000e03d3a8">"没有什么能比凌晨三点的爆哭声让人更崩溃"</a>（<strong>6161评论——全群体第一</strong>）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69bc18c600000000220014aa">"每天晚上哄睡到想要掐死孩子"</a>（692评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/691cd114000000001e00163d">"凌晨一点哄到四点的崩溃夜晚，想死的心都有了"</a></div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ae4a3c000000000e00d692">"高敏感娃睡觉熬的不是夜，是妈妈的命"</a>（收藏/赞比1.25）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6985d60a000000000b009a6d">"说真的，我真的觉得自己真的筋疲力尽，看着哭闹的孩子，我萌生了一死了之的想法"</a>（1045评论）</div>
+                        <div class="insight"><strong>这是最危险的子群。</strong> "一死了之""想死的心都有了""想要掐死孩子"——这些不是文学修辞，是长期睡眠剥夺下的真实崩溃。6161条评论说明每一个读到的妈妈都在说"我也是"。<br><br>和人群4"睡前思维剧场"的区别：人群4的失眠是心理性的（脑子停不下来），这里的"失眠"是物理性的（被孩子叫醒）。解决方案完全不同。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群10 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群10：青春期/青少年心理（20帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b7edda0000000023005cdb">"抑郁女儿在家躺平三年，没想到会是这个结果——作为陪女儿走过2年11个月抑郁时光的爸爸"</a>（1995评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69affd4c0000000015033322">"43岁的高一家长，已经崩溃到无法呼吸了——有没有高一的学生妈妈"</a></div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ce5a200000000023022966">"孩子抑郁了，我该不该辞掉工作，全职陪伴？"</a>（评论/赞比15.20）</div>
+                        <div class="insight"><strong>注意：抑郁女儿帖子的发帖者是"爸爸"。</strong> 这是五个群体中极少见的男性视角，说明当孩子出现心理问题时，<strong>父亲也会被卷入并开始寻求帮助</strong>。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群11 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群11：子女替妈妈求助（14帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68fd6bb6000000000301a6a2">"妈妈48岁了，每天晚上都睡不着"</a>（907评论，收藏/赞比1.32）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/698a6cae000000000c0343be">"妈妈更年期，整夜整夜没睡意"</a>（598评论）</div>
+                        <div class="user-voice">"更年期天天烦躁怎么破——说的是我妈妈"</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69831885000000000903ba37">"我妈更年期天天哭，正常吗"</a></div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d91a2a000000001d01dc5e">"求助！！！妈妈出现了明显的精神问题"</a></div>
+                        <div class="insight"><strong>这14帖是课程产品设计中最容易被忽略但最有商业价值的信号。</strong> 子女（通常是20-30岁的女儿）在替妈妈搜索解决方案，她们：<br>1. 比妈妈本人更熟悉互联网消费<br>2. 有明确的付费意愿（"只要能让妈妈好起来"）<br>3. 是天然的"课程代购者"</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群12 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群12：社交隔离/孤独（10帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice">"带娃好累啊，没地方述说，不敢发朋友圈"（2397评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b690620000000023013585">"85年，41岁，已经没有人联系我了"</a>（928评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c1379d00000000230225e5">"养孩子真难，我不想活了！！！太痛苦了"</a>（894评论）</div>
+                        <div class="insight"><strong>帖量小但和"身份消失感"高度绑定。</strong> 全职妈妈的社交圈逐渐萎缩到只剩孩子和家人，当家庭内部也无法提供情感支持时，她们变成了"一个人扛一切"的状态。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群13 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群13：丈夫求助视角（3帖，评论密度超级高）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6968c674000000002202e94d">"请教一下各位美女们，老婆在家全职带娃，每天都很烦躁很抑郁"</a>（4792评论）</div>
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ce1f910000000021005084">"有啥法子能让老婆开心点？"</a>（1743评论）</div>
+                        <div class="insight"><strong>仅3帖但总评论6536——平均每帖2179评论。</strong> 这是全五个群体中"单帖评论密度"最高的子群。说明<strong>当一个男性表达"我想帮老婆"时，评论区女性用户的响应是爆炸性的</strong>——既有给建议的，也有大量"让你老婆看到这条帖子就够了"的声音。<br><br>课程启示：丈夫是一个被严重忽视的"付费入口"。他们的诉求非常简单具体——"怎么让老婆开心点"。如果课程有一个面向丈夫的极简版内容（10分钟看完的"丈夫指南"），可能是获客的意外通道。</div>
+                    </div></div>
+                </div>
+
+                <!-- 子群14 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>子群14：辅导作业/学业焦虑（26帖）</span>
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cb3f970000000023011521">"辅导娃写作业到深夜，我俩抱头痛哭——不是矫情，是真的撑不住了"</a>（982评论）</div>
+                        <p>和"高三家长"子群有交叉。</p>
+                    </div></div>
+                </div>
+
+            </div><!-- /accordion -->
+        </div>
+    </div>
+
+    <!-- TAB: 标签与互动 -->
+    <div class="tab-panel" id="tab-tags">
+        <div class="section-block">
+            <h2>搜索标签体系</h2>
+            <table class="data-table">
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#家庭教育</td><td>17</td><td>和#女性成长并列第一</td></tr>
+                    <tr><td>#女性成长</td><td>17</td><td>她们把育儿痛苦也放在"女性觉醒"框架下</td></tr>
+                    <tr><td>#情绪管理</td><td>12</td><td><strong>独有高频标签——前四个群体从未进入前10</strong></td></tr>
+                    <tr><td>#育儿 / #育儿干货</td><td>14</td><td></td></tr>
+                    <tr><td>#亲子关系 / #亲子教育</td><td>15</td><td></td></tr>
+                    <tr><td>#原生家庭</td><td>9</td><td>把育儿困难归因到自己的原生家庭</td></tr>
+                    <tr><td>#产后抑郁</td><td>6</td><td></td></tr>
+                    <tr><td>#全职妈妈</td><td>5</td><td></td></tr>
+                    <tr><td>#当妈妈是一场修行</td><td>6</td><td><strong>"修行"这个词揭示了态度——不是享受，是忍耐</strong></td></tr>
+                    <tr><td>#更年期 / #更年期妈妈</td><td>9</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>独有发现：#情绪管理（12次）是这个群体独有的高频标签。</strong> 前四个群体没有人用"情绪管理"——高敏感用"钝感力"，原生家庭用"疗愈"，内耗用"停止内耗"。但妈妈群体用的是非常务实的"情绪管理"——因为她们的需求不是"理解自己为什么这样"，而是"下次孩子哭的时候我怎么才能不发火"。<br><br><strong>另一个独有标签：#简单心理（5次）。</strong> 这是唯一一个在标签中直接出现心理咨询平台名称的群体。说明有一部分妈妈已经在认真考虑/正在使用心理咨询服务。
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>互动行为规律 — 收藏/赞比</h2>
+            <h3>超高收藏（>1.2，"这就是我的育儿手册"）</h3>
+            <table class="data-table">
+                <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+                <tbody>
+                    <tr><td>我们的妈妈正在经历最痛苦的10年</td><td><strong>1.62</strong></td><td>命名+共情</td></tr>
+                    <tr><td>情绪暴躁的妈妈每天抄写一遍</td><td><strong>1.40</strong></td><td>每日练习</td></tr>
+                    <tr><td>我几乎完全不批评孩子了</td><td>1.38</td><td>行为改变方法</td></tr>
+                    <tr><td>妈妈的情绪是如何被破坏的</td><td>1.36</td><td>归因解释</td></tr>
+                    <tr><td>妈妈48岁失眠（子女帖）</td><td>1.32</td><td>求助</td></tr>
+                    <tr><td>有以下表现说明你已经过度育儿了</td><td>1.28</td><td>自查清单</td></tr>
+                    <tr><td>高敏感娃睡觉熬的不是夜</td><td>1.25</td><td>育儿方法</td></tr>
+                </tbody>
+            </table>
+
+            <h3>极低收藏（&lt;0.1）</h3>
+            <table class="data-table">
+                <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+                <tbody>
+                    <tr><td>面对孩子崩溃是自己的心理问题</td><td>0.09</td><td>3.8万赞但仅3677收藏</td></tr>
+                    <tr><td>妈妈人生怎么会这么苦</td><td>0.02</td><td>2.1万赞但仅379收藏</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>规律：方法/练习/自查清单的收藏比>1.2，纯情绪宣泄的收藏比&lt;0.1。</strong> 但一个新发现——<strong>"情绪暴躁的妈妈每天抄写一遍"这类"每日打卡式"内容的收藏比最高（1.29-1.40）</strong>。说明妈妈群体对"每天做一件小事"的可执行格式有极强偏好——不是看一遍的道理，而是可以每天重复的练习。
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>最强讨论触发</h2>
+            <p>1. <strong>深夜崩溃实录</strong>："凌晨三点爆哭声"（6161评论）——妈妈深夜互慰</p>
+            <p>2. <strong>丈夫求助</strong>："怎么让老婆开心"（4792评论）——全女性评论区爆发</p>
+            <p>3. <strong>高三家长</strong>：反复出现的标准化标题（平均1058评论/帖）</p>
+            <p>4. <strong>身份拷问</strong>："不用工作为啥不开心"（2180评论）——触发集体倾诉</p>
+        </div>
+    </div>
+
+</div><!-- /page-container -->
+
+<script>
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+
+// Accordion
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+</script>
+</body>
+</html>

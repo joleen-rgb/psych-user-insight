@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09 自我标签收集者 - 用户洞察</title>
+
+<style>
+:root {
+    --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+    --border-subtle: #ececef; --border-hover: #dcdce0;
+    --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+    --accent-warm: #f5a524; --accent-pink: #ff6b8a; --accent-gold: #8b6cef;
+    --path-awakening: #4aa3df; --path-independent: #8b6cef;
+    --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: var(--bg-primary); color: var(--text-primary);
+    font-family: var(--font-body); line-height: 1.8;
+    min-height: 100vh; overflow-x: hidden;
+}
+a { color: var(--accent-warm); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--text-secondary); font-size: 0.9rem;
+    padding: 24px 0 0 0; transition: color 0.3s;
+}
+.back-link:hover { color: var(--text-primary); text-decoration: none; }
+.back-link::before { content: '←'; font-size: 1.1rem; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* Header */
+.page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 32px; }
+.header-number { font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: rgba(184,196,232,0.15); line-height: 1; }
+.header-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin: -12px 0 8px; }
+.header-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 16px; }
+.path-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+    background: rgba(184,196,232,0.1); color: #b8c4e8; border: 1px solid rgba(184,196,232,0.2);
+}
+
+/* Metrics */
+.metrics-bar {
+    display: flex; gap: 32px; padding: 20px 24px; margin-bottom: 32px;
+    background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle);
+}
+.metric-item { text-align: center; }
+.metric-value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--accent-warm); }
+.metric-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border-subtle); }
+.tab-btn {
+    padding: 12px 24px; background: none; border: none; color: var(--text-muted);
+    font-family: var(--font-body); font-size: 0.95rem; cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo);
+    position: relative; top: 1px;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent-warm); }
+.tab-content { display: none; padding: 32px 0; animation: fadeIn 0.4s var(--ease-out-expo); }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sections */
+.section { margin-bottom: 40px; }
+.section-title {
+    font-family: var(--font-display); font-size: 1.3rem; font-weight: 600;
+    margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: var(--bg-card); color: var(--text-secondary); font-weight: 500; border-bottom: 1px solid var(--border-subtle); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+tr:hover td { background: var(--bg-card-hover); }
+
+/* Cards / quotes */
+.insight-box {
+    background: var(--bg-card); border-left: 3px solid var(--accent-warm);
+    padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0;
+    color: var(--text-secondary); font-size: 0.95rem;
+}
+.insight-box strong { color: var(--text-primary); }
+
+.post-list { list-style: none; margin: 12px 0; }
+.post-list li {
+    padding: 10px 16px; margin: 6px 0; background: var(--bg-card); border-radius: 8px;
+    border: 1px solid var(--border-subtle); font-size: 0.9rem; transition: border-color 0.3s;
+}
+.post-list li:hover { border-color: var(--border-hover); }
+.post-list li a { color: var(--accent-warm); }
+.post-stat { color: var(--text-muted); font-size: 0.8rem; }
+
+/* Accordion */
+.accordion { margin: 16px 0; }
+.accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 20px; background: var(--bg-card); cursor: pointer;
+    font-weight: 500; font-size: 0.95rem; transition: background 0.3s;
+    user-select: none;
+}
+.accordion-header:hover { background: var(--bg-card-hover); }
+.accordion-arrow { transition: transform 0.3s var(--ease-out-expo); font-size: 0.8rem; color: var(--text-muted); }
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo), padding 0.3s; }
+.accordion-item.open .accordion-body { max-height: 3000px; padding: 16px 20px; }
+
+p { margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">返回总览</a>
+
+    <div class="page-header">
+        <div class="header-number">09</div>
+        <h1 class="header-title">自我标签收集者</h1>
+        <div class="header-subtitle">测试是最好的获客工具</div>
+        <span class="path-badge">认知觉醒路径</span>
+    </div>
+
+    <div class="metrics-bar">
+        <div class="metric-item">
+            <div class="metric-value">7.6%</div>
+            <div class="metric-label">发帖量占比</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-value">7.0%</div>
+            <div class="metric-label">互动率</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="who">她们是谁</button>
+        <button class="tab-btn" data-tab="cooccur">共现问题</button>
+        <button class="tab-btn" data-tab="journey">用户旅程</button>
+        <button class="tab-btn" data-tab="scenes">子场景群</button>
+        <button class="tab-btn" data-tab="more">标签与互动</button>
+    </div>
+
+    <!-- Tab 1: 她们是谁 -->
+    <div class="tab-content active" id="tab-who">
+        <div class="section">
+            <div class="insight-box">
+                <strong>这不是一个"痛苦人群"，而是一种"行为模式"——疯狂寻找标签来命名自己。</strong> 她们横跨所有其他群体，但共享一个核心行为：通过人格测试、依恋类型测试、心理自测来定义"我是谁"。
+            </div>
+
+            <h3 class="section-title">受众标签分布</h3>
+            <table>
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>关系困扰人群</td><td>76</td><td><strong>第一大群——通过测试理解自己的关系模式</strong></td></tr>
+                    <tr><td>女性</td><td>44</td><td></td></tr>
+                    <tr><td>职场人</td><td>16</td><td></td></tr>
+                    <tr><td>高敏感人群</td><td>13</td><td>交叉</td></tr>
+                    <tr><td>学生</td><td>12</td><td></td></tr>
+                    <tr><td>心理咨询来访者</td><td>9</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box">
+                <strong>核心intent：自测筛查260帖（55%）——超过一半的帖子是测试类内容。</strong> 这在其他群体中从未出现过——其他群体以"情绪共鸣"或"经验分享"为主，但这个群体的核心行为就是"测"。
+            </div>
+
+            <h3 class="section-title">与前十个群体的关键差异</h3>
+            <table>
+                <thead><tr><th>维度</th><th>其他群体</th><th>标签收集者</th></tr></thead>
+                <tbody>
+                    <tr><td>核心行为</td><td>倾诉/求助/学习</td><td><strong>测试/收集/命名</strong></td></tr>
+                    <tr><td>内容形态</td><td>多样</td><td><strong>55%是测试帖</strong></td></tr>
+                    <tr><td>依恋关系交叉</td><td>最高11%（原生家庭）</td><td><strong>36%</strong></td></tr>
+                    <tr><td>评论机制</td><td>讨论/分享</td><td><strong>"选了X，我是什么？"——评论区是结果交换场</strong></td></tr>
+                    <tr><td>对课程的意义</td><td>目标用户</td><td><strong>最强的引流入口——测试是获客钩子</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 2: 共现问题 -->
+    <div class="tab-content" id="tab-cooccur">
+        <div class="section">
+            <h3 class="section-title">共现问题</h3>
+            <table>
+                <thead><tr><th>共现问题</th><th>频次</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>焦虑</td><td>188</td><td>40%</td></tr>
+                    <tr><td>依恋关系</td><td>171</td><td><strong>36%——远超其他群体，说明"测试"的主要场景是亲密关系</strong></td></tr>
+                    <tr><td>自我成长</td><td>66</td><td>14%</td></tr>
+                    <tr><td>抑郁</td><td>65</td><td><strong>14%——偏高</strong></td></tr>
+                    <tr><td>内耗</td><td>52</td><td>11%</td></tr>
+                    <tr><td>原生家庭</td><td>19</td><td>4%</td></tr>
+                    <tr><td>躯体化</td><td>17</td><td>4%</td></tr>
+                    <tr><td>高敏感</td><td>13</td><td>3%</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>依恋关系共现36%——是所有群体中仅次于婚姻群体（59%）的第二高。</strong> 说明大量用户做心理测试的真正动机不是"了解自己"，而是<strong>"理解为什么我的关系总是出问题"</strong>。
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: 用户旅程 -->
+    <div class="tab-content" id="tab-journey">
+        <div class="section">
+            <h3 class="section-title">用户旅程</h3>
+            <div class="post-list" style="counter-reset: step;">
+                <li><strong>1. 关系/情绪触发</strong> → 某次冲突/分手/内耗 → "我为什么总是这样？"</li>
+                <li><strong>2. 标签搜索</strong> → 搜"性格测试""心理测试" → 做大量测试 → 获得一堆标签："焦虑型依恋""INFJ""讨好型人格""高敏感"</li>
+                <li><strong>3. 标签收集期</strong> → 不断做新测试 → 每个结果都觉得"是我！" → 收集越来越多标签</li>
+                <li><strong>4. 解释成瘾</strong> → 用标签解释所有行为："我之所以这样是因为我是回避型" → <strong>标签变成了固化的自我定义</strong></li>
+                <li><strong>5. 两个分叉：</strong><br>
+                    a. 从标签走向行动 → "知道了我是XX型，然后呢？" → <strong>课程介入点</strong><br>
+                    b. 停留在标签层 → 继续测试 → 永远在"了解自己"但从不改变
+                </li>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 4: 子场景群 -->
+    <div class="tab-content" id="tab-scenes">
+        <div class="section">
+            <h3 class="section-title">7个子场景群</h3>
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群1：直觉/数字测试（评论爆炸——3万+评论帖）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69ccc8b500000000230171a9" target="_blank">"TA现在对你什么心思——1-500，凭第一直觉选一个数字"</a> <span class="post-stat">32273评论——全数据集评论之王</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ccd371000000002301ccb1" target="_blank">"不要犹豫，最先想到的字准——凭直觉补全这个字"</a> <span class="post-stat">16453评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c77925000000002003a934" target="_blank">"你的焦虑值和专注力ok吗？"</a> <span class="post-stat">15662评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d5000a000000001d01caf4" target="_blank">"一分钟测试：你的占有欲有多强？"</a> <span class="post-stat">6334评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/693103c9000000001e03b324" target="_blank">"让你更加了解自己的心理测试题——14把椅子测出你的心理特质"</a> <span class="post-stat">6232评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ca4b1300000000210122de" target="_blank">"别躲了！下意识的坐姿出卖了你"</a> <span class="post-stat">5203评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69a626bd000000002203048d" target="_blank">"三道题测你隐藏人格"</a> <span class="post-stat">3388评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c88383000000002103b6b2" target="_blank">"测试一下你最近压力有多大？"</a> <span class="post-stat">2033评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>32273评论——这是6172条帖子中评论量最高的帖子，而它只有817赞。</strong> 评论/赞比39.5——每一个赞背后有40条评论。测试帖的互动机制和所有其他内容完全不同：<strong>用户不是在"阅读"内容，而是在"参与"游戏</strong>——选一个数字→评论→等解读→看别人的结果。
+                        </div>
+                        <p>这就是为什么测试是课程引流的最强工具——<strong>它的参与门槛为零，但参与一次后用户已经进入了"想了解自己"的心理状态</strong>。</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群2：抑郁/情绪自测（准临床方向）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li>"一分钟'微笑抑郁症'自测" <span class="post-stat">10076评论</span></li>
+                            <li>"一分钟'阳光抑郁症'自测" <span class="post-stat">2778评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/6988ddc2000000001a01f4dc" target="_blank">"快自测！你最近情绪还好吗？"</a> <span class="post-stat">4604评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d486130000000023010b58" target="_blank">"测一测你的缺爱指数"</a> <span class="post-stat">2756评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69cc7d54000000002103bc6e" target="_blank">"超准心理测试——你的缺爱指数有多高"</a> <span class="post-stat">1633评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c88383000000002103b6b2" target="_blank">"测试一下你最近压力有多大"</a> <span class="post-stat">2033评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>"微笑抑郁症自测"10076评论——说明大量用户在用自测来判断"我到底有没有抑郁"。</strong> 这些测试在临床上可能效度存疑，但它满足的需求是真实的：<strong>用户需要一个"是/否"的答案来决定自己是否需要就医</strong>。课程如果提供更有质量的自测工具（附带"如果你的得分超过X，建议做这些"的行动指南），会比这些粗糙的测试有价值得多。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群3：依恋类型测试/解读</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/68f899e200000000070309b2" target="_blank">"1分钟来测出你的爱情观是怎样的"</a> <span class="post-stat">8864评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69c67997000000001a0227d5" target="_blank">"情感测试——分清生理性喜欢vs心理性喜欢"</a> <span class="post-stat">4945评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ca5c1a0000000023021d9b" target="_blank">"你是吸渣体质还是被宠体质"</a> <span class="post-stat">4277评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ce4c52000000001a030d4e" target="_blank">"焦虑型人格第二天有事前的状态"</a> <span class="post-stat">2.8万赞，1601评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ba934a0000000022027753" target="_blank">"焦虑型依恋：清醒地看着自己失控"</a> <span class="post-stat">3万赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69d75a58000000002301df98" target="_blank">"回避型伴侣的十大优点"</a></li>
+                        </ul>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">hashtags: #读懂回避型（19次）、#回避型依恋（17次）、#回避型人格的具体表现（11次）、#讨好型人格（21次）</p>
+                        <div class="insight-box">
+                            <strong>依恋类型是用户使用最频繁的标签体系——比MBTI还高频。</strong> "焦虑型""回避型""讨好型"已经成了日常词汇。"清醒地看着自己失控"——这句话精准描述了焦虑型依恋者的核心体验：<strong>知道自己在过度反应，但停不下来</strong>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群4：MBTI/人格分类</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/68f48edf0000000004021960" target="_blank">"不同人格面对表扬和批评"</a> <span class="post-stat">3.8万赞，4476评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/696e304e000000001a02a9de" target="_blank">"放弃型人格又称享福型人格"</a> <span class="post-stat">7679赞</span></li>
+                        </ul>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">hashtags: #INFJ（多次出现在高敏感和内耗标签中）</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群5：身体/坐姿/行为测试</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/698740480000000016009928" target="_blank">"请问你平时最喜欢以下哪种坐姿呢？"</a> <span class="post-stat">6610评论</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ca4b1300000000210122de" target="_blank">"别躲了！下意识的坐姿出卖了你"</a> <span class="post-stat">5203评论</span></li>
+                            <li>"挤牙膏方式揭示你的内耗指数" <span class="post-stat">1329评论</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>用身体语言/日常习惯做性格解读——在科学上几乎无效度，但评论量极高。</strong> 说明用户对"从日常小事了解自己"有极强的兴趣——课程可以用更有质量的"日常行为觉察"替代这些伪科学测试。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群6：人格标签命名帖（非测试）</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="post-list">
+                            <li><a href="https://www.xiaohongshu.com/explore/69c26573000000002200cc56" target="_blank">"不敢麻烦别人，不是性格好"</a> <span class="post-stat">4.5万赞——命名"回避型人格"</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69aa9fb00000000022032811" target="_blank">"泪失禁这一块"</a> <span class="post-stat">12.6万赞——命名一种体验</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/698558530000000022033aef" target="_blank">"空心人：自我压抑，缺乏情感、想法与主见"</a></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69a0bc0f000000001d02621d" target="_blank">"因为你不是ADHD，所以你很难理解"</a> <span class="post-stat">9972赞</span></li>
+                            <li><a href="https://www.xiaohongshu.com/explore/69ce4c52000000001a030d4e" target="_blank">"焦虑型人格第二天有事前的状态"</a> <span class="post-stat">2.8万赞</span></li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>这些帖子不是测试，但功能和测试一样——给出一个标签让用户"对号入座"。</strong> 它们的赞数远超测试帖（测试帖赞数低但评论高，命名帖赞数高但评论低）——两者是互补的引流形态。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>子群7："我是什么"集体交换</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p>评论区的核心互动模式是：</p>
+                        <ul class="post-list">
+                            <li>用户A："我选了3"</li>
+                            <li>帖主："选3的你是XXX型"</li>
+                            <li>用户B："也是3！太准了！"</li>
+                            <li>用户C："我是2和4之间犹豫"</li>
+                        </ul>
+                        <div class="insight-box">
+                            <strong>评论区变成了一个"身份交换市场"——每个人都在寻找自己的位置。</strong> 这种互动模式是课程社群可以复制的——"你是哪种类型？在社群里找到同类"。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 5: 标签与互动 -->
+    <div class="tab-content" id="tab-more">
+        <div class="section">
+            <h3 class="section-title">搜索标签体系</h3>
+            <table>
+                <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>#心理测试</td><td>53</td><td>绝对核心</td></tr>
+                    <tr><td>#性格测试</td><td>28</td><td></td></tr>
+                    <tr><td>#女性成长</td><td>24</td><td></td></tr>
+                    <tr><td>#讨好型人格</td><td>21</td><td><strong>人格标签中的第一名</strong></td></tr>
+                    <tr><td>#趣味心理测试</td><td>21</td><td></td></tr>
+                    <tr><td>#读懂回避型</td><td>19</td><td></td></tr>
+                    <tr><td>#回避型依恋</td><td>17</td><td></td></tr>
+                    <tr><td>#人格测试</td><td>16</td><td></td></tr>
+                    <tr><td>#回避型 / #回避型人格的具体表现</td><td>24</td><td>合计</td></tr>
+                    <tr><td>#不要讨好别人</td><td>10</td><td></td></tr>
+                    <tr><td>#原生家庭</td><td>9</td><td></td></tr>
+                    <tr><td>#抑郁 / #抑郁症</td><td>17</td><td></td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>#讨好型人格（21次）和#回避型依恋（17次）是最高频的人格标签——远超#MBTI或#INFJ。</strong> 说明用户最关心的不是"我是什么性格"（MBTI），而是<strong>"我在关系中是什么模式"（依恋类型）</strong>。这进一步验证了课程应该以"关系中的模式"而非"人格类型"作为组织框架。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">互动行为规律</h3>
+            <p><strong>这个群体的互动模式和其他所有群体完全不同：</strong></p>
+            <table>
+                <thead><tr><th>内容类型</th><th>赞数</th><th>评论数</th><th>收藏</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>直觉测试帖</td><td>极低（200-800）</td><td><strong>极高（5000-32000）</strong></td><td>极低</td><td>参与>消费</td></tr>
+                    <tr><td>人格命名帖</td><td><strong>极高（2万-12万）</strong></td><td>中（1000-4000）</td><td>高</td><td>消费>参与</td></tr>
+                    <tr><td>依恋解读帖</td><td>高（5000-30000）</td><td>高（500-1600）</td><td>高</td><td>两者兼有</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>测试帖是全数据集中"评论/赞比"最极端的内容形态——39.5（TA对你什么心思）、42.5（最先想到的字）、17.9（焦虑值）。</strong> 没有任何其他内容形态能产生如此密集的评论。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">对课程的核心启示</h3>
+            <div class="insight-box">
+                <strong>1. 引流层必须包含测试——这是被数据验证的最强互动机制</strong><br>
+                2. 测试结果应该导向课程模块："你是焦虑型依恋→推荐学习路径A"<br>
+                3. 测试的质量可以远超现有的"凭直觉选数字"——提供更有深度的自测工具本身就是课程的价值之一
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+</script>
+</body>
+</html>

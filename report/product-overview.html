@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程产品全景图</title>
+
+<style>
+:root {
+    --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+    --border-subtle: #ececef; --border-hover: #dcdce0;
+    --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+    --accent-warm: #f5a524; --accent-pink: #ff6b8a; --accent-gold: #8b6cef;
+    --path-awakening: #4aa3df; --path-independent: #8b6cef;
+    --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.8; min-height: 100vh; overflow-x: hidden; }
+a { color: var(--accent-warm); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; padding: 24px 0 0 0; transition: color 0.3s; }
+.back-link:hover { color: var(--text-primary); text-decoration: none; }
+.back-link::before { content: '←'; font-size: 1.1rem; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+.page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 40px; }
+.header-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; }
+.header-subtitle { font-size: 1rem; color: var(--text-secondary); margin-top: 8px; }
+
+.section { margin-bottom: 48px; }
+.section-title {
+    font-family: var(--font-display); font-size: 1.4rem; font-weight: 600;
+    margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; gap: 12px;
+}
+.section-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+    flex-shrink: 0;
+}
+.icon-free { background: rgba(184,196,232,0.15); color: var(--path-awakening); }
+.icon-core { background: rgba(212,165,116,0.15); color: var(--accent-warm); }
+.icon-scene { background: rgba(232,180,184,0.15); color: var(--accent-pink); }
+.icon-indie { background: rgba(212,184,150,0.15); color: var(--path-independent); }
+.icon-principle { background: rgba(201,184,150,0.15); color: var(--accent-gold); }
+
+table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 0.9rem; }
+th {
+    text-align: left; padding: 12px 16px; background: var(--bg-card);
+    color: var(--text-secondary); font-weight: 500;
+    border-bottom: 1px solid var(--border-subtle);
+}
+td {
+    padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+}
+tr:hover td { background: var(--bg-card-hover); }
+td strong { color: var(--text-primary); }
+
+.insight-box {
+    background: var(--bg-card); border-left: 3px solid var(--accent-warm);
+    padding: 20px 24px; margin: 24px 0; border-radius: 0 8px 8px 0;
+    color: var(--text-secondary); font-size: 0.95rem;
+}
+.insight-box strong { color: var(--text-primary); }
+
+.principle-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 12px; padding: 24px 28px; margin-top: 16px;
+}
+.principle-card p { margin: 8px 0; }
+.principle-highlight {
+    font-family: var(--font-display); font-size: 1.15rem; font-weight: 600;
+    color: var(--accent-gold); margin-bottom: 12px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">返回总览</a>
+
+    <div class="page-header">
+        <h1 class="header-title">课程产品全景图</h1>
+        <div class="header-subtitle">第七章 -- 基于12个用户群体洞察的产品架构</div>
+    </div>
+
+    <!-- 获客层 -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon icon-free">01</span>
+            获客层（免费/极低价）
+        </h2>
+        <table>
+            <thead><tr><th>产品</th><th>对应入口</th><th>形态</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>"你属于哪种类型"自测</strong></td>
+                    <td>自我标签收集者</td>
+                    <td>小程序/H5测试 → 测完导向课程</td>
+                </tr>
+                <tr>
+                    <td><strong>"课程 vs 咨询"对比页</strong></td>
+                    <td>咨询价格受阻者</td>
+                    <td>落地页——打价格和"给方法"的差异化</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 核心课程 -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon icon-core">02</span>
+            核心课程（按心理恶化程度分层）
+        </h2>
+        <table>
+            <thead><tr><th>层级</th><th>对应人群</th><th>核心内容</th><th>数据验证</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>入门层：认知框架</strong></td>
+                    <td>高敏感 + 内耗 + 原生家庭</td>
+                    <td>命名模式 + 生理解释 + 日常策略</td>
+                    <td>命名帖收藏比 0.8-1.2</td>
+                </tr>
+                <tr>
+                    <td><strong>实操层：即时工具</strong></td>
+                    <td>睡前思维 + 情绪失控</td>
+                    <td>睡前关机法 / 情绪急救包 / 场景化练习</td>
+                    <td>"秒睡法"收藏比 2.49</td>
+                </tr>
+                <tr>
+                    <td><strong>导航层：就医教育</strong></td>
+                    <td>躯体化 + 就医彷徨</td>
+                    <td>何时就医 / 精神科流程 / 药物预期</td>
+                    <td>"不想留就诊记录" 1932评论</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 场景包 -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon icon-scene">03</span>
+            场景包（按生命阶段分线）
+        </h2>
+        <table>
+            <thead><tr><th>场景</th><th>对应人群</th><th>独有内容</th><th>数据验证</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>妈妈线</strong></td>
+                    <td>全职妈妈 + 高三家长</td>
+                    <td>不崩溃的育儿 / 代际传递阻断 / 每日微练习</td>
+                    <td>"每日抄写"收藏比 1.40</td>
+                </tr>
+                <tr>
+                    <td><strong>婚姻线</strong></td>
+                    <td>婚姻 + 原生家庭(婚姻重现)</td>
+                    <td>在关系里不那么累 / "各过各的"策略</td>
+                    <td>"看见需求"收藏比 1.12</td>
+                </tr>
+                <tr>
+                    <td><strong>更年期线</strong></td>
+                    <td>更年期</td>
+                    <td>食疗方 / 激素科普 / 失眠管理 / 子女指南</td>
+                    <td>食疗收藏比 2.70</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 独立产品 -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon icon-indie">04</span>
+            独立产品
+        </h2>
+        <table>
+            <thead><tr><th>产品</th><th>对应人群</th><th>原因</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>情绪与食物</strong></td>
+                    <td>情绪性进食</td>
+                    <td>零交叉孤岛——获客走 #减肥 渠道</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 贯穿原则 -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon icon-principle">05</span>
+            贯穿原则
+        </h2>
+        <div class="principle-card">
+            <div class="principle-highlight">30% 命名（获取信任）+ 70% 方法（创造价值）</div>
+            <p>每个模块的内容配比：用户愿意为"被说中"付出注意力，但愿意为"能照着做"付出金钱。</p>
+        </div>
+        <div class="insight-box">
+            课程的终极卖点不是"治愈你自己"，而是<strong>"为了你的孩子/为了你的生活，先理解你自己"</strong>——利他动机比自利动机更容易驱动行动。
+        </div>
+    </div>
+</div>
+</body>
+</html>

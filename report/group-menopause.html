@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更年期孤岛女性 - 用户洞察报告</title>
+    
+    
+    <style>
+        :root {
+            --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+            --border-subtle: #ececef; --border-hover: #dcdce0;
+            --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+            --accent-warm: #f5a524; --accent-pink: #ff6b8a;
+            --path-lifecycle: #2ec27e;
+            --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary); color: var(--text-primary);
+            font-family: var(--font-body); font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            line-height: 1.75; -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--path-lifecycle); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .page-container { max-width: 960px; margin: 0 auto; padding: clamp(1rem, 4vw, 3rem); }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+        .back-link svg { width: 16px; height: 16px; }
+        .hero { margin-bottom: 3rem; }
+        .hero-number { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; color: rgba(168,196,184,0.15); line-height: 1; }
+        .hero-title { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--text-primary); margin-top: -0.5rem; }
+        .hero-subtitle { font-family: var(--font-body); font-size: clamp(0.9rem, 1.5vw, 1.1rem); color: var(--text-secondary); margin-top: 0.5rem; }
+        .path-badge { display: inline-block; margin-top: 1rem; padding: 0.25rem 0.85rem; border: 1px solid var(--path-lifecycle); border-radius: 999px; font-size: 0.75rem; color: var(--path-lifecycle); letter-spacing: 0.05em; }
+        .metrics-bar { display: flex; gap: 2rem; flex-wrap: wrap; padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 2.5rem; }
+        .metric { display: flex; flex-direction: column; }
+        .metric-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--path-lifecycle); }
+        .metric-label { font-size: 0.75rem; color: var(--text-muted); }
+        .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem; overflow-x: auto; }
+        .tab-btn { background: none; border: none; padding: 0.75rem 1.25rem; font-family: var(--font-body); font-size: 0.85rem; color: var(--text-muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo); }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--path-lifecycle); border-bottom-color: var(--path-lifecycle); }
+        .tab-panel { display: none; animation: fadeIn 0.4s var(--ease-out-expo); }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-block { margin-bottom: 2.5rem; }
+        .section-block h2 { font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle); }
+        .section-block h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--accent-warm); margin: 1.5rem 0 0.75rem; }
+        p, .content-text { color: var(--text-secondary); margin-bottom: 1rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .data-table th { text-align: left; padding: 0.6rem 0.75rem; font-weight: 500; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .data-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+        .accordion-header { width: 100%; background: var(--bg-card); border: none; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; transition: background 0.3s; }
+        .accordion-header:hover { background: var(--bg-card-hover); }
+        .accordion-header .arrow { transition: transform 0.3s var(--ease-out-expo); color: var(--text-muted); font-size: 0.8rem; }
+        .accordion-item.open .accordion-header .arrow { transform: rotate(180deg); }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo); background: var(--bg-card); }
+        .accordion-item.open .accordion-body { max-height: 5000px; }
+        .accordion-content { padding: 0 1.25rem 1.25rem; }
+        .accordion-content p { color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .user-voice { border-left: 2px solid var(--path-lifecycle); padding: 0.5rem 0 0.5rem 1rem; margin: 0.75rem 0; color: var(--text-secondary); font-size: 0.85rem; }
+        .user-voice a { color: var(--text-secondary); }
+        .user-voice a:hover { color: var(--path-lifecycle); }
+        .insight { background: rgba(168,196,184,0.06); border: 1px solid rgba(168,196,184,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; color: var(--text-secondary); font-size: 0.85rem; }
+        .journey { counter-reset: step; margin: 1rem 0; }
+        .journey-step { position: relative; padding: 0 0 1.5rem 2.5rem; color: var(--text-secondary); }
+        .journey-step::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: rgba(168,196,184,0.12); color: var(--path-lifecycle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+        .journey-step::after { content: ''; position: absolute; left: 0.75rem; top: 1.8rem; width: 1px; height: calc(100% - 1.8rem); background: var(--border-subtle); }
+        .journey-step:last-child::after { display: none; }
+        .table-scroll { overflow-x: auto; margin: 1rem 0; }
+        .table-scroll table { min-width: 700px; }
+        @media (max-width: 640px) { .metrics-bar { flex-direction: column; gap: 1rem; } .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; } }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        返回总览
+    </a>
+
+    <header class="hero">
+        <div class="hero-number">07</div>
+        <h1 class="hero-title">更年期孤岛女性</h1>
+        <p class="hero-subtitle">用养生语言替代心理学术语</p>
+        <span class="path-badge">生命周期路径</span>
+    </header>
+
+    <div class="metrics-bar">
+        <div class="metric">
+            <span class="metric-value">5.3%</span>
+            <span class="metric-label">发帖量占比</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value">1.7%</span>
+            <span class="metric-label">互动率</span>
+        </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="who" role="tab">她们是谁</button>
+        <button class="tab-btn" data-tab="pain" role="tab">痛苦时刻</button>
+        <button class="tab-btn" data-tab="cooccur" role="tab">共现问题</button>
+        <button class="tab-btn" data-tab="journey" role="tab">用户旅程</button>
+    </div>
+
+    <!-- TAB: 她们是谁 -->
+    <div class="tab-panel active" id="tab-who">
+        <div class="section-block">
+            <h2>她们是谁</h2>
+            <p>这是九个群体中互动率最低（1.7%）但评论密度最高的群体——一个被算法遗忘但用户极度活跃的"暗网社区"。</p>
+
+            <h3>受众标签分布</h3>
+            <table class="data-table">
+                <thead><tr><th>受众</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>更年期女性</td><td>326</td><td><strong>几乎100%</strong></td></tr>
+                    <tr><td>女性</td><td>272</td><td></td></tr>
+                    <tr><td>妈妈/家长</td><td>42</td><td>更年期+育儿双重身份</td></tr>
+                    <tr><td>职场人</td><td>6</td><td></td></tr>
+                </tbody>
+            </table>
+
+            <h3>生活阶段</h3>
+            <table class="data-table">
+                <thead><tr><th>阶段</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>更年期</td><td>290</td><td><strong>绝对主体</strong></td></tr>
+                    <tr><td>中年阶段</td><td>69</td><td></td></tr>
+                    <tr><td>育儿期</td><td>8</td><td>大龄妈妈</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>核心矛盾：互动率仅1.7%说明算法几乎不推她们的内容，但评论区极度活跃。</strong> 帖子赞数普遍极低（中位数&lt;100），但评论数可以到500-1000——说明每一个找到帖子的更年期女性几乎都会留言。她们不是在"刷到"内容，而是在<strong>主动搜索并互相寻找</strong>。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 痛苦时刻 -->
+    <div class="tab-panel" id="tab-pain">
+        <div class="section-block">
+            <h2>痛苦时刻——发帖时间</h2>
+            <table class="data-table">
+                <thead><tr><th>时段</th><th>帖量</th><th>标记</th></tr></thead>
+                <tbody>
+                    <tr><td>05:00</td><td>4</td><td>早醒</td></tr>
+                    <tr><td>07:00</td><td>13</td><td>一夜没睡好</td></tr>
+                    <tr><td>08:00</td><td>18</td><td>&#9733; 早间高峰</td></tr>
+                    <tr><td>11:00</td><td>19</td><td></td></tr>
+                    <tr><td>16:00</td><td>23</td><td></td></tr>
+                    <tr><td>18:00</td><td>27</td><td></td></tr>
+                    <tr><td>19:00</td><td>33</td><td>&#9733;&#9733; 最高峰</td></tr>
+                    <tr><td>20:00</td><td>34</td><td>&#9733;&#9733; 最高峰</td></tr>
+                    <tr><td>21:00</td><td>28</td><td>&#9733;</td></tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <strong>和前八个群体的独有差异：早上5:00-8:00有显著活跃（35帖，11%）——其他群体在这个时段几乎无人。</strong> 这对应更年期特有的"早醒"：凌晨4-5点醒来，无法再入睡，在床上刷手机。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 共现问题 -->
+    <div class="tab-panel" id="tab-cooccur">
+        <div class="section-block">
+            <h2>共现问题</h2>
+            <table class="data-table">
+                <thead><tr><th>共现问题</th><th>频次</th><th>占比</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>失眠</td><td>130</td><td>40%</td><td><strong>九个群体中最高——失眠是更年期第一症状</strong></td></tr>
+                    <tr><td>焦虑</td><td>99</td><td>30%</td><td></td></tr>
+                    <tr><td>亲子育儿</td><td>45</td><td>14%</td><td>高中生家长居多</td></tr>
+                    <tr><td>自我成长</td><td>13</td><td>4%</td><td></td></tr>
+                    <tr><td>内耗</td><td>12</td><td>4%</td><td></td></tr>
+                    <tr><td>抑郁</td><td>11</td><td>3%</td><td></td></tr>
+                    <tr><td>躯体化</td><td>9</td><td>3%</td><td>心悸/潮热/疼痛</td></tr>
+                    <tr><td>正念冥想</td><td>5</td><td>2%</td><td></td></tr>
+                    <tr><td>婚姻冲突</td><td>3</td><td>1%</td><td></td></tr>
+                </tbody>
+            </table>
+            <div class="insight">
+                <strong>核心差异：失眠共现40%——是所有群体中最高的。</strong> 更年期失眠不是"想太多睡不着"，而是激素变化导致的生理性睡眠障碍——这是完全不同的机制，需要完全不同的干预。
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: 用户旅程 -->
+    <div class="tab-panel" id="tab-journey">
+        <div class="section-block">
+            <h2>用户旅程</h2>
+            <div class="journey">
+                <div class="journey-step"><strong>症状突袭</strong> — 某天突然潮热/失眠/心悸 → "我怎么了" → 上网搜 → 发现是更年期</div>
+                <div class="journey-step"><strong>孤独期</strong> — 周围没人理解 → 老公觉得"矫情" → 子女不知道 → "原来这就是更年期"</div>
+                <div class="journey-step"><strong>搜索期</strong> — 搜"更年期失眠""更年期怎么办" → 找到同龄帖子 → 评论区留言 → 发现"不是只有我这样"</div>
+                <div class="journey-step"><strong>方法试错期</strong> — 中药/西药/食疗/激素替代 → 效果不稳定 → 反复调整</div>
+                <div class="journey-step"><strong>两个入口</strong> —<br>a. 自己搜索（但不太会用小红书）<br>b. 子女代搜 → "我妈更年期怎么办" → <strong>课程的关键付费入口</strong></div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>群体对比表</h2>
+            <div class="table-scroll">
+            <table class="data-table">
+                <thead><tr><th>维度</th><th>其他群体</th><th>更年期</th></tr></thead>
+                <tbody>
+                    <tr><td>互动率</td><td>1.7%-23.1%</td><td><strong>1.7%——最低，被算法遗忘</strong></td></tr>
+                    <tr><td>评论密度</td><td>正常</td><td><strong>极高——每帖平均评论/赞比&gt;2.0</strong></td></tr>
+                    <tr><td>失眠共现</td><td>最高8%</td><td><strong>40%</strong></td></tr>
+                    <tr><td>痛苦机制</td><td>心理性</td><td><strong>生理+心理双重</strong></td></tr>
+                    <tr><td>早间活跃</td><td>无</td><td><strong>显著（5:00-8:00）</strong></td></tr>
+                    <tr><td>付费入口</td><td>本人</td><td><strong>本人+子女双入口</strong></td></tr>
+                    <tr><td>最强收藏</td><td>方法/解释</td><td><strong>食疗方/中成药指南（收藏比&gt;2.0）</strong></td></tr>
+                    <tr><td>独有标签</td><td>各异</td><td><strong>#更年期 #女性健康 #中医 #养生</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9个子场景群 -->
+    <div class="section-block">
+        <h2>9个子场景群</h2>
+        <div class="accordion">
+
+            <!-- 子群1 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群1：失眠/睡不着（134帖，最大子群，占41%）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69a210bc000000002303bb6e">"更年期的女人，你们每天都睡几小时？"</a>（592评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/699e88f8000000001d025213">"更年期的中年女人，失眠，你们是怎么熬过来的？"</a>（410评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/698a6cae000000000c0343be">"妈妈更年期，整夜整夜没睡意，试过很多药打过很多针都没用"</a>（598评论——子女视角）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6965faf8000000001a026182">"更年期的睡眠困境——我现在都要2点才入睡"</a>（278评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69414145000000000d034868">"更年期失眠，告诉你一个小方法"</a>（收藏/赞比1.54）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cfac410000000023024b65">"更年期半夜总是醒？去超市买这3样不起眼的"</a>（<strong>收藏/赞比2.70——全九个群体所有帖子中最高值</strong>）</div>
+                    <div class="insight">收藏/赞比2.70——每个点赞的人平均收藏了近3次。这个数据在九个群体的所有帖子中前所未有。<strong>"你们每天都睡几小时？"——这不是一个问题，是一个暗号。</strong></div>
+                </div></div>
+            </div>
+
+            <!-- 子群2 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群2：情绪失控/暴躁（105帖）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6936b204000000001e004f76">"46岁更年期症状发作——更年期别硬扛！"</a>（337评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69831885000000000903ba37">"我妈更年期天天哭，正常吗？"</a>（351评论——子女视角）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c72249000000001d01c081">"40以后很难真正开心起来，心里总是沉沉的"</a>（<strong>1266评论——全群体第一评论帖</strong>）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b0bbc00000000022033471">"40+才懂：不是懒，是真的熬不动了"</a>（304评论）</div>
+                    <div class="insight"><strong>"明明没大事，就是提不起劲"——1266评论，全群体第一。</strong> 精准描述了更年期情绪的核心特征：不是因为具体的事而难过，而是整个人的"底色"变暗了。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群3 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群3：方法/自救（78帖）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69be8a46000000001f005d2c">"更年期症状全来了，我用半年走出来"</a>（280评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6919430e000000001b02797e">"致更年期：好好享受失去荷尔蒙的快乐！"</a>（<strong>1.1万赞，568评论——全群体赞数最高</strong>）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68f75d620000000004005336">"更年期8大常用中成药对症指南，一篇看懂"</a>（收藏/赞比1.87）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69848e5c000000001a030782">"更年期潮热治愈了，分享我的经历"</a>（收藏/赞比1.70）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68faf646000000000503a84b">"更年期最难熬的三个阶段，你在哪一关？"</a>（267评论）</div>
+                    <div class="insight"><strong>"致更年期：好好享受失去荷尔蒙的快乐！"——1.1万赞，全群体唯一破万。</strong> "正面重构"叙事有巨大共鸣力但市面几乎没有。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群4 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群4：焦虑/抑郁（68帖）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/691864ad0000000005013682">"1984年，41岁，更年期、焦虑、抑郁、失眠，大家都还好吗"</a>（312评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69ae792d000000002303a5fd">"50+更年期遇上焦虑症——我终于找回了自己"</a></div>
+                    <div class="insight">更年期+焦虑/抑郁的共病非常普遍，但很多人不知道这是更年期导致的。<strong>"大家都还好吗"——更年期女性的表达方式更克制、更隐忍。</strong></div>
+                </div></div>
+            </div>
+
+            <!-- 子群5 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群5：心悸/躯体化（58帖）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/695520a10000000022033928">"严重的更年期综合症，每天夜里心悸失眠，严重到一个月叫了两次120"</a>（479评论，收藏/赞比1.52）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69bd1c17000000002301e879">"更年期的疼——持续的喉咙不适、肩颈疼痛和胸闷"</a>（941评论，收藏/赞比1.03）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69aff2dd000000002603fd2f">"女性更年期的20种常见症状，你有几种？"</a>（2659赞，2900收藏——收藏&gt;赞）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69d477cd000000001a02f352">"更年期潮热，突然转性了"</a>（收藏/赞比2.22）</div>
+                    <div class="insight"><strong>"恐惧睡觉"——从"睡不着"到"怕睡觉"，怕的是"夜里犯病"。</strong> 120都叫了两次——已经不是心理不适，是生理急症。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群6 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群6：子女替妈妈求助（43帖，独有子群）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/698a6cae000000000c0343be">"妈妈更年期，整夜整夜没睡意"</a>（598评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68fd6bb6000000000301a6a2">"妈妈48岁了，每天晚上都睡不着"</a>（907评论，收藏/赞比1.32）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69831885000000000903ba37">"我妈更年期天天哭，正常吗"</a>（351评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/6955e8e10000000022039ca1">"妈妈49岁，晚上没有觉，通宵两晚上就是不困"</a>（收藏/赞比1.32）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b7ed48000000002202a9ff">"我们的妈妈，正在经历最痛苦的10年"</a>（收藏/赞比1.62）</div>
+                    <div class="insight"><strong>43帖——占全群体13%。</strong> 子女（通常是20-30岁的女儿）在替妈妈做一件妈妈自己不会做的事：上网搜索解决方案。子女在保存这些信息，准备给妈妈看或自己学习如何帮助妈妈。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群7 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群7：食疗/养生（36帖，收藏比最极端）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69cfac410000000023024b65">"更年期半夜总是醒？去超市买这3样不起眼的"</a>（收藏/赞比2.70）</div>
+                    <div class="user-voice">"更年期失眠盗汗调理30种常用药按症状选"（收藏/赞比2.48）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68f9a871000000000702353c">"潮热失眠睡不好？试试这5道滋阴潜阳汤"</a>（收藏/赞比1.93）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68ef466b0000000004020dac">"太灵了，更年期潮热渐渐没了"</a>（收藏/赞比1.67）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69884d6c0000000016009db2">"更年期多吃这6种天然食物，气色好睡得香"</a>（收藏/赞比1.10）</div>
+                    <div class="insight"><strong>食疗帖的收藏/赞比是全九个群体中最极端的——2.70、2.48、1.93。</strong> 她们在反复试错，每一个新方法都值得尝试。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群8 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群8：激素替代/药物（31帖）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69b16266000000000b037588">"更年期来了——这是已经启动激素替代的第29天"</a>（360评论）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/68f75d620000000004005336">"更年期8大常用中成药对症指南"</a>（收藏/赞比1.87）</div>
+                    <div class="insight"><strong>激素替代（HRT）讨论度不高（仅31帖）——说明大多数用户还不了解这个选项。</strong> 课程如果能科普HRT基本原理，会填补巨大信息缺口。</div>
+                </div></div>
+            </div>
+
+            <!-- 子群9 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>子群9：集体倾诉/同龄互找（15帖，评论/赞比超级高）</span>
+                    <span class="arrow">&#9660;</span>
+                </button>
+                <div class="accordion-body"><div class="accordion-content">
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c72249000000001d01c081">"40以后很难真正开心起来"</a>（1266评论/575赞=评论/赞比2.20）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69a210bc000000002303bb6e">"更年期的女人，你们每天都睡几小时？"</a>（592评论/86赞=评论/赞比6.88）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/691864ad0000000005013682">"1984年，41岁，大家都还好吗"</a>（312评论/45赞=评论/赞比6.93）</div>
+                    <div class="user-voice"><a href="https://www.xiaohongshu.com/explore/69c5c7dd000000001a030b81">"疲惫不堪的中年，40+，你的中年累吗？"</a>（281评论/61赞=评论/赞比4.61）</div>
+                    <div class="insight"><strong>评论/赞比6.93——全九个群体中最极端的讨论密度。</strong> 这些帖子的功能不是"内容传播"，而是"同龄互找"——更年期女性在寻找彼此。</div>
+                </div></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 搜索标签体系 -->
+    <div class="section-block">
+        <h2>搜索标签体系</h2>
+
+        <h3>核心标签</h3>
+        <table class="data-table">
+            <thead><tr><th>标签</th><th>频率</th><th>说明</th></tr></thead>
+            <tbody>
+                <tr><td>#更年期</td><td>55</td><td><strong>绝对核心</strong></td></tr>
+                <tr><td>#失眠 / #更年期失眠</td><td>19</td><td></td></tr>
+                <tr><td>#女性健康</td><td>16</td><td></td></tr>
+                <tr><td>#更年期调理 / #更年期保养</td><td>11</td><td></td></tr>
+                <tr><td>#女人到中年</td><td>7</td><td></td></tr>
+                <tr><td>#中医 / #中医科普</td><td>7</td><td><strong>独有——其他群体几乎不出现中医标签</strong></td></tr>
+                <tr><td>#更年期症状</td><td>6</td><td></td></tr>
+                <tr><td>#养生</td><td>4</td><td></td></tr>
+                <tr><td>#焦虑症</td><td>4</td><td></td></tr>
+                <tr><td>#围绝经期</td><td>3</td><td>更专业的表述</td></tr>
+            </tbody>
+        </table>
+
+        <div class="insight">
+            <strong>独有发现：#中医（7次）是九个群体中唯一出现"中医"标签的群体。</strong>
+        </div>
+    </div>
+
+    <!-- 互动行为规律 -->
+    <div class="section-block">
+        <h2>互动行为规律 - 超高收藏表</h2>
+        <table class="data-table">
+            <thead><tr><th>帖子</th><th>收藏/赞比</th><th>类型</th></tr></thead>
+            <tbody>
+                <tr><td>更年期半夜总是醒买这3样</td><td><strong>2.70</strong></td><td>食疗方</td></tr>
+                <tr><td>更年期失眠盗汗30种药</td><td><strong>2.48</strong></td><td>用药指南</td></tr>
+                <tr><td>更年期潮热突然转性了</td><td><strong>2.22</strong></td><td>经验分享</td></tr>
+                <tr><td>5道滋阴潜阳汤</td><td><strong>1.93</strong></td><td>食疗方</td></tr>
+                <tr><td>8大常用中成药对症指南</td><td><strong>1.87</strong></td><td>用药指南</td></tr>
+                <tr><td>更年期潮热治愈经历</td><td><strong>1.70</strong></td><td>康复故事</td></tr>
+                <tr><td>太灵了潮热渐渐没了</td><td><strong>1.67</strong></td><td>偏方</td></tr>
+                <tr><td>我们的妈妈最痛苦的10年</td><td><strong>1.62</strong></td><td>命名+共情</td></tr>
+                <tr><td>更年期失眠告诉你一个小方法</td><td><strong>1.54</strong></td><td>方法</td></tr>
+                <tr><td>严重更年期叫了两次120</td><td><strong>1.52</strong></td><td>求助</td></tr>
+            </tbody>
+        </table>
+
+        <div class="insight">
+            <strong>规律：食疗方/用药指南的收藏比&gt;2.0，是所有群体所有内容形态中最高的。</strong> 更年期女性对"可以买来试的东西"有极端的保存行为。
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => { header.parentElement.classList.toggle('open'); });
+});
+</script>
+</body>
+</html>
