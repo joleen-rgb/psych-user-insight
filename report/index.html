@@ -9,7 +9,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;text-align:justify;text-justify:inter-ideograph}
-h1,h2,h3,h4,h5,.topnav,.path-label,.card .num,.card h3,.card .stats,.sec-head,.rule-label,.rule h4,.insight h4,.insight .n,.stat-label,.stat-val,.flow-title,.hero-title,.hero-meta,.takeaway,.product-link,.footer{text-align:left}
+h1,h2,h3,h4,h5,.topnav,.path-label,.card .num,.card h3,.card .stats,.sec-head,.rule-label,.rule h4,.insight h4,.insight .sub-n,.stat-label,.stat-val,.flow-title,.hero-title,.hero-meta,.takeaway,.product-link,.footer{text-align:left}
 a{color:inherit;text-decoration:none}
 
 .topnav{position:sticky;top:0;z-index:100;background:rgba(251,250,247,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:8px 20px;display:flex;align-items:center;gap:16px;font-size:13px;overflow-x:auto;white-space:nowrap}
@@ -76,6 +76,33 @@ a{color:inherit;text-decoration:none}
 .note-box{margin-top:12px;padding:10px 14px;border-radius:10px;background:var(--line-2);font-size:13px;color:var(--ink-2)}
 .note-box strong{color:var(--ink)}
 
+/* SPECTRUM MAP */
+.map-intro{font-size:14px;color:var(--ink-2);line-height:1.8;margin-bottom:20px}
+.map-intro strong{color:var(--ink);font-weight:600}
+.map-wrapper{position:relative;width:100%;aspect-ratio:16/10;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.axis-label{position:absolute;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:1.5px}
+.axis-x-left{top:50%;left:16px;transform:translateY(-50%)}.axis-x-right{top:50%;right:16px;transform:translateY(-50%)}
+.axis-y-top{top:12px;left:50%;transform:translateX(-50%)}.axis-y-bottom{bottom:12px;left:50%;transform:translateX(-50%)}
+.divider-h{position:absolute;top:50%;left:5%;width:90%;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+.zone-label{position:absolute;font-size:10px;color:var(--ink-3);letter-spacing:1px;opacity:0.6}
+.zone-tl{top:36px;left:36px}.zone-tr{top:36px;right:36px}.zone-bl{bottom:36px;left:36px}.zone-br{bottom:36px;right:36px}
+.node{position:absolute;transform:translate(-50%,-50%);cursor:default;z-index:2}
+.node-dot{width:var(--size,48px);height:var(--size,48px);border-radius:50%;background:var(--color,#4aa3df);opacity:0.12;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.node-inner{position:relative;text-align:center;z-index:3}
+.node-name{font-size:11px;font-weight:600;color:var(--color,#4aa3df);white-space:nowrap}
+.node-desc{font-size:9px;color:var(--ink-3);margin-top:2px;white-space:nowrap}
+.node-stat{font-size:9px;color:var(--ink-3);margin-top:1px;opacity:0.7}
+.node:hover .node-dot{opacity:0.25}.node:hover .node-name{color:var(--ink)}
+.arrows-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.arrow-path{fill:none;stroke-width:1.5;opacity:0.35}
+.map-legend{display:flex;justify-content:center;gap:20px;margin-top:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-3)}
+.legend-dot{width:10px;height:10px;border-radius:50%}.legend-line{width:20px;height:2px}
+.map-notes{margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.map-note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.map-note h3{font-size:12px;color:var(--sky);margin-bottom:4px;text-align:left}
+.map-note p{font-size:11px;color:var(--ink-3);line-height:1.6}
+
 /* RULES */
 .rule{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:10px}
 .rule-label{font-size:10px;font-weight:600;color:var(--rose);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
@@ -93,7 +120,7 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 /* INSIGHTS */
 .insight{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;box-shadow:var(--shadow);display:flex;gap:16px;margin-bottom:16px}
-.insight .n{font-size:36px;font-weight:800;color:var(--line);width:40px;flex-shrink:0;line-height:1}
+.insight .sub-n{font-size:13px;font-weight:700;color:var(--rose);width:28px;height:28px;border-radius:50%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
 .insight h4{font-size:16px;font-weight:700;margin-bottom:8px}
 .insight p{font-size:14.5px;color:var(--ink-2);line-height:1.7}
 .insight p strong{color:var(--ink)}
@@ -127,11 +154,13 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 @media(max-width:640px){
 .stat-bar{grid-template-columns:repeat(3,1fr)}
 .grid{grid-template-columns:1fr}
+.map-notes{grid-template-columns:1fr}
+.map-wrapper{aspect-ratio:4/5}
 .sec-head{gap:12px}
 .sec-num{font-size:36px;min-width:44px}
 .product-link{flex-direction:column}
 .insight{flex-direction:column;gap:8px}
-.insight .n{width:auto}
+.insight .sub-n{width:auto}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.15s!important}html{scroll-behavior:auto}}
 </style>
@@ -141,12 +170,11 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 <nav class="topnav">
 <span class="brand">心理洞察</span>
 <a href="#s1">人群画像</a>
-<a href="#s2">流动关系</a>
-<a href="#s3">内容规律</a>
-<a href="#s4">反直觉洞察</a>
-<a href="#s5">竞品分析</a>
-<a href="#s6">新兴人群</a>
-<a href="#s7">产品全景</a>
+<a href="#s2">人群光谱</a>
+<a href="#s3">反直觉洞察</a>
+<a href="#s4">竞品分析</a>
+<a href="#s5">内容规律</a>
+<a href="#s6">产品全景</a>
 </nav>
 
 <div class="wrap">
@@ -211,47 +239,84 @@ table.data-table td strong{color:var(--ink);font-weight:600}
     <a href="group-overseas-chinese.html" class="card t-rose" style="--rose:var(--amber)"><div class="num">16</div><h3>海外华人心理困扰</h3><p class="desc">38帖但两条"留子吐槽"帖合计3,119评论——需求真空</p><div class="stats"><div class="stat"><b>3,119</b><span>评论</span></div></div></a>
 </div>
 
-<!-- 02 流动关系 -->
-<div class="sec-head" id="s2"><div class="sec-num">02</div><div class="sec-info"><h2>人群之间的流动关系</h2><p>基于 20,563 条帖子的 16 人群交叉分析（显著重叠对 50+ 帖）</p></div></div>
+<!-- 02 人群光谱图 -->
+<div class="sec-head" id="s2"><div class="sec-num">02</div><div class="sec-info"><h2>人群光谱图</h2><p>16 个人群在二维空间上的位置、大小与流动方向</p></div></div>
 
-<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--rose)"></div><div class="flow-title">心理恶化路径——从"性格敏感"到"身体出症状"</div></div><div class="flow-chain"><span class="pill rose">高敏感</span><span class="arr">→</span><span class="cross">76帖交叉</span><span class="arr">→</span><span class="pill rose">内耗</span><span class="arr">→</span><span class="cross">167帖交叉</span><span class="arr">→</span><span class="pill rose">睡前思维</span><span class="arr">→</span><span class="cross">86帖交叉</span><span class="arr">→</span><span class="pill rose">躯体化/就医</span></div></div>
-<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--green)"></div><div class="flow-title">生命周期路径——从"带娃崩溃"到"更年期失眠"</div></div><div class="flow-chain"><span class="pill green">妈妈 (30-40)</span><span class="arr">→</span><span class="cross">64帖交叉</span><span class="arr">→</span><span class="pill green">婚姻 (35-45)</span><span class="arr">→</span><span class="cross">55帖交叉</span><span class="arr">→</span><span class="pill green">更年期 (42-55)</span><span class="arr">→</span><span class="cross">23帖交叉</span><span class="arr">→</span><span class="pill green">躯体化</span></div></div>
-<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--sky)"></div><div class="flow-title">认知觉醒路径——从"做测试"到"不让孩子重蹈覆辙"</div></div><div class="flow-chain"><span class="pill sky">标签收集 (自测)</span><span class="arr">→</span><span class="cross">41帖交叉</span><span class="arr">→</span><span class="pill sky">原生家庭 (归因)</span><span class="arr">→</span><span class="cross">19帖交叉</span><span class="arr">→</span><span class="pill sky">婚姻 (重现)</span><span class="arr">→</span><span class="cross">64帖交叉</span><span class="arr">→</span><span class="pill sky">妈妈 (传递恐惧)</span></div></div>
-<div class="note-box reveal"><strong>"咨询受阻"是所有人群的最大交叉枢纽</strong>——与倾听师转行交叉 216 帖、与妈妈交叉 227 帖、与 AI 依恋交叉 52 帖。<strong>休学家庭×妈妈=76帖</strong>，成为妈妈路径的新分支。情绪性进食仍然是孤岛（与新增4个人群同样零交叉）。</div>
+<p class="map-intro reveal">这 16 个人群并非固定不变的标签——同一个人会随着心理状态的变化，在不同人群之间流动和迁移。我们根据帖子交叉数据还原了这些流动路径，将所有人群绘制在同一张光谱图上：<strong>横轴代表问题的严重程度（左轻右重），纵轴代表痛苦的指向（上方关于自己，下方关于关系与家庭）</strong>。</p>
 
-<!-- 03 内容规律 -->
-<div class="sec-head" id="s3"><div class="sec-num">03</div><div class="sec-info"><h2>内容设计的五条基本规律</h2></div></div>
+<div class="map-wrapper reveal">
+    <span class="axis-label axis-x-left">轻 · 不舒服</span>
+    <span class="axis-label axis-x-right">重 · 需要就医</span>
+    <span class="axis-label axis-y-top">关于"我自己"</span>
+    <span class="axis-label axis-y-bottom">关于"关系与家庭"</span>
+    <div class="divider-h"></div>
+    <span class="zone-label zone-tl">认知启蒙区</span>
+    <span class="zone-label zone-tr">工具急救区</span>
+    <span class="zone-label zone-bl">关系探索区</span>
+    <span class="zone-label zone-br">生命周期区</span>
+    <svg class="arrows-svg" viewBox="0 0 1200 750">
+      <defs>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4aa3df" opacity="0.5"/></marker>
+        <marker id="aG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2ec27e" opacity="0.5"/></marker>
+        <marker id="aP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#8b6cef" opacity="0.5"/></marker>
+      </defs>
+      <path d="M 230 200 C 350 200,400 190,480 200" stroke="#4aa3df" class="arrow-path" marker-end="url(#aB)"/>
+      <path d="M 530 200 C 620 195,680 190,740 210" stroke="#4aa3df" class="arrow-path" marker-end="url(#aB)"/>
+      <path d="M 800 220 C 870 230,910 240,960 260" stroke="#4aa3df" class="arrow-path" marker-end="url(#aB)"/>
+      <path d="M 460 530 C 540 540,580 550,640 540" stroke="#2ec27e" class="arrow-path" marker-end="url(#aG)"/>
+      <path d="M 700 530 C 780 520,820 500,860 490" stroke="#2ec27e" class="arrow-path" marker-end="url(#aG)"/>
+      <path d="M 920 480 C 960 470,990 460,1010 440" stroke="#2ec27e" class="arrow-path" marker-end="url(#aG)"/>
+      <path d="M 180 280 C 220 340,240 400,260 450" stroke="#8b6cef" class="arrow-path" marker-end="url(#aP)"/>
+      <path d="M 310 490 C 380 510,420 520,460 520" stroke="#8b6cef" class="arrow-path" marker-end="url(#aP)"/>
+    </svg>
+    <div class="node" style="left:15%;top:32%;--color:#8b6cef"><div class="node-dot" style="--size:56px;--color:#8b6cef"></div><div class="node-inner"><div class="node-name" style="--color:#8b6cef">标签收集者</div><div class="node-desc">做测试、贴标签</div><div class="node-stat">7.6% · 引流入口</div></div></div>
+    <div class="node" style="left:28%;top:22%;--color:#4aa3df"><div class="node-dot" style="--size:44px;--color:#4aa3df"></div><div class="node-inner"><div class="node-name" style="--color:#4aa3df">高敏感</div><div class="node-desc">活得累但不是病</div><div class="node-stat">2.0% · 互动率23.1%</div></div></div>
+    <div class="node" style="left:44%;top:24%;--color:#4aa3df"><div class="node-dot" style="--size:64px;--color:#4aa3df"></div><div class="node-inner"><div class="node-name" style="--color:#4aa3df">内耗</div><div class="node-desc">每天很累说不清为什么</div><div class="node-stat">10.3%</div></div></div>
+    <div class="node" style="left:64%;top:26%;--color:#4aa3df"><div class="node-dot" style="--size:72px;--color:#4aa3df"></div><div class="node-inner"><div class="node-name" style="--color:#4aa3df">睡前思维</div><div class="node-desc">脑子关不掉</div><div class="node-stat">9.7%</div></div></div>
+    <div class="node" style="left:82%;top:30%;--color:#ff6b8a"><div class="node-dot" style="--size:40px;--color:#ff6b8a"></div><div class="node-inner"><div class="node-name" style="--color:#ff6b8a">躯体化/就医</div><div class="node-desc">身体出症状了</div><div class="node-stat">4.5%</div></div></div>
+    <div class="node" style="left:13%;top:50%;--color:#f5a524"><div class="node-dot" style="--size:36px;--color:#f5a524"></div><div class="node-inner"><div class="node-name" style="--color:#f5a524">情绪进食</div><div class="node-desc">孤岛 · 搜"减肥"</div><div class="node-stat">4.4%</div></div></div>
+    <div class="node" style="left:30%;top:46%;--color:var(--ink-3)"><div class="node-dot" style="--size:28px;--color:var(--ink-3)"></div><div class="node-inner"><div class="node-name" style="--color:var(--ink-3)">AI依恋</div><div class="node-desc">和AI谈恋爱</div><div class="node-stat">76帖 · 新现象</div></div></div>
+    <div class="node" style="left:16%;top:68%;--color:var(--ink-3)"><div class="node-dot" style="--size:28px;--color:var(--ink-3)"></div><div class="node-inner"><div class="node-name" style="--color:var(--ink-3)">海外华人</div><div class="node-desc">需求真空</div><div class="node-stat">38帖 · 新现象</div></div></div>
+    <div class="node" style="left:25%;top:64%;--color:#8b6cef"><div class="node-dot" style="--size:50px;--color:#8b6cef"></div><div class="node-inner"><div class="node-name" style="--color:#8b6cef">原生家庭</div><div class="node-desc">给痛苦起名字</div><div class="node-stat">2.6% · 互动率17.1%</div></div></div>
+    <div class="node" style="left:10%;top:82%;--color:#f5a524"><div class="node-dot" style="--size:60px;--color:#f5a524"></div><div class="node-inner"><div class="node-name" style="--color:#f5a524">咨询受阻</div><div class="node-desc">想付钱但嫌贵/没用</div><div class="node-stat">11.2% · 付费入口</div></div></div>
+    <div class="node" style="left:28%;top:82%;--color:var(--ink-3)"><div class="node-dot" style="--size:30px;--color:var(--ink-3)"></div><div class="node-inner"><div class="node-name" style="--color:var(--ink-3)">倾听师转行</div><div class="node-desc">既是用户也是供给方</div><div class="node-stat">380+帖 · 新现象</div></div></div>
+    <div class="node" style="left:46%;top:65%;--color:#2ec27e"><div class="node-dot" style="--size:44px;--color:#2ec27e"></div><div class="node-inner"><div class="node-name" style="--color:#2ec27e">婚姻围城</div><div class="node-desc">"婚内已寡"</div><div class="node-stat">3.3%</div></div></div>
+    <div class="node" style="left:60%;top:68%;--color:#2ec27e"><div class="node-dot" style="--size:80px;--color:#2ec27e"></div><div class="node-inner"><div class="node-name" style="--color:#2ec27e">全职妈妈</div><div class="node-desc">角色正在摧毁自我</div><div class="node-stat">9.0%</div></div></div>
+    <div class="node" style="left:78%;top:62%;--color:#2ec27e"><div class="node-dot" style="--size:40px;--color:#2ec27e"></div><div class="node-inner"><div class="node-name" style="--color:#2ec27e">更年期</div><div class="node-desc">被算法遗忘</div><div class="node-stat">5.3% · 互动率1.7%</div></div></div>
+    <div class="node" style="left:88%;top:56%;--color:#2ec27e"><div class="node-dot" style="--size:28px;--color:#2ec27e"></div><div class="node-inner"><div class="node-name" style="--color:#2ec27e">高三家长</div><div class="node-desc">561评论/帖</div><div class="node-stat">0.3%</div></div></div>
+    <div class="node" style="left:68%;top:82%;--color:var(--ink-3)"><div class="node-dot" style="--size:28px;--color:var(--ink-3)"></div><div class="node-inner"><div class="node-name" style="--color:var(--ink-3)">休学家庭</div><div class="node-desc">家长说不上学/孩子说原生家庭</div><div class="node-stat">90帖 · 新现象</div></div></div>
+</div>
+<div class="map-legend">
+    <div class="legend-item"><div class="legend-line" style="background:#4aa3df"></div><span>严重程度路径</span></div>
+    <div class="legend-item"><div class="legend-line" style="background:#2ec27e"></div><span>生命周期路径</span></div>
+    <div class="legend-item"><div class="legend-line" style="background:#8b6cef"></div><span>认知深度路径</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f5a524"></div><span>孤岛/付费入口</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--ink-3)"></div><span>新兴现象</span></div>
+</div>
+<div class="map-notes">
+    <div class="map-note"><h3>怎么看这张图</h3><p>越往右，问题越严重，用户越需要"即时工具"和"就医导航"。越往下，痛苦越和关系/家庭有关。圆圈大小≈帖量占比。箭头=用户流动方向。</p></div>
+    <div class="map-note"><h3>课程应该先做哪块</h3><p>图的中上部（内耗→睡前思维）是帖量最大、流动最密集的区域。中下部（妈妈）是付费信号最强的区域。左下角（咨询受阻）是现成的付费转化池。</p></div>
+    <div class="map-note"><h3>四个灰色圆是"新玩意儿"</h3><p>AI依恋、倾听师转行、休学家庭、海外华人——半年前几乎不存在，现在正在快速增长。不一定是主线课程的目标，但值得持续观察。</p></div>
+</div>
+<div class="note-box reveal" style="margin-top:16px"><strong>"咨询受阻"是所有人群的最大交叉枢纽</strong>——与倾听师转行交叉 216 帖、与妈妈交叉 227 帖、与 AI 依恋交叉 52 帖。<strong>休学家庭×妈妈=76帖</strong>，成为妈妈路径的新分支。情绪性进食仍然是孤岛。</div>
 
-<div class="rule reveal"><div class="rule-label">铁律 01</div><h4>收藏/赞比是区分"流量"和"价值"的唯一指标</h4><div class="rule-body"><table class="data-table"><thead><tr><th>内容类型</th><th>收藏/赞比</th><th>含义</th></tr></thead><tbody><tr><td>鸡汤/安慰（"你担心的事99%不会发生"）</td><td>0.01-0.04</td><td>看了就忘</td></tr><tr><td>共鸣/宣泄（"高敏感的人在学校活不下去"）</td><td>0.10-0.15</td><td>点赞但不存</td></tr><tr><td>命名/解释（"过度独立是一种心理防御"）</td><td>0.7-1.2</td><td>存下来理解自己</td></tr><tr><td>方法/工具（"两分钟骗过你的大脑"）</td><td><strong>1.0-2.7</strong></td><td>存下来反复用</td></tr></tbody></table><p style="margin-top:.6rem">"你担心的事99%不会发生"被5个人反复发布，每次都有赞但收藏比都在0.02-0.04——<strong>鸡汤的无效性被精确量化了。</strong></p></div></div>
-<div class="rule reveal"><div class="rule-label">铁律 02</div><h4>不同年龄信任完全不同的语言系统</h4><div class="rule-body"><ul><li>20-30岁（高敏感/内耗）→ 信任"脑科学"：皮质醇、杏仁核、神经系统</li><li>30-40岁（妈妈）→ 信任"可执行的每日练习"：每天抄写一遍（收藏比1.40）</li><li>40-55岁（更年期）→ 信任"中医/食疗"：滋阴潜阳汤（<strong>收藏比2.70——全场最高</strong>）</li></ul></div></div>
-<div class="rule reveal"><div class="rule-label">铁律 03</div><h4>评论密度比互动率更能反映真实需求</h4><p>更年期群体互动率1.7%（全场最低），但评论/赞比6.93（全场最高）。不是需求不大，是算法不推——<strong>每一个靠搜索找到帖子的人几乎都会留言。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 04</div><h4>用户已经造出了一套比心理学术语更有效的"民间词汇"</h4><p>"过度独立"（4.5万赞）、"精神房租"（2.8万赞）、"婚内已寡"、"睡前妄想症"、"内核稳定"——这些词不存在于心理学教科书，但传播力远超正式术语。<strong>课程应该用这套民间语言做入口。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 05</div><h4>心理内容赛道正在快速红海化</h4><p>帖量从2025.10的224帖增长到2026.04的2440帖（<strong>11倍</strong>），但均赞从3024下降到517（<strong>1/6</strong>）。免费内容泛滥 → 单帖价值稀释 → <strong>用户开始愿意为"系统化+可执行"的产品付费的窗口正在打开。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 06</div><h4>凌晨发帖赞数最高，早上9点收藏比最高</h4><p>凌晨1-2点发的帖子均赞1119-1123，远超白天（300-700）——深夜写的东西情绪浓度更高、竞争更少。而早上9点的收藏/赞比是全天最高（0.71）。<strong>深度情绪内容深夜发，方法工具类内容早上9点发。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 07</div><h4>周六是浏览日，周日是深度日</h4><p>周六帖均赞1076（全周最高），周日帖均评论95（全周最高）。<strong>引流内容周六发，讨论型内容周日发。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 08</div><h4>图文仍然是心理内容的主体格式</h4><p>视频帖只占23%（4722条），图文占69%（10627条）。心理话题的用户更偏好"可以反复看、可以截图收藏"的图文。<strong>课程的引流内容不需要强行做视频——图文卡片+自测互动可能更适合这个赛道。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 09</div><h4>用户会"悄悄收藏"但不愿意"公开点赞"</h4><p>存在一批收藏远超赞数的帖子——"你经常半夜两三点醒"（收藏5871，赞2183）、"更年期中成药指南"（收藏5498，赞2941）。<strong>课程应该强调"匿名学习""私密性"这个特性。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 10</div><h4>"真问题"比"好内容"更能激发讨论</h4><p>1055条"评论数超过赞数"的纯讨论帖中，最高频intent是：提问（180）> 吐槽（104）> 求助（96）。<strong>课程社群运营的起手式应该是投放"提问帖"而非"知识帖"。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 11</div><h4>用户心中的价格锚点——150-200元是心理甜点</h4><p>989条价格讨论帖中，用户最频繁提到的价格是200元（11次）和150元（10次）。三个价格带：99元以下="冲动消费"，150-200元="能接受但会犹豫"，500-800元="咬牙才会试"。<strong>课程定价在99-199区间，刚好卡在"比咨询便宜但比免费内容有质量"的心理甜点上。</strong></p></div>
-<div class="rule reveal"><div class="rule-label">铁律 12</div><h4>用户说"有效"的东西都是不需要理解原理、直接照做的小动作</h4><p>96条"亲测有用"帖中，收藏比最高的不是方法论而是具体的行动指令：不吼不叫孩子反而更听话（收藏比1.07）、凌晨早醒亲测好用方法（收藏比1.58）。<strong>课程的方法设计应该是"行动指令"级别的，不是"先理解再行动"。</strong></p></div>
+<!-- 03 反直觉洞察 -->
+<div class="sec-head" id="s3"><div class="sec-num">03</div><div class="sec-info"><h2>反直觉洞察</h2><p>数据中容易踩的坑</p></div></div>
 
-<!-- 04 反直觉洞察 -->
-<div class="sec-head" id="s4"><div class="sec-num">04</div><div class="sec-info"><h2>反直觉洞察</h2><p>数据中容易踩的坑</p></div></div>
+<div class="insight reveal"><div class="sub-n">1</div><div><h4>用户在自建"免费心理咨询替代品"</h4><p>244条"树洞/搭子/倾诉"帖产出 <strong>38,665 条评论</strong>。"大家可以说说最近的烦心事吗？"单帖 10,538 评论。用户发现评论区互助比花300块找咨询师更有效——因为回应她们的是"经历过同样事情的人"。</p><div class="hl">课程的附加价值不只是内容，而是社群——课程是入群的门票。</div></div></div>
+<div class="insight reveal"><div class="sub-n">2</div><div><h4>周末的痛苦比工作日更深</h4><p>工作日均评论 150，周末均评论 183（高出 22%）。周末帖子写得更详细，引发更深共鸣。</p><div class="hl">深度内容应该周末推送，碎片化工具应该工作日推送。</div></div></div>
+<div class="insight reveal"><div class="sub-n">3</div><div><h4>"转变故事"是被低估的高价值格式</h4><p>255条"走出来/变好了/康复"帖的藏/赞比 0.42，高于平均。头部帖收藏比 2.0。用户存的不只是方法，还有<strong>"证据"——证明这条路能走通</strong>。</p><div class="hl">课程应嵌入真实用户的转变叙事。</div></div></div>
+<div class="insight reveal"><div class="sub-n">4</div><div><h4>"脑子停不下来"是横跨4个群体的隐性超级需求</h4><p><strong>150+ 帖</strong>，但从未被当作统一现象。高敏感的"自动脑补"、内耗的"胡思乱想"、睡前的"脑内剧场"、躯体化的"反复扫描身体"——在临床上都指向强迫性思维谱系，但用户不知道它们是同一个东西。</p><div class="hl">一个叫"怎么让脑子停下来"的课程模块会同时命中 4 个群体。</div></div></div>
+<div class="insight reveal"><div class="sub-n">5</div><div><h4>灵性内容的收藏比竟然低于脑科学和冥想</h4><p>灵性内容有量（259帖），用户会被吸引（点赞），但不会存下来反复用（收藏）。完整排名：<strong>中医食疗(1.06) > 冥想(0.86) > 脑科学(0.79) > CBT(0.66) > 灵性(0.52)</strong>。</p><div class="hl">越"具体可操作"的方法论，收藏比越高。</div></div></div>
+<div class="insight reveal"><div class="sub-n">6</div><div><h4>AI正在成为免费心理咨询的最大替代品——而且用户在和AI谈恋爱</h4><p>76条AI依恋帖。"deepseek是最适合中国宝宝的心理医生"（992评论）、"跟AI无意识撒娇"（<strong>1.6万赞</strong>）。AI正在做三件原本需要不同产品完成的事：倾听、角色扮演、情感陪伴。</p><div class="hl">课程的差异化壁垒不是"比AI更会倾听"，而是AI给不了的——系统方法+同类社群+危机识别。</div></div></div>
+<div class="insight reveal"><div class="sub-n">7</div><div><h4>课程的负面评价是正面评价的2.3倍——"信任危机"是获客最大障碍</h4><p>876条课程消费帖中，负面118条 vs 正面51条。"教培避雷""割韭菜""交智商税"是高频词。</p><div class="hl">获客话术的第一句不应该是"我们的课程多好"，而是"我们知道你被坑过"——直接回应信任危机。</div></div></div>
+<div class="insight reveal"><div class="sub-n">8</div><div><h4>"倾听师/秒回师/挨骂师"正在爆发——心理咨询行业正被民间平替瓦解</h4><p><strong>380帖</strong>。"45岁转行倾听师"（1318评论）、"应聘秒回师，您有故事我有耳朵"（3976评论）。120条"转行"帖的画像：35-45岁中年女性+原行业倦怠+自己有心理困扰经历。</p><div class="hl">她们既是课程的用户，也是潜在的分销渠道和助教池。</div></div></div>
+<div class="insight reveal"><div class="sub-n">9</div><div><h4>"我妈自学心理学真是让我崩溃"——心理学被误用的副作用</h4><p>只有1条帖但<strong>748评论</strong>。家长"学了点心理学"后反而用心理学语言来PUA/操控孩子。</p><div class="hl">面向家长群体的课程需要内置"这些知识是用来理解孩子的，不是用来'修理'孩子的"这一层提醒。</div></div></div>
+<div class="insight reveal"><div class="sub-n">10</div><div><h4>"休学"是一个正在爆发的青少年危机——已出现商业化服务</h4><p><strong>90帖</strong>。家长在问"孩子不上学怎么办"，孩子在说"我就怪原生家庭"（732评论）。</p><div class="hl">家长和孩子的归因完全不同——这个认知鸿沟本身就是课程可以填补的。</div></div></div>
+<div class="insight reveal"><div class="sub-n">11</div><div><h4>海外华人心理困扰是一个"需求真空"</h4><p>38帖但两条"留子吐槽"帖合计<strong>3,119评论</strong>。她们的痛苦（文化隔离+经济愧疚+就业恐慌）和国内用户完全不同。</p><div class="hl">英文心理服务不理解"东亚家庭""原生家庭""内耗"——中文线上课程对她们有天然优势。</div></div></div>
 
-<div class="insight reveal"><div class="n">01</div><div><h4>用户在自建"免费心理咨询替代品"</h4><p>244条"树洞/搭子/倾诉"帖产出 <strong>38,665 条评论</strong>。"大家可以说说最近的烦心事吗？"单帖 10,538 评论。用户发现评论区互助比花300块找咨询师更有效——因为回应她们的是"经历过同样事情的人"。</p><div class="hl">课程的附加价值不只是内容，而是社群——课程是入群的门票。</div></div></div>
-<div class="insight reveal"><div class="n">02</div><div><h4>周末的痛苦比工作日更深</h4><p>工作日均评论 150，周末均评论 183（高出 22%）。周末帖子写得更详细，引发更深共鸣。</p><div class="hl">深度内容应该周末推送，碎片化工具应该工作日推送。</div></div></div>
-<div class="insight reveal"><div class="n">03</div><div><h4>"转变故事"是被低估的高价值格式</h4><p>255条"走出来/变好了/康复"帖的藏/赞比 0.42，高于平均。头部帖收藏比 2.0。用户存的不只是方法，还有<strong>"证据"——证明这条路能走通</strong>。</p><div class="hl">课程应嵌入真实用户的转变叙事。</div></div></div>
-<div class="insight reveal"><div class="n">04</div><div><h4>"脑子停不下来"是横跨4个群体的隐性超级需求</h4><p><strong>150+ 帖</strong>，但从未被当作统一现象。高敏感的"自动脑补"、内耗的"胡思乱想"、睡前的"脑内剧场"、躯体化的"反复扫描身体"——在临床上都指向强迫性思维谱系，但用户不知道它们是同一个东西。</p><div class="hl">一个叫"怎么让脑子停下来"的课程模块会同时命中 4 个群体。</div></div></div>
-<div class="insight reveal"><div class="n">05</div><div><h4>灵性内容的收藏比竟然低于脑科学和冥想</h4><p>灵性内容有量（259帖），用户会被吸引（点赞），但不会存下来反复用（收藏）。完整排名：<strong>中医食疗(1.06) > 冥想(0.86) > 脑科学(0.79) > CBT(0.66) > 灵性(0.52)</strong>。</p><div class="hl">越"具体可操作"的方法论，收藏比越高。</div></div></div>
-<div class="insight reveal"><div class="n">06</div><div><h4>AI正在成为免费心理咨询的最大替代品——而且用户在和AI谈恋爱</h4><p>76条AI依恋帖。"deepseek是最适合中国宝宝的心理医生"（992评论）、"跟AI无意识撒娇"（<strong>1.6万赞</strong>）。AI正在做三件原本需要不同产品完成的事：倾听、角色扮演、情感陪伴。</p><div class="hl">课程的差异化壁垒不是"比AI更会倾听"，而是AI给不了的——系统方法+同类社群+危机识别。</div></div></div>
-<div class="insight reveal"><div class="n">07</div><div><h4>课程的负面评价是正面评价的2.3倍——"信任危机"是获客最大障碍</h4><p>876条课程消费帖中，负面118条 vs 正面51条。"教培避雷""割韭菜""交智商税"是高频词。</p><div class="hl">获客话术的第一句不应该是"我们的课程多好"，而是"我们知道你被坑过"——直接回应信任危机。</div></div></div>
-<div class="insight reveal"><div class="n">08</div><div><h4>"倾听师/秒回师/挨骂师"正在爆发——心理咨询行业正被民间平替瓦解</h4><p><strong>380帖</strong>。"45岁转行倾听师"（1318评论）、"应聘秒回师，您有故事我有耳朵"（3976评论）。120条"转行"帖的画像：35-45岁中年女性+原行业倦怠+自己有心理困扰经历。</p><div class="hl">她们既是课程的用户，也是潜在的分销渠道和助教池。</div></div></div>
-<div class="insight reveal"><div class="n">09</div><div><h4>"我妈自学心理学真是让我崩溃"——心理学被误用的副作用</h4><p>只有1条帖但<strong>748评论</strong>。家长"学了点心理学"后反而用心理学语言来PUA/操控孩子。</p><div class="hl">面向家长群体的课程需要内置"这些知识是用来理解孩子的，不是用来'修理'孩子的"这一层提醒。</div></div></div>
-<div class="insight reveal"><div class="n">10</div><div><h4>"休学"是一个正在爆发的青少年危机——已出现商业化服务</h4><p><strong>90帖</strong>。家长在问"孩子不上学怎么办"，孩子在说"我就怪原生家庭"（732评论）。</p><div class="hl">家长和孩子的归因完全不同——这个认知鸿沟本身就是课程可以填补的。</div></div></div>
-<div class="insight reveal"><div class="n">11</div><div><h4>海外华人心理困扰是一个"需求真空"</h4><p>38帖但两条"留子吐槽"帖合计<strong>3,119评论</strong>。她们的痛苦（文化隔离+经济愧疚+就业恐慌）和国内用户完全不同。</p><div class="hl">英文心理服务不理解"东亚家庭""原生家庭""内耗"——中文线上课程对她们有天然优势。</div></div></div>
-
-<!-- 05 竞品 -->
-<div class="sec-head" id="s5"><div class="sec-num">05</div><div class="sec-info"><h2>竞品现状与用户评价</h2><p>心理服务平台 · AI工具 · 专家KOL · 从业者培训市场</p></div></div>
+<!-- 04 竞品 -->
+<div class="sec-head" id="s4"><div class="sec-num">04</div><div class="sec-info"><h2>竞品现状与用户评价</h2><p>心理服务平台 · AI工具 · 专家KOL · 从业者培训市场</p></div></div>
 
 <div class="comp-section reveal"><div class="comp-title">心理服务平台</div><table class="data-table"><thead><tr><th>品牌</th><th>提及量</th><th>用户态度</th></tr></thead><tbody><tr><td>壹心理</td><td>427帖</td><td>最大但最空——大量自产日签/推广，来访者帖集中在"贵"和"没用"，从业者在"正式退出平台"</td></tr><tr><td>暂停实验室</td><td><strong>256帖</strong></td><td><strong>唯一让用户"练起来"的品牌</strong>——"650天，全体系完成"，但也有"ADHDer不适合""害怕是智商税"</td></tr><tr><td>简单心理</td><td>122帖</td><td>培训讨论多于咨询讨论；从业者在讨论"平台潜规则""头一次把咨询师给投诉了"</td></tr><tr><td>KnowYourself</td><td>27帖</td><td>老牌但影响力衰减——长文模式在小红书上失灵，用户正从微信迁移到短内容平台</td></tr><tr><td>清华心理课</td><td>22帖</td><td>权威标签传播力极强——"教你如何建立自信"1.3万赞，收藏/赞比0.55-0.85</td></tr></tbody></table><div class="note-box" style="margin-top:12px">暂停实验室做对了什么：把品牌和"具体的每日练习"绑定，让用户形成"打卡"习惯。课程可以学习的不是它的内容，而是它的<strong>留存机制</strong>。</div></div>
 
@@ -261,16 +326,24 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 <div class="comp-section reveal"><div class="comp-title">从业者培训市场——供给侧在崩溃</div><ul class="kol-list"><li><strong>"避雷，心理咨询师考试就是坑！"</strong>（419评论）</li><li><strong>"花几十万学心理学已经碎了"</strong>（173评论）</li><li>"为什么心理咨询师不可以自己报名，一定要去机构报名"（287评论）</li><li>"我学心理学11年，但我根本不想做咨询师！"（431评论）</li></ul></div>
 
-<!-- 06 新兴人群 -->
-<div class="sec-head" id="s6"><div class="sec-num">06</div><div class="sec-info"><h2>4个值得关注的新兴人群</h2><p>帖量较小，但揭示了市场的新趋势和新机会</p></div></div>
+<!-- 05 内容规律 -->
+<div class="sec-head" id="s5"><div class="sec-num">05</div><div class="sec-info"><h2>内容设计的基本规律</h2></div></div>
 
-<div class="insight reveal"><div class="n" style="color:var(--amber)">13</div><div><h4>AI依恋者：一个全新现象正在形成（76帖）</h4><p>用户不是把AI当工具——是在和AI建立情感依赖。"跟AI无意识撒娇"<strong>1.6万赞</strong>。AI正在做三件事：倾听（替代咨询师）、角色扮演（替代社交）、情感陪伴（替代亲密关系）。</p><div class="hl">课程差异化壁垒：AI给不了的——系统方法+同类社群+危机识别。<a href="group-ai-attachment.html" style="margin-left:8px;text-decoration:underline">查看详情 →</a></div></div></div>
-<div class="insight reveal"><div class="n" style="color:var(--amber)">14</div><div><h4>倾听师转行者：需求方和供给方是同一批人（380+帖）</h4><p>35-45岁中年女性，既是心理服务的需求方（自己有焦虑/内耗），也是供给方（想做倾听师赚钱）。与咨询受阻交叉<strong>216帖</strong>——几乎完全重叠。</p><div class="hl">课程的第二种商业模式——"从学员到倾听师"的成长路径。<a href="group-listener-career.html" style="margin-left:8px;text-decoration:underline">查看详情 →</a></div></div></div>
-<div class="insight reveal"><div class="n" style="color:var(--amber)">15</div><div><h4>休学家庭：一个正在爆发的青少年危机（90帖）</h4><p>家长视角和孩子视角比例约6:4。家长在问"孩子不上学怎么办"，孩子在说"是原生家庭的问题"。与妈妈交叉<strong>76帖</strong>，已出现商业化服务。</p><div class="hl">"双人群"课程——"休学是孩子在说'我需要帮助'"。<a href="group-school-dropout.html" style="margin-left:8px;text-decoration:underline">查看详情 →</a></div></div></div>
-<div class="insight reveal"><div class="n" style="color:var(--amber)">16</div><div><h4>海外华人心理困扰：需求真空中的高密度讨论（38帖）</h4><p>帖量小但讨论密度爆炸——两条"留子最近都在烦什么"帖合计<strong>3,119评论</strong>。文化隔离+经济愧疚+就业恐慌+求助无门。</p><div class="hl">英文心理服务不理解"东亚家庭""内耗"——中文线上课程有天然优势。<a href="group-overseas-chinese.html" style="margin-left:8px;text-decoration:underline">查看详情 →</a></div></div></div>
+<div class="rule reveal"><div class="rule-label">规律 01</div><h4>收藏/赞比是区分"流量"和"价值"的唯一指标</h4><div class="rule-body"><table class="data-table"><thead><tr><th>内容类型</th><th>收藏/赞比</th><th>含义</th></tr></thead><tbody><tr><td>鸡汤/安慰（"你担心的事99%不会发生"）</td><td>0.01-0.04</td><td>看了就忘</td></tr><tr><td>共鸣/宣泄（"高敏感的人在学校活不下去"）</td><td>0.10-0.15</td><td>点赞但不存</td></tr><tr><td>命名/解释（"过度独立是一种心理防御"）</td><td>0.7-1.2</td><td>存下来理解自己</td></tr><tr><td>方法/工具（"两分钟骗过你的大脑"）</td><td><strong>1.0-2.7</strong></td><td>存下来反复用</td></tr></tbody></table><p style="margin-top:.6rem">"你担心的事99%不会发生"被5个人反复发布，每次都有赞但收藏比都在0.02-0.04——<strong>鸡汤的无效性被精确量化了。</strong></p></div></div>
+<div class="rule reveal"><div class="rule-label">规律 02</div><h4>不同年龄信任完全不同的语言系统</h4><div class="rule-body"><ul><li>20-30岁（高敏感/内耗）→ 信任"脑科学"：皮质醇、杏仁核、神经系统</li><li>30-40岁（妈妈）→ 信任"可执行的每日练习"：每天抄写一遍（收藏比1.40）</li><li>40-55岁（更年期）→ 信任"中医/食疗"：滋阴潜阳汤（<strong>收藏比2.70——全场最高</strong>）</li></ul></div></div>
+<div class="rule reveal"><div class="rule-label">规律 03</div><h4>评论密度比互动率更能反映真实需求</h4><p>更年期群体互动率1.7%（全场最低），但评论/赞比6.93（全场最高）。不是需求不大，是算法不推——<strong>每一个靠搜索找到帖子的人几乎都会留言。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 04</div><h4>用户已经造出了一套比心理学术语更有效的"民间词汇"</h4><p>"过度独立"（4.5万赞）、"精神房租"（2.8万赞）、"婚内已寡"、"睡前妄想症"、"内核稳定"——这些词不存在于心理学教科书，但传播力远超正式术语。<strong>课程应该用这套民间语言做入口。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 05</div><h4>心理内容赛道正在快速红海化</h4><p>帖量从2025.10的224帖增长到2026.04的2440帖（<strong>11倍</strong>），但均赞从3024下降到517（<strong>1/6</strong>）。免费内容泛滥 → 单帖价值稀释 → <strong>用户开始愿意为"系统化+可执行"的产品付费的窗口正在打开。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 06</div><h4>凌晨发帖赞数最高，早上9点收藏比最高</h4><p>凌晨1-2点发的帖子均赞1119-1123，远超白天（300-700）——深夜写的东西情绪浓度更高、竞争更少。而早上9点的收藏/赞比是全天最高（0.71）。<strong>深度情绪内容深夜发，方法工具类内容早上9点发。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 07</div><h4>周六是浏览日，周日是深度日</h4><p>周六帖均赞1076（全周最高），周日帖均评论95（全周最高）。<strong>引流内容周六发，讨论型内容周日发。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 08</div><h4>图文仍然是心理内容的主体格式</h4><p>视频帖只占23%（4722条），图文占69%（10627条）。心理话题的用户更偏好"可以反复看、可以截图收藏"的图文。<strong>课程的引流内容不需要强行做视频——图文卡片+自测互动可能更适合这个赛道。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 09</div><h4>用户会"悄悄收藏"但不愿意"公开点赞"</h4><p>存在一批收藏远超赞数的帖子——"你经常半夜两三点醒"（收藏5871，赞2183）、"更年期中成药指南"（收藏5498，赞2941）。<strong>课程应该强调"匿名学习""私密性"这个特性。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 10</div><h4>"真问题"比"好内容"更能激发讨论</h4><p>1055条"评论数超过赞数"的纯讨论帖中，最高频intent是：提问（180）> 吐槽（104）> 求助（96）。<strong>课程社群运营的起手式应该是投放"提问帖"而非"知识帖"。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 11</div><h4>用户心中的价格锚点——150-200元是心理甜点</h4><p>989条价格讨论帖中，用户最频繁提到的价格是200元（11次）和150元（10次）。三个价格带：99元以下="冲动消费"，150-200元="能接受但会犹豫"，500-800元="咬牙才会试"。<strong>课程定价在99-199区间，刚好卡在"比咨询便宜但比免费内容有质量"的心理甜点上。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">规律 12</div><h4>用户说"有效"的东西都是不需要理解原理、直接照做的小动作</h4><p>96条"亲测有用"帖中，收藏比最高的不是方法论而是具体的行动指令：不吼不叫孩子反而更听话（收藏比1.07）、凌晨早醒亲测好用方法（收藏比1.58）。<strong>课程的方法设计应该是"行动指令"级别的，不是"先理解再行动"。</strong></p></div>
 
-<!-- 07 产品全景 -->
-<div class="sec-head" id="s7"><div class="sec-num">07</div><div class="sec-info"><h2>课程产品全景图</h2><p>获客层 · 核心课程 · 场景包 · 独立产品 · 延伸机会 · 贯穿原则</p></div></div>
+<!-- 06 产品全景 -->
+<div class="sec-head" id="s6"><div class="sec-num">06</div><div class="sec-info"><h2>课程产品全景图</h2><p>获客层 · 核心课程 · 场景包 · 独立产品 · 延伸机会 · 贯穿原则</p></div></div>
 
 <a href="product-overview.html" class="product-link reveal"><div><div class="product-link-title">查看完整产品架构</div><p class="product-link-desc">从获客层到核心课程到场景包——基于数据验证的完整课程产品体系</p><div class="product-link-tags"><span class="ptag">获客层</span><span class="ptag">核心课程（三层）</span><span class="ptag">场景包（三线）</span><span class="ptag">独立产品</span><span class="ptag">贯穿原则</span></div></div><span class="product-link-arrow">&#8594;</span></a>
 
