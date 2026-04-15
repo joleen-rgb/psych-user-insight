@@ -702,6 +702,134 @@
         }
 
         /* =========================================
+           TOP NAV
+           ========================================= */
+        .topnav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(251,250,247,0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .topnav .brand {
+            font-weight: 700;
+            color: var(--text-1);
+            font-size: 14px;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        .topnav a {
+            color: var(--text-2);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .topnav a:hover {
+            color: var(--text-1);
+            border-bottom-color: var(--text-1);
+        }
+
+        /* =========================================
+           OVERVIEW SECTION
+           ========================================= */
+        .overview {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+
+        .overview-lead {
+            font-size: clamp(1rem, 1.6vw, 1.2rem);
+            font-weight: 700;
+            color: var(--text-1);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .overview-body {
+            font-size: 14px;
+            color: var(--text-2);
+            line-height: 1.8;
+        }
+
+        .overview-body p {
+            margin-bottom: 0.8rem;
+        }
+
+        .overview-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .overview-body strong {
+            color: var(--text-1);
+            font-weight: 600;
+        }
+
+        .overview-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1.25rem 0;
+            padding: 16px;
+            background: #f3f3f5;
+            border-radius: 12px;
+        }
+
+        .overview-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .overview-stat b {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-1);
+        }
+
+        .overview-stat span {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .overview-stat + .overview-stat::before {
+            content: '';
+            width: 1px;
+            height: 16px;
+            background: var(--border);
+            margin-right: 4px;
+            align-self: center;
+        }
+
+        .overview-takeaway {
+            margin-top: 1.25rem;
+            padding: 14px 18px;
+            border-radius: 10px;
+            background: #ffe6ec;
+            color: #c8425e;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* =========================================
            FOOTER
            ========================================= */
         .report-footer {
@@ -812,20 +940,60 @@
 </head>
 <body>
 
+    <!-- Sticky navigation -->
+    <nav class="topnav">
+        <span class="brand">心理洞察</span>
+        <a href="#overview">概览</a>
+        <a href="#personas">人群画像</a>
+        <a href="#flow">流动关系</a>
+        <a href="#rules">内容规律</a>
+        <a href="#insights">反直觉洞察</a>
+        <a href="#competitors">竞品分析</a>
+        <a href="#product">产品全景</a>
+    </nav>
+
     <div class="page">
 
         <!-- ================================
              报告标题
              ================================ -->
-        <header class="report-header reveal" style="margin-bottom:clamp(2.5rem,5vw,4rem);">
-            <h1 style="font-family:var(--font-serif);font-size:clamp(1.1rem,2vw,1.4rem);font-weight:700;color:var(--text-1);letter-spacing:-0.01em;">心理课程市场用户洞察报告</h1>
+        <header class="report-header reveal" style="margin-bottom:clamp(1.5rem,3vw,2rem);">
+            <h1 style="font-size:clamp(1.2rem,2.2vw,1.5rem);font-weight:700;color:var(--text-1);letter-spacing:-0.01em;">心理课程市场用户洞察报告</h1>
             <p style="font-size:clamp(0.7rem,0.9vw,0.78rem);color:var(--text-3);margin-top:0.35rem;">小红书 6,172 条帖子 &middot; 2025.10 — 2026.04 &middot; 分析日期 2026-04-14</p>
         </header>
 
         <!-- ================================
+             概览
+             ================================ -->
+        <div class="overview reveal" id="overview">
+            <div class="overview-lead">小红书上正在发生一场大规模的"民间心理自救运动"——而现有的心理服务几乎全部缺席。</div>
+
+            <div class="overview-body">
+                <p>过去半年，小红书上心理相关帖子从月均 224 条暴涨到 2,440 条（<strong>11倍</strong>），但单帖均赞从 3,024 跌到 517（<strong>仅剩 1/6</strong>）。免费内容泛滥、价值被快速稀释——用户开始愿意为"系统化、可执行"的产品付费的窗口正在打开。</p>
+
+                <p>这些帖子的作者几乎全是女性。她们不认为自己"有心理疾病"，但每天都觉得"活得很累"——敏感、内耗、失眠、崩溃、身体出症状。她们在小红书上做的事情不是寻求治疗，而是<strong>给自己的痛苦找到一个名字</strong>。</p>
+            </div>
+
+            <div class="overview-stats">
+                <div class="overview-stat"><b>6,172</b><span>帖子样本</span></div>
+                <div class="overview-stat"><b>12</b><span>用户人群</span></div>
+                <div class="overview-stat"><b>3</b><span>流动路径</span></div>
+                <div class="overview-stat"><b>5</b><span>内容铁律</span></div>
+                <div class="overview-stat"><b>5</b><span>反直觉发现</span></div>
+            </div>
+
+            <div class="overview-body">
+                <p>我们从这些帖子中识别出 12 个用户人群。最关键的发现是：<strong>这 12 个人群不是 12 个独立的市场，而是同一批人在不同人生阶段的样子。</strong></p>
+                <p>一个今天在搜"高敏感"的 25 岁女生，三年后可能变成搜"内耗怎么办"的职场人，再过五年可能变成搜"失眠"的新手妈妈。她的痛苦在加深，她的角色在变化，但她始终是同一个人。</p>
+            </div>
+
+            <div class="overview-takeaway">这意味着课程不应该按"焦虑""失眠"这样的主题分课，而应该沿着用户的人生轨迹和心理恶化程度来设计——跟着她走，而不是等她来找你。</div>
+        </div>
+
+        <!-- ================================
              人群深度画像
              ================================ -->
-        <section>
+        <section id="personas">
             <div class="sh reveal">
                 <div class="sh-eyebrow">User Profiles</div>
                 <h1 class="sh-title">人群深度画像</h1>
@@ -1004,7 +1172,7 @@
         <!-- ================================
              人群流动关系
              ================================ -->
-        <section>
+        <section id="flow">
             <div class="sh reveal">
                 <div class="sh-eyebrow">User Flow Patterns</div>
                 <h2 class="sh-title">人群之间的流动关系</h2>
@@ -1083,7 +1251,7 @@
         <!-- ================================
              内容设计的五条基本规律
              ================================ -->
-        <section>
+        <section id="rules">
             <div class="sh reveal">
                 <div class="sh-eyebrow">Content Design Rules</div>
                 <h2 class="sh-title">内容设计的五条基本规律</h2>
@@ -1148,7 +1316,7 @@
         <!-- ================================
              反直觉洞察
              ================================ -->
-        <section>
+        <section id="insights">
             <div class="sh reveal">
                 <div class="sh-eyebrow">Counter-Intuitive Insights</div>
                 <h2 class="sh-title">反直觉洞察</h2>
@@ -1202,7 +1370,7 @@
         <!-- ================================
              竞品现状与用户评价
              ================================ -->
-        <section>
+        <section id="competitors">
             <div class="sh reveal">
                 <div class="sh-eyebrow">Competitive Landscape</div>
                 <h2 class="sh-title">竞品现状与用户评价</h2>
@@ -1255,7 +1423,7 @@
         <!-- ================================
              产品全景图
              ================================ -->
-        <section>
+        <section id="product">
             <div class="sh reveal">
                 <div class="sh-eyebrow">Product Blueprint</div>
                 <h2 class="sh-title">课程产品全景图</h2>
@@ -1281,15 +1449,11 @@
              报告信息
              ================================ -->
         <footer class="report-footer reveal">
-            <h2 class="footer-title">心理课程市场<br>用户洞察报告</h2>
             <div class="footer-meta">
+                <span class="footer-meta-item"><span class="footer-meta-dot"></span>心理课程市场用户洞察报告</span>
                 <span class="footer-meta-item"><span class="footer-meta-dot"></span>小红书 6,172 条帖子</span>
                 <span class="footer-meta-item"><span class="footer-meta-dot"></span>2025.10 — 2026.04</span>
                 <span class="footer-meta-item"><span class="footer-meta-dot"></span>分析日期 2026-04-14</span>
-            </div>
-            <div class="footer-intro">
-                <p>我们从 6,172 条小红书帖子中识别出 12 个潜在用户人群。交叉分析发现：这些人群不是互不相干的，而是同一批人在不同阶段的样子。</p>
-                <p>一个今天在搜"高敏感"的 25 岁女生，三年后可能变成搜"内耗怎么办"的职场人，再过五年可能变成搜"失眠"的新手妈妈。她的痛苦在加深，她的角色在变化，但她始终是同一个人。</p>
             </div>
         </footer>
 
