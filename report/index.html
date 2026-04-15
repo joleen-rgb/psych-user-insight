@@ -1,1475 +1,254 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心理课程市场用户洞察报告</title>
-    <style>
-        /* =========================================
-           THEME — aligned with report.html
-           ========================================= */
-        :root {
-            --bg-base: #fbfaf7;
-            --bg-surface: #ffffff;
-            --bg-surface-hover: #ffffff;
-            --bg-glass: #f3f3f5;
-            --border: #ececef;
-            --border-hover: #dcdce0;
-
-            --text-1: #1b1b1f;
-            --text-2: #4a4a55;
-            --text-3: #8a8a96;
-
-            --warm: #f5a524;
-            --rose: #ff6b8a;
-            --sage: #2ec27e;
-            --sky: #4aa3df;
-            --sand: #8b6cef;
-
-            --rose-soft: #ffe6ec;
-            --sage-soft: #e3f6ec;
-            --sky-soft: #e3f1fb;
-            --sand-soft: #ece6ff;
-
-            --shadow: 0 1px 2px rgba(20,20,30,.04), 0 8px 24px rgba(20,20,30,.06);
-            --radius: 16px;
-
-            --font-serif: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", "Microsoft YaHei", sans-serif;
-            --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", "Microsoft YaHei", sans-serif;
-
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* =========================================
-           RESET & BASE
-           ========================================= */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg-base);
-            color: var(--text-1);
-            font-family: var(--font-sans);
-            font-size: clamp(0.85rem, 1.1vw, 1rem);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        /* ambient removed — clean light background */
-
-        /* =========================================
-           LAYOUT
-           ========================================= */
-        .page {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3rem);
-        }
-
-        section {
-            margin-bottom: clamp(4rem, 8vw, 7rem);
-        }
-
-        /* =========================================
-           SECTION HEADER
-           ========================================= */
-        .sh {
-            margin-bottom: clamp(2rem, 4vw, 3rem);
-        }
-
-        .sh-eyebrow {
-            font-size: clamp(0.65rem, 0.9vw, 0.75rem);
-            font-weight: 500;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-3);
-            margin-bottom: 0.6rem;
-        }
-
-        .sh-title {
-            font-family: var(--font-serif);
-            font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-            font-weight: 700;
-            line-height: 1.3;
-            color: var(--text-1);
-        }
-
-        .sh-desc {
-            color: var(--text-2);
-            margin-top: 0.6rem;
-            max-width: 560px;
-            font-size: clamp(0.8rem, 1vw, 0.9rem);
-        }
-
-        /* =========================================
-           PATH GROUP
-           ========================================= */
-        .path {
-            margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
-        }
-
-        .path-head {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .path-name {
-            font-family: var(--font-serif);
-            font-size: clamp(1rem, 1.8vw, 1.2rem);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .path-name::before {
-            content: '';
-            display: inline-block;
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .path--rose .path-name { color: var(--rose); }
-        .path--rose .path-name::before { background: var(--rose); }
-        .path--sage .path-name { color: var(--sage); }
-        .path--sage .path-name::before { background: var(--sage); }
-        .path--sky .path-name { color: var(--sky); }
-        .path--sky .path-name::before { background: var(--sky); }
-        .path--sand .path-name { color: var(--sand); }
-        .path--sand .path-name::before { background: var(--sand); }
-
-        .path-desc {
-            font-size: clamp(0.75rem, 0.95vw, 0.85rem);
-            color: var(--text-3);
-            margin-bottom: 1.25rem;
-            max-width: 620px;
-            line-height: 1.6;
-        }
-
-        /* =========================================
-           FLOW ARROW between cards
-           ========================================= */
-        .flow {
-            display: flex;
-            gap: clamp(0.6rem, 1.2vw, 0.9rem);
-            overflow-x: auto;
-            scroll-snap-type: x proximity;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 0.5rem;
-        }
-
-        .flow::-webkit-scrollbar { height: 0; }
-
-        .flow-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            width: 24px;
-            color: var(--text-3);
-            font-size: 1.1rem;
-            opacity: 0.4;
-            align-self: stretch;
-        }
-
-        /* =========================================
-           CARD
-           ========================================= */
-        .card {
-            flex: 1 0 220px;
-            max-width: 300px;
-            min-height: 210px;
-            scroll-snap-align: start;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(1.2rem, 2vw, 1.6rem);
-            box-shadow: var(--shadow);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        /* Top accent bar */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-        }
-
-        .path--rose .card::before { background: var(--rose); }
-        .path--sage .card::before { background: var(--sage); }
-        .path--sky .card::before { background: var(--sky); }
-        .path--sand .card::before { background: var(--sand); }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 1px 2px rgba(20,20,30,.05), 0 14px 32px rgba(20,20,30,.09);
-        }
-
-        .card-seq {
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text-3);
-            margin-bottom: 6px;
-        }
-
-        .card-title {
-            font-family: var(--font-serif);
-            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-            font-weight: 700;
-            line-height: 1.35;
-            margin-bottom: 0.45rem;
-        }
-
-        .card-persona {
-            font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-            color: var(--text-2);
-            line-height: 1.55;
-            flex: 1;
-        }
-
-        .card-foot {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid #f3f3f5;
-        }
-
-        .kpi {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .kpi-val {
-            font-weight: 700;
-            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-            letter-spacing: -0.02em;
-        }
-
-        .kpi-lbl {
-            font-size: 0.65rem;
-            color: var(--text-3);
-            letter-spacing: 0.02em;
-        }
-
-        .card-go {
-            position: absolute;
-            bottom: clamp(1.2rem, 2vw, 1.6rem);
-            right: clamp(1.2rem, 2vw, 1.6rem);
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            color: var(--text-3);
-            transition: all 0.3s var(--ease);
-        }
-
-        .card:hover .card-go {
-            border-color: var(--text-2);
-            color: var(--text-1);
-            transform: translateX(2px);
-        }
-
-        /* Tag for independent */
-        .card-tag {
-            display: inline-block;
-            font-size: 0.6rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #5a3fc0;
-            background: var(--sand-soft);
-            border: 1px solid rgba(139,108,239,0.2);
-            padding: 0.2rem 0.55rem;
-            border-radius: 6px;
-            margin-bottom: 0.6rem;
-            width: fit-content;
-        }
-
-        /* =========================================
-           PROSE SECTIONS (full text blocks)
-           ========================================= */
-        .prose {
-            max-width: 800px;
-        }
-
-        .prose p {
-            color: var(--text-2);
-            line-height: 1.85;
-            margin-bottom: 1rem;
-        }
-
-        .prose p strong {
-            color: var(--text-1);
-            font-weight: 600;
-        }
-
-        .prose-lead {
-            font-size: clamp(0.88rem, 1.15vw, 1rem);
-            color: var(--text-1) !important;
-            line-height: 1.8;
-        }
-
-        /* (flow-diagram removed — replaced by flow-block pills) */
-
-        /* Rule blocks */
-        .rule {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(1.4rem, 2.5vw, 2rem);
-            margin-bottom: clamp(0.8rem, 1.5vw, 1.1rem);
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .rule-label {
-            font-family: var(--font-serif);
-            font-size: clamp(0.65rem, 0.85vw, 0.75rem);
-            font-weight: 600;
-            color: var(--rose);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 0.6rem;
-        }
-
-        .rule-title {
-            font-family: var(--font-serif);
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 0.75rem;
-        }
-
-        .rule-body {
-            color: var(--text-2);
-            font-size: clamp(0.78rem, 1vw, 0.88rem);
-            line-height: 1.8;
-        }
-
-        .rule-body strong {
-            color: var(--text-1);
-            font-weight: 600;
-        }
-
-        .rule-body ul {
-            list-style: none;
-            margin: 0.6rem 0;
-        }
-
-        .rule-body ul li {
-            padding-left: 1rem;
-            position: relative;
-            margin-bottom: 0.35rem;
-        }
-
-        .rule-body ul li::before {
-            content: '·';
-            position: absolute;
-            left: 0;
-            color: var(--rose);
-            font-weight: 700;
-        }
-
-        /* Data table */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0.75rem 0;
-            font-size: clamp(0.72rem, 0.92vw, 0.82rem);
-        }
-
-        .data-table th {
-            text-align: left;
-            font-weight: 500;
-            color: var(--text-3);
-            font-size: 0.7rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            padding: 0.5rem 0.75rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .data-table td {
-            padding: 0.55rem 0.75rem;
-            color: var(--text-2);
-            border-bottom: 1px solid #f3f3f5;
-            vertical-align: top;
-        }
-
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .data-table td:first-child {
-            color: var(--text-1);
-        }
-
-        .data-table td strong {
-            color: var(--text-1);
-            font-weight: 600;
-        }
-
-        /* =========================================
-           FLOW VISUALIZATION (pills + arrows)
-           ========================================= */
-        .flow-block {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 16px 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 12px;
-        }
-
-        .flow-block-head {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .flow-block-bar {
-            width: 5px;
-            align-self: stretch;
-            border-radius: 3px;
-            min-height: 20px;
-        }
-
-        .flow-block-bar.rose { background: var(--rose); }
-        .flow-block-bar.sage { background: var(--sage); }
-        .flow-block-bar.sky { background: var(--sky); }
-
-        .flow-block-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-1);
-        }
-
-        .flow-chain {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-            padding: 4px 0;
-        }
-
-        .flow-pill {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .flow-pill.rose { background: #ffe6ec; color: #c8425e; }
-        .flow-pill.sage { background: #e3f6ec; color: #1d855a; }
-        .flow-pill.sky { background: #e3f1fb; color: #1f6a9e; }
-
-        .flow-arr {
-            color: var(--text-3);
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .flow-cross {
-            font-size: 11px;
-            color: var(--text-3);
-            background: #f3f3f5;
-            padding: 2px 8px;
-            border-radius: 999px;
-            white-space: nowrap;
-        }
-
-        .flow-note-box {
-            margin-top: 12px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            background: #f3f3f5;
-            font-size: 13.5px;
-            color: var(--text-2);
-        }
-
-        .flow-note-box strong {
-            color: var(--text-1);
-        }
-
-        /* =========================================
-           COMPETITOR TABLE
-           ========================================= */
-        .comp-section {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(1.4rem, 2.5vw, 2rem);
-            box-shadow: var(--shadow);
-            margin-bottom: 16px;
-        }
-
-        .comp-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .comp-title::before {
-            content: '';
-            width: 4px;
-            height: 16px;
-            border-radius: 2px;
-            background: var(--warm);
-        }
-
-        .kol-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .kol-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f3f3f5;
-            font-size: 13.5px;
-            color: var(--text-2);
-        }
-
-        .kol-list li:last-child { border-bottom: none; }
-        .kol-list li strong { color: var(--text-1); }
-
-        /* =========================================
-           INSIGHT CARDS (upgraded)
-           ========================================= */
-        .insights {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-            gap: clamp(0.8rem, 1.5vw, 1.1rem);
-        }
-
-        .insights {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .insight {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px 22px;
-            box-shadow: var(--shadow);
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-
-        .insight-num {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--border);
-            flex-shrink: 0;
-            width: 40px;
-            line-height: 1;
-        }
-
-        .insight-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .insight-title {
-            font-size: 15px;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 6px;
-        }
-
-        .insight-body {
-            font-size: 13.5px;
-            color: var(--text-2);
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        .insight-body strong {
-            color: var(--text-1);
-            font-weight: 600;
-        }
-
-        .insight-highlight {
-            margin-top: 10px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            background: #ffe6ec;
-            color: #c8425e;
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.55;
-        }
-
-        /* =========================================
-           PRODUCT LINK
-           ========================================= */
-        .product-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: clamp(1.8rem, 3vw, 2.4rem);
-            box-shadow: var(--shadow);
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 1px 2px rgba(20,20,30,.05), 0 14px 32px rgba(20,20,30,.09);
-        }
-
-        .product-link-title {
-            font-family: var(--font-serif);
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
-
-        .product-link-desc {
-            color: var(--text-2);
-            font-size: clamp(0.78rem, 1vw, 0.88rem);
-        }
-
-        .product-link-tags {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            margin-top: 0.8rem;
-        }
-
-        .ptag {
-            font-size: 0.65rem;
-            color: var(--text-3);
-            background: #f3f3f5;
-            border: none;
-            padding: 0.25rem 0.6rem;
-            border-radius: 999px;
-            letter-spacing: 0.02em;
-        }
-
-        .product-link-arrow {
-            flex-shrink: 0;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: var(--text-3);
-            transition: all 0.3s var(--ease);
-        }
-
-        .product-link:hover .product-link-arrow {
-            border-color: var(--sand);
-            color: var(--sand);
-            transform: translateX(3px);
-        }
-
-        /* =========================================
-           TOP NAV
-           ========================================= */
-        .topnav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(251,250,247,0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 8px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 13px;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .topnav .brand {
-            font-weight: 700;
-            color: var(--text-1);
-            font-size: 14px;
-            margin-right: 6px;
-            flex-shrink: 0;
-        }
-
-        .topnav a {
-            color: var(--text-2);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 4px 0;
-            border-bottom: 2px solid transparent;
-            transition: all 0.15s;
-        }
-
-        .topnav a:hover {
-            color: var(--text-1);
-            border-bottom-color: var(--text-1);
-        }
-
-        /* =========================================
-           OVERVIEW SECTION
-           ========================================= */
-        .overview {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: clamp(1.5rem, 3vw, 2.5rem);
-            margin-bottom: clamp(2rem, 4vw, 3rem);
-        }
-
-        .overview-lead {
-            font-size: clamp(1rem, 1.6vw, 1.2rem);
-            font-weight: 700;
-            color: var(--text-1);
-            line-height: 1.5;
-            margin-bottom: 1.25rem;
-        }
-
-        .overview-body {
-            font-size: 14px;
-            color: var(--text-2);
-            line-height: 1.8;
-        }
-
-        .overview-body p {
-            margin-bottom: 0.8rem;
-        }
-
-        .overview-body p:last-child {
-            margin-bottom: 0;
-        }
-
-        .overview-body strong {
-            color: var(--text-1);
-            font-weight: 600;
-        }
-
-        .overview-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 1.25rem 0;
-            padding: 16px;
-            background: #f3f3f5;
-            border-radius: 12px;
-        }
-
-        .overview-stat {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-        }
-
-        .overview-stat b {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-1);
-        }
-
-        .overview-stat span {
-            font-size: 13px;
-            color: var(--text-3);
-        }
-
-        .overview-stat + .overview-stat::before {
-            content: '';
-            width: 1px;
-            height: 16px;
-            background: var(--border);
-            margin-right: 4px;
-            align-self: center;
-        }
-
-        .overview-takeaway {
-            margin-top: 1.25rem;
-            padding: 14px 18px;
-            border-radius: 10px;
-            background: #ffe6ec;
-            color: #c8425e;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.6;
-        }
-
-        /* =========================================
-           FOOTER
-           ========================================= */
-        .report-footer {
-            border-top: 1px solid var(--border);
-            padding-top: clamp(3rem, 6vw, 5rem);
-        }
-
-        .footer-title {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            color: var(--text-1);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-meta-item {
-            font-size: clamp(0.7rem, 0.85vw, 0.78rem);
-            color: var(--text-3);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .footer-meta-dot {
-            width: 4px; height: 4px;
-            border-radius: 50%;
-            background: var(--text-3);
-        }
-
-        .footer-intro {
-            color: var(--text-2);
-            font-size: clamp(0.8rem, 1vw, 0.9rem);
-            line-height: 1.85;
-            max-width: 720px;
-        }
-
-        .footer-intro p + p {
-            margin-top: 0.8rem;
-        }
-
-        /* =========================================
-           ANIMATIONS
-           ========================================= */
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
-        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
-        .stagger.visible > *:nth-child(2) { transition-delay: 0.12s; }
-        .stagger.visible > *:nth-child(3) { transition-delay: 0.19s; }
-        .stagger.visible > *:nth-child(4) { transition-delay: 0.26s; }
-        .stagger.visible > *:nth-child(5) { transition-delay: 0.33s; }
-        .stagger.visible > *:nth-child(6) { transition-delay: 0.40s; }
-        .stagger.visible > *:nth-child(7) { transition-delay: 0.47s; }
-        .stagger.visible > *:nth-child(8) { transition-delay: 0.54s; }
-        .stagger.visible > *:nth-child(9) { transition-delay: 0.61s; }
-        .stagger.visible > * { opacity: 1; transform: translateY(0); }
-
-        /* Only apply stagger when parent is visible */
-        .stagger:not(.visible) > * { opacity: 0; transform: translateY(20px); }
-
-        /* =========================================
-           RESPONSIVE
-           ========================================= */
-        @media (max-width: 700px) {
-            .flow {
-                flex-direction: column;
-                gap: 0.6rem;
-            }
-            .flow-arrow {
-                display: none;
-            }
-            .card {
-                max-width: 100%;
-                flex: 1 0 auto;
-            }
-            .product-link {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.15s !important;
-            }
-            html { scroll-behavior: auto; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>心理课程市场用户洞察报告</title>
+<style>
+:root{--bg:#fbfaf7;--surface:#fff;--ink:#1b1b1f;--ink-2:#4a4a55;--ink-3:#8a8a96;--line:#ececef;--line-2:#f3f3f5;--rose:#ff6b8a;--rose-soft:#ffe6ec;--green:#2ec27e;--sky:#4aa3df;--violet:#8b6cef;--amber:#f5a524;--shadow:0 1px 2px rgba(20,20,30,.04),0 8px 24px rgba(20,20,30,.06);--r:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Helvetica Neue","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;text-align:justify;text-justify:inter-ideograph}
+h1,h2,h3,h4,h5,.topnav,.path-label,.card .num,.card h3,.card .stats,.sec-head,.rule-label,.rule h4,.insight h4,.insight .n,.stat-label,.stat-val,.flow-title,.hero-title,.hero-meta,.takeaway,.product-link,.footer{text-align:left}
+a{color:inherit;text-decoration:none}
+
+.topnav{position:sticky;top:0;z-index:100;background:rgba(251,250,247,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:8px 20px;display:flex;align-items:center;gap:16px;font-size:13px;overflow-x:auto;white-space:nowrap}
+.topnav .brand{font-weight:700;color:var(--ink);font-size:14px;margin-right:6px;flex-shrink:0}
+.topnav a{color:var(--ink-2);font-weight:500;padding:4px 0;border-bottom:2px solid transparent;transition:all .15s}
+.topnav a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(1rem,3vw,2.5rem)}
+
+/* HERO */
+.hero{padding:clamp(2rem,4vw,3rem) 0 0}
+.hero-title{font-size:clamp(24px,3.5vw,32px);font-weight:700;letter-spacing:-.015em;margin-bottom:6px}
+.hero-meta{font-size:13px;color:var(--ink-3);margin-bottom:clamp(1.5rem,3vw,2rem)}
+.hero-overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,2.5vw,2rem);box-shadow:var(--shadow);margin-bottom:clamp(1.5rem,3vw,2rem)}
+.hero-overview p{font-size:clamp(14px,1.5vw,15px);color:var(--ink-2);line-height:1.85;margin-bottom:10px}
+.hero-overview p:last-child{margin-bottom:0}
+.hero-overview strong{color:var(--ink);font-weight:600}
+.hero-overview .hl{color:var(--rose);font-weight:600}
+.stat-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:clamp(1.5rem,3vw,2rem)}
+.stat-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);text-align:center}
+.stat-card .bar{width:100%;height:3px;border-radius:2px;margin-bottom:12px}
+.bar-rose{background:var(--rose)}.bar-amber{background:var(--amber)}.bar-sky{background:var(--sky)}.bar-green{background:var(--green)}.bar-violet{background:var(--violet)}
+.stat-val{font-size:clamp(22px,3vw,32px);font-weight:800;line-height:1;display:block;margin-bottom:4px}
+.stat-sub{font-size:11px;color:var(--ink-3);display:block}
+.finding{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,2.5vw,2rem);box-shadow:var(--shadow);margin-bottom:clamp(2rem,4vw,3rem)}
+.finding p{font-size:clamp(14px,1.5vw,15px);color:var(--ink-2);line-height:1.85;margin-bottom:12px}
+.finding strong{color:var(--ink);font-weight:600}
+.finding .core{font-size:clamp(16px,2vw,20px);font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:12px}
+.takeaway{padding:14px 18px;border-radius:10px;background:var(--rose-soft);color:#c8425e;font-size:14px;font-weight:600;line-height:1.6}
+
+/* SECTION DIVIDER */
+.sec-head{display:flex;align-items:flex-start;gap:16px;padding:clamp(2.5rem,5vw,4rem) 0 clamp(1.2rem,2vw,1.5rem);border-top:2px solid var(--ink);margin-top:clamp(1rem,3vw,2rem)}
+.sec-num{font-size:clamp(40px,6vw,56px);font-weight:800;color:var(--line);line-height:1;flex-shrink:0;min-width:60px}
+.sec-info h2{font-size:clamp(18px,2.5vw,24px);font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.sec-info p{color:var(--ink-2);font-size:14px}
+
+/* CARDS */
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);position:relative;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.t-rose::before{background:var(--rose)}.card.t-green::before{background:var(--green)}.card.t-sky::before{background:var(--sky)}.card.t-violet::before{background:var(--violet)}
+.card .num{font-size:11px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:3px}
+.card h3{font-size:14px;margin-bottom:6px}
+.card .desc{font-size:12px;color:var(--ink-2);margin-bottom:10px;line-height:1.5;flex:1}
+.card .stats{display:flex;gap:10px;border-top:1px solid var(--line-2);padding-top:8px}
+.card .stat span{font-size:10px;color:var(--ink-3)}
+.card .stat b{display:block;font-size:14px;font-weight:600}
+.path-label{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.path-label .dot{width:8px;height:8px;border-radius:50%}
+.path-label span{font-size:13px;font-weight:600}
+.tag{font-size:12px;color:var(--ink-3)}
+
+/* FLOW */
+.flow-block{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:10px}
+.flow-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.flow-bar{width:4px;align-self:stretch;border-radius:2px;min-height:16px}
+.flow-title{font-size:13px;font-weight:700}
+.flow-chain{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.pill{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600}
+.pill.rose{background:var(--rose-soft);color:#c8425e}.pill.green{background:#e3f6ec;color:#1d855a}.pill.sky{background:#e3f1fb;color:#1f6a9e}
+.arr{color:var(--ink-3);font-size:12px}
+.cross{font-size:10px;color:var(--ink-3);background:var(--line-2);padding:2px 7px;border-radius:999px}
+.note-box{margin-top:12px;padding:10px 14px;border-radius:10px;background:var(--line-2);font-size:13px;color:var(--ink-2)}
+.note-box strong{color:var(--ink)}
+
+/* RULES */
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:10px}
+.rule-label{font-size:10px;font-weight:600;color:var(--rose);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.rule h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.rule p,.rule .rule-body{font-size:13px;color:var(--ink-2);line-height:1.7}
+.rule p strong,.rule .rule-body strong{color:var(--ink)}
+.rule ul{list-style:none;margin:.5rem 0}
+.rule ul li{padding-left:1rem;position:relative;margin-bottom:.3rem}
+.rule ul li::before{content:'·';position:absolute;left:0;color:var(--rose);font-weight:700}
+table.data-table{width:100%;border-collapse:collapse;font-size:13px;margin:.5rem 0}
+table.data-table th{text-align:left;font-weight:500;color:var(--ink-3);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+table.data-table td{padding:6px 8px;color:var(--ink-2);border-bottom:1px solid var(--line-2);vertical-align:top}
+table.data-table td:first-child{color:var(--ink)}
+table.data-table td strong{color:var(--ink);font-weight:600}
+
+/* INSIGHTS */
+.insight{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;box-shadow:var(--shadow);display:flex;gap:16px;margin-bottom:16px}
+.insight .n{font-size:36px;font-weight:800;color:var(--line);width:40px;flex-shrink:0;line-height:1}
+.insight h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.insight p{font-size:14.5px;color:var(--ink-2);line-height:1.7}
+.insight p strong{color:var(--ink)}
+.insight .hl{margin-top:10px;padding:10px 16px;border-radius:10px;background:var(--rose-soft);color:#c8425e;font-size:14px;font-weight:600;line-height:1.55}
+
+/* COMPETITOR */
+.comp-section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,2vw,1.6rem);box-shadow:var(--shadow);margin-bottom:14px}
+.comp-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.comp-title::before{content:'';width:4px;height:14px;border-radius:2px;background:var(--amber)}
+.kol-list{list-style:none;padding:0;margin:0}
+.kol-list li{padding:8px 0;border-bottom:1px solid var(--line-2);font-size:13.5px;color:var(--ink-2)}
+.kol-list li:last-child{border-bottom:none}
+.kol-list li strong{color:var(--ink)}
+
+/* PRODUCT LINK */
+.product-link{display:flex;align-items:center;justify-content:space-between;gap:2rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.5rem,2.5vw,2rem);box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+.product-link:hover{transform:translateY(-2px);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.product-link-title{font-size:clamp(16px,2vw,20px);font-weight:700;margin-bottom:4px}
+.product-link-desc{color:var(--ink-2);font-size:14px}
+.product-link-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ptag{font-size:12px;color:var(--ink-3);background:var(--line-2);padding:3px 10px;border-radius:999px}
+.product-link-arrow{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--ink-3);transition:all .2s}
+.product-link:hover .product-link-arrow{border-color:var(--violet);color:var(--violet);transform:translateX(3px)}
+
+.footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;font-size:12px;color:var(--ink-3)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:640px){
+.stat-bar{grid-template-columns:repeat(3,1fr)}
+.grid{grid-template-columns:1fr}
+.sec-head{gap:12px}
+.sec-num{font-size:36px;min-width:44px}
+.product-link{flex-direction:column}
+.insight{flex-direction:column;gap:8px}
+.insight .n{width:auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.15s!important}html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
 
-    <!-- Sticky navigation -->
-    <nav class="topnav">
-        <span class="brand">心理洞察</span>
-        <a href="#overview">概览</a>
-        <a href="#personas">人群画像</a>
-        <a href="#flow">流动关系</a>
-        <a href="#rules">内容规律</a>
-        <a href="#insights">反直觉洞察</a>
-        <a href="#competitors">竞品分析</a>
-        <a href="#product">产品全景</a>
-    </nav>
+<nav class="topnav">
+<span class="brand">心理洞察</span>
+<a href="#s1">人群画像</a>
+<a href="#s2">流动关系</a>
+<a href="#s3">内容规律</a>
+<a href="#s4">反直觉洞察</a>
+<a href="#s5">竞品分析</a>
+<a href="#s6">产品全景</a>
+</nav>
 
-    <div class="page">
+<div class="wrap">
 
-        <!-- ================================
-             报告标题
-             ================================ -->
-        <header class="report-header reveal" style="margin-bottom:clamp(1.5rem,3vw,2rem);">
-            <h1 style="font-size:clamp(1.2rem,2.2vw,1.5rem);font-weight:700;color:var(--text-1);letter-spacing:-0.01em;">心理课程市场用户洞察报告</h1>
-            <p style="font-size:clamp(0.7rem,0.9vw,0.78rem);color:var(--text-3);margin-top:0.35rem;">小红书 6,172 条帖子 &middot; 2025.10 — 2026.04 &middot; 分析日期 2026-04-14</p>
-        </header>
-
-        <!-- ================================
-             概览
-             ================================ -->
-        <div class="overview reveal" id="overview">
-            <div class="overview-lead">小红书上正在发生一场大规模的"民间心理自救运动"——而现有的心理服务几乎全部缺席。</div>
-
-            <div class="overview-body">
-                <p>过去半年，小红书上心理相关帖子从月均 224 条暴涨到 2,440 条（<strong>11倍</strong>），但单帖均赞从 3,024 跌到 517（<strong>仅剩 1/6</strong>）。免费内容泛滥、价值被快速稀释——用户开始愿意为"系统化、可执行"的产品付费的窗口正在打开。</p>
-
-                <p>这些帖子的作者几乎全是女性。她们不认为自己"有心理疾病"，但每天都觉得"活得很累"——敏感、内耗、失眠、崩溃、身体出症状。她们在小红书上做的事情不是寻求治疗，而是<strong>给自己的痛苦找到一个名字</strong>。</p>
-            </div>
-
-            <div class="overview-stats">
-                <div class="overview-stat"><b>6,172</b><span>帖子样本</span></div>
-                <div class="overview-stat"><b>12</b><span>用户人群</span></div>
-                <div class="overview-stat"><b>3</b><span>流动路径</span></div>
-                <div class="overview-stat"><b>5</b><span>内容铁律</span></div>
-                <div class="overview-stat"><b>5</b><span>反直觉发现</span></div>
-            </div>
-
-            <div class="overview-body">
-                <p>我们从这些帖子中识别出 12 个用户人群。最关键的发现是：<strong>这 12 个人群不是 12 个独立的市场，而是同一批人在不同人生阶段的样子。</strong></p>
-                <p>一个今天在搜"高敏感"的 25 岁女生，三年后可能变成搜"内耗怎么办"的职场人，再过五年可能变成搜"失眠"的新手妈妈。她的痛苦在加深，她的角色在变化，但她始终是同一个人。</p>
-            </div>
-
-            <div class="overview-takeaway">这意味着课程不应该按"焦虑""失眠"这样的主题分课，而应该沿着用户的人生轨迹和心理恶化程度来设计——跟着她走，而不是等她来找你。</div>
-        </div>
-
-        <!-- ================================
-             人群深度画像
-             ================================ -->
-        <section id="personas">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">User Profiles</div>
-                <h1 class="sh-title">人群深度画像</h1>
-                <p class="sh-desc">从 6,172 条小红书帖子中识别出 12 个用户人群，沿三条路径流动。点击任意卡片查看完整分析。</p>
-            </div>
-
-            <!-- 心理恶化路径 -->
-            <div class="path path--rose">
-                <div class="path-head reveal">
-                    <div class="path-name">心理恶化路径</div>
-                </div>
-                <p class="path-desc reveal">从"性格敏感"到"身体出症状"——同一个人在心理问题逐渐加重过程中的四个阶段</p>
-                <div class="flow stagger">
-                    <a href="group-hypersensitive.html" class="card">
-                        <span class="card-seq">01</span>
-                        <div class="card-title">高敏感自我厌恶者</div>
-                        <p class="card-persona">20-30岁女性，既厌恶又依赖"高敏感"这个标签</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">2.0%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">23.1%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-rumination.html" class="card">
-                        <span class="card-seq">02</span>
-                        <div class="card-title">内耗思维反刍者</div>
-                        <p class="card-persona">多角色中年女性，每天都很累但说不清为什么</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">10.3%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">8.1%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-bedtime-theater.html" class="card">
-                        <span class="card-seq">03</span>
-                        <div class="card-title">睡前思维剧场患者</div>
-                        <p class="card-persona">脑子关不掉，更年期+职场人为主，凌晨仍活跃</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">9.7%</span><span class="kpi-lbl">发帖占比</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-somatization.html" class="card">
-                        <span class="card-seq">04</span>
-                        <div class="card-title">躯体化焦虑-就医彷徨者</div>
-                        <p class="card-persona">焦虑已制造身体症状，纠结要不要吃药</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">4.5%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">5.0%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 生命周期路径 -->
-            <div class="path path--sage">
-                <div class="path-head reveal">
-                    <div class="path-name">生命周期路径</div>
-                </div>
-                <p class="path-desc reveal">从"带娃崩溃"到"更年期失眠"——同一个女性在 30 到 50 岁之间依次经历的四种痛苦</p>
-                <div class="flow stagger">
-                    <a href="group-fulltime-mom.html" class="card">
-                        <span class="card-seq">05</span>
-                        <div class="card-title">全职妈妈情绪废墟</div>
-                        <p class="card-persona">"妈妈"这个角色正在摧毁她们的自我</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">9.0%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">7.0%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-marriage-fatigue.html" class="card">
-                        <span class="card-seq">06</span>
-                        <div class="card-title">婚姻围城疲惫女性</div>
-                        <p class="card-persona">"婚内已寡"，用依恋理论标签解读伴侣</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">3.3%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">6.3%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-menopause.html" class="card">
-                        <span class="card-seq">07</span>
-                        <div class="card-title">更年期孤岛女性</div>
-                        <p class="card-persona">互动率最低但评论密度最高——被算法遗忘的真实需求</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">5.3%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">1.7%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-gaokao-parents.html" class="card">
-                        <span class="card-seq">08</span>
-                        <div class="card-title">高三家长濒崩群体</div>
-                        <p class="card-persona">帖量最小但单帖评论密度最高</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">0.3%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">561</span><span class="kpi-lbl">评论/帖</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 认知觉醒路径 -->
-            <div class="path path--sky">
-                <div class="path-head reveal">
-                    <div class="path-name">认知觉醒路径</div>
-                </div>
-                <p class="path-desc reveal">从"做测试"到"不让孩子重蹈覆辙"——自测和命名是用户自发走过的前两步</p>
-                <div class="flow stagger">
-                    <a href="group-label-collectors.html" class="card">
-                        <span class="card-seq">09</span>
-                        <div class="card-title">自我标签收集者</div>
-                        <p class="card-persona">疯狂做测试，用标签命名自己——天然的引流入口</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">7.6%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">7.0%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <span class="flow-arrow">&#10132;</span>
-                    <a href="group-family-trauma.html" class="card">
-                        <span class="card-seq">10</span>
-                        <div class="card-title">原生家庭创伤命名者</div>
-                        <p class="card-persona">正在做妈妈的人回望童年，给痛苦起精确的名字</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">2.6%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">17.1%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 独立产品线 -->
-            <div class="path path--sand">
-                <div class="path-head reveal">
-                    <div class="path-name">独立产品线</div>
-                </div>
-                <p class="path-desc reveal">和主课逻辑不兼容——需要独立的获客语言和产品形态</p>
-                <div class="flow stagger">
-                    <a href="group-emotional-eating.html" class="card">
-                        <span class="card-seq">11</span>
-                        <span class="card-tag">独立产品线</span>
-                        <div class="card-title">情绪性进食困局者</div>
-                        <p class="card-persona">"不是饿，是情绪"，和心理学圈子零交叉的孤岛</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">4.4%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">10.1%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                    <a href="group-counseling-blocked.html" class="card">
-                        <span class="card-seq">12</span>
-                        <span class="card-tag">独立产品线</span>
-                        <div class="card-title">咨询价格受阻者</div>
-                        <p class="card-persona">已有付费意愿，但被价格/效果/污名化挡住了</p>
-                        <div class="card-foot">
-                            <div class="kpi"><span class="kpi-val">11.2%</span><span class="kpi-lbl">发帖占比</span></div>
-                            <div class="kpi"><span class="kpi-val">0.8%</span><span class="kpi-lbl">互动率</span></div>
-                        </div>
-                        <span class="card-go">&#8594;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================
-             人群流动关系
-             ================================ -->
-        <section id="flow">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">User Flow Patterns</div>
-                <h2 class="sh-title">人群之间的流动关系</h2>
-                <p class="sh-desc">343条独立帖子中有44条出现在2+个人群，揭示了三条流动方向</p>
-            </div>
-
-            <div class="flow-block reveal">
-                <div class="flow-block-head">
-                    <div class="flow-block-bar rose"></div>
-                    <div class="flow-block-title">心理恶化路径——从"性格敏感"到"身体出症状"</div>
-                </div>
-                <div class="flow-chain">
-                    <span class="flow-pill rose">高敏感</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">5帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill rose">内耗</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">9帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill rose">睡前思维</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">2帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill rose">躯体化/就医</span>
-                </div>
-            </div>
-
-            <div class="flow-block reveal">
-                <div class="flow-block-head">
-                    <div class="flow-block-bar sage"></div>
-                    <div class="flow-block-title">生命周期路径——从"带娃崩溃"到"更年期失眠"</div>
-                </div>
-                <div class="flow-chain">
-                    <span class="flow-pill sage">妈妈 (30-40)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">4帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sage">婚姻 (35-45)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">5帖+3帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sage">更年期 (42-55)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sage">躯体化</span>
-                </div>
-            </div>
-
-            <div class="flow-block reveal">
-                <div class="flow-block-head">
-                    <div class="flow-block-bar sky"></div>
-                    <div class="flow-block-title">认知觉醒路径——从"做测试"到"不让孩子重蹈覆辙"</div>
-                </div>
-                <div class="flow-chain">
-                    <span class="flow-pill sky">标签收集 (自测)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">2帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sky">原生家庭 (归因)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">2帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sky">婚姻 (重现)</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-cross">4帖交叉</span>
-                    <span class="flow-arr">→</span>
-                    <span class="flow-pill sky">妈妈 (传递恐惧)</span>
-                </div>
-            </div>
-
-            <div class="flow-note-box reveal">
-                <strong>另有1个孤岛</strong>（情绪性进食：和所有群体零交叉）和<strong>2个入口</strong>（标签测试：引流；咨询受阻：付费转化）。
-            </div>
-        </section>
-
-        <!-- ================================
-             内容设计的五条基本规律
-             ================================ -->
-        <section id="rules">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">Content Design Rules</div>
-                <h2 class="sh-title">内容设计的五条基本规律</h2>
-            </div>
-
-            <div class="rule reveal">
-                <div class="rule-label">铁律 01</div>
-                <div class="rule-title">收藏/赞比是区分"流量"和"价值"的唯一指标</div>
-                <div class="rule-body">
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>内容类型</th><th>收藏/赞比</th><th>含义</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>鸡汤/安慰（"你担心的事99%不会发生"）</td><td>0.01-0.04</td><td>看了就忘</td></tr>
-                            <tr><td>共鸣/宣泄（"高敏感的人在学校活不下去"）</td><td>0.10-0.15</td><td>点赞但不存</td></tr>
-                            <tr><td>命名/解释（"过度独立是一种心理防御"）</td><td>0.7-1.2</td><td>存下来理解自己</td></tr>
-                            <tr><td>方法/工具（"两分钟骗过你的大脑"）</td><td><strong>1.0-2.7</strong></td><td>存下来反复用</td></tr>
-                        </tbody>
-                    </table>
-                    <p style="margin-top:0.75rem;">"你担心的事99%不会发生"被5个人反复发布，每次都有赞但收藏比都在0.02-0.04——<strong>鸡汤的无效性被精确量化了。</strong></p>
-                </div>
-            </div>
-
-            <div class="rule reveal">
-                <div class="rule-label">铁律 02</div>
-                <div class="rule-title">不同年龄信任完全不同的语言系统</div>
-                <div class="rule-body">
-                    <ul>
-                        <li>20-30岁（高敏感/内耗）→ 信任"脑科学"：皮质醇、杏仁核、神经系统</li>
-                        <li>30-40岁（妈妈）→ 信任"可执行的每日练习"：每天抄写一遍（收藏比1.40）</li>
-                        <li>40-55岁（更年期）→ 信任"中医/食疗"：滋阴潜阳汤（<strong>收藏比2.70——全场最高</strong>）</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="rule reveal">
-                <div class="rule-label">铁律 03</div>
-                <div class="rule-title">评论密度比互动率更能反映真实需求</div>
-                <div class="rule-body">
-                    <p>更年期群体互动率1.7%（全场最低），但评论/赞比6.93（全场最高）。不是需求不大，是算法不推——<strong>每一个靠搜索找到帖子的人几乎都会留言。</strong></p>
-                </div>
-            </div>
-
-            <div class="rule reveal">
-                <div class="rule-label">铁律 04</div>
-                <div class="rule-title">用户已经造出了一套比心理学术语更有效的"民间词汇"</div>
-                <div class="rule-body">
-                    <p>"过度独立"（4.5万赞）、"精神房租"（2.8万赞）、"婚内已寡"、"睡前妄想症"、"内核稳定"——这些词不存在于心理学教科书，但传播力远超正式术语。<strong>课程应该用这套民间语言做入口。</strong></p>
-                </div>
-            </div>
-
-            <div class="rule reveal">
-                <div class="rule-label">铁律 05</div>
-                <div class="rule-title">心理内容赛道正在快速红海化</div>
-                <div class="rule-body">
-                    <p>帖量从2025.10的224帖增长到2026.04的2440帖（<strong>11倍</strong>），但均赞从3024下降到517（<strong>1/6</strong>）。免费内容泛滥 → 单帖价值稀释 → <strong>用户开始愿意为"系统化+可执行"的产品付费的窗口正在打开。</strong></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================
-             反直觉洞察
-             ================================ -->
-        <section id="insights">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">Counter-Intuitive Insights</div>
-                <h2 class="sh-title">反直觉洞察</h2>
-                <p class="sh-desc">数据中容易踩的坑</p>
-            </div>
-
-            <div class="insights">
-                <div class="insight reveal">
-                    <div class="insight-num">01</div>
-                    <div class="insight-content">
-                        <div class="insight-title">用户在自建"免费心理咨询替代品"</div>
-                        <p class="insight-body">244条"树洞/搭子/倾诉"帖产出 <strong>38,665 条评论</strong>。"大家可以说说最近的烦心事吗？"单帖 10,538 评论。用户发现评论区互助比花300块找咨询师更有效——因为回应她们的是"经历过同样事情的人"。</p>
-                        <div class="insight-highlight">课程的附加价值不只是内容，而是社群——课程是入群的门票。</div>
-                    </div>
-                </div>
-                <div class="insight reveal">
-                    <div class="insight-num">02</div>
-                    <div class="insight-content">
-                        <div class="insight-title">周末的痛苦比工作日更深</div>
-                        <p class="insight-body">工作日均评论 150，周末均评论 183（高出 22%）。周末帖子写得更详细，引发更深共鸣。</p>
-                        <div class="insight-highlight">深度内容应该周末推送，碎片化工具应该工作日推送。</div>
-                    </div>
-                </div>
-                <div class="insight reveal">
-                    <div class="insight-num">03</div>
-                    <div class="insight-content">
-                        <div class="insight-title">"转变故事"是被低估的高价值格式</div>
-                        <p class="insight-body">255条"走出来/变好了/康复"帖的藏/赞比 0.42，高于平均。头部帖收藏比 2.0。用户存的不只是方法，还有<strong>"证据"——证明这条路能走通</strong>。</p>
-                        <div class="insight-highlight">课程应嵌入真实用户的转变叙事。</div>
-                    </div>
-                </div>
-                <div class="insight reveal">
-                    <div class="insight-num">04</div>
-                    <div class="insight-content">
-                        <div class="insight-title">"脑子停不下来"是横跨4个群体的隐性超级需求</div>
-                        <p class="insight-body"><strong>150+ 帖</strong>，但从未被当作统一现象。高敏感的"自动脑补"、内耗的"胡思乱想"、睡前的"脑内剧场"、躯体化的"反复扫描身体"——在临床上都指向强迫性思维谱系，但用户不知道它们是同一个东西。</p>
-                        <div class="insight-highlight">一个叫"怎么让脑子停下来"的课程模块会同时命中 4 个群体。</div>
-                    </div>
-                </div>
-                <div class="insight reveal">
-                    <div class="insight-num">05</div>
-                    <div class="insight-content">
-                        <div class="insight-title">灵性内容正在填补心理学的空白</div>
-                        <p class="insight-body">"这个频率可以让你停止胡思乱想" <strong>3.2万赞，收藏比 1.0</strong>。用户在用灵性语言描述的是很具体的体验——"能量低"=疲惫、"频率"=外部工具帮脑子关机。</p>
-                        <div class="insight-highlight">课程如果能用科学语言回应同样的体验（"你说的'能量低'在神经科学里叫交感神经过度激活"），会同时获得两类用户的信任。</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================================
-             竞品现状与用户评价
-             ================================ -->
-        <section id="competitors">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">Competitive Landscape</div>
-                <h2 class="sh-title">竞品现状与用户评价</h2>
-            </div>
-
-            <div class="comp-section reveal">
-                <div class="comp-title">平台/机构</div>
-                <table class="data-table">
-                    <thead>
-                        <tr><th>品牌</th><th>提及量</th><th>用户态度</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>壹心理</td><td>141帖</td><td>大而空——大量是平台自产日签/推广，来访者帖集中在"贵"和"没用"</td></tr>
-                        <tr><td>简单心理</td><td>91帖</td><td>咨询匹配+培训；从业者帖中出现"正式退出平台"</td></tr>
-                        <tr><td><strong>暂停实验室</strong></td><td>80帖</td><td><strong>唯一被用户当"方法"而非"平台"提及的品牌——有人在写"训练日记"</strong></td></tr>
-                        <tr><td>KnowYourself</td><td>12帖</td><td>自我成长方向，影响力在这个数据集中有限</td></tr>
-                    </tbody>
-                </table>
-                <div class="flow-note-box" style="margin-top:14px;">暂停实验室是唯一值得深入研究的竞品——它做到了<strong>"让用户把品牌和具体练习绑定"</strong>。</div>
-            </div>
-
-            <div class="comp-section reveal">
-                <div class="comp-title">专家 KOL</div>
-                <ul class="kol-list">
-                    <li><strong>武志红</strong>（18帖）：原生家庭群体的第一KOL，用户用他的框架分析自己的童年</li>
-                    <li><strong>余华</strong>（22帖）：不是心理学家但被当作权威引用——"东亚家庭的现状是孩子等父母道歉，父母等孩子报恩"</li>
-                    <li><strong>埃克哈特·托利</strong>（7帖）：灵性/正念方向的锚点，《当下的力量》4.8万赞</li>
-                </ul>
-            </div>
-
-            <div class="comp-section reveal">
-                <div class="comp-title">内容格式效果排名（按收藏/赞比）</div>
-                <table class="data-table">
-                    <thead>
-                        <tr><th>格式</th><th>藏/赞比</th><th>适用场景</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>频率/音频</td><td><strong>1.05</strong></td><td>助眠/冥想——唯一"收藏>赞"的格式</td></tr>
-                        <tr><td>每日打卡/抄写</td><td><strong>0.85</strong></td><td>妈妈群体最爱</td></tr>
-                        <tr><td>食疗/食物方案</td><td>0.66</td><td>更年期群体最爱</td></tr>
-                        <tr><td>书单</td><td>0.52</td><td>内耗群体在"囤学习路径"</td></tr>
-                        <tr><td>自测/测试</td><td>0.34（但均评论955）</td><td><strong>赞低评论炸——引流之王</strong></td></tr>
-                        <tr><td>骂醒/毒鸡汤</td><td>0.31（但均赞7383）</td><td><strong>赞高藏低——流量工具，非付费工具</strong></td></tr>
-                    </tbody>
-                </table>
-                <div class="flow-note-box" style="margin-top:14px;"><strong>"抄写"比"记录"更受妈妈欢迎</strong>——因为抄写不需要组织语言（她们的认知资源已经耗尽），而"写下你的感受"还需要动脑。</div>
-            </div>
-        </section>
-
-        <!-- ================================
-             产品全景图
-             ================================ -->
-        <section id="product">
-            <div class="sh reveal">
-                <div class="sh-eyebrow">Product Blueprint</div>
-                <h2 class="sh-title">课程产品全景图</h2>
-            </div>
-
-            <a href="product-overview.html" class="product-link reveal">
-                <div>
-                    <div class="product-link-title">查看完整产品架构</div>
-                    <p class="product-link-desc">从获客层到核心课程到场景包——基于数据验证的完整课程产品体系</p>
-                    <div class="product-link-tags">
-                        <span class="ptag">获客层</span>
-                        <span class="ptag">核心课程（三层）</span>
-                        <span class="ptag">场景包（三线）</span>
-                        <span class="ptag">独立产品</span>
-                        <span class="ptag">贯穿原则</span>
-                    </div>
-                </div>
-                <span class="product-link-arrow">&#8594;</span>
-            </a>
-        </section>
-
-        <!-- ================================
-             报告信息
-             ================================ -->
-        <footer class="report-footer reveal">
-            <div class="footer-meta">
-                <span class="footer-meta-item"><span class="footer-meta-dot"></span>心理课程市场用户洞察报告</span>
-                <span class="footer-meta-item"><span class="footer-meta-dot"></span>小红书 6,172 条帖子</span>
-                <span class="footer-meta-item"><span class="footer-meta-dot"></span>2025.10 — 2026.04</span>
-                <span class="footer-meta-item"><span class="footer-meta-dot"></span>分析日期 2026-04-14</span>
-            </div>
-        </footer>
-
+<!-- HERO -->
+<div class="hero">
+    <h1 class="hero-title">心理课程市场用户洞察报告</h1>
+    <div class="hero-meta">小红书 · 2025.10 — 2026.04 · 6,172 条帖子</div>
+    <div class="hero-overview reveal">
+        <p>过去半年，小红书上的心理相关内容经历了一轮爆发式增长——帖量从每月 224 条飙升到 2,440 条，但单帖平均赞数从 3,024 跌至 517。免费内容正在快速贬值，而用户对<span class="hl">"系统化、可执行"</span>的付费产品需求正在打开窗口。</p>
     </div>
+    <div class="stat-bar reveal">
+        <div class="stat-card"><div class="bar bar-rose"></div><span class="stat-val">11x</span><span class="stat-sub">帖量半年增长</span></div>
+        <div class="stat-card"><div class="bar bar-amber"></div><span class="stat-val">1/6</span><span class="stat-sub">均赞下降幅度</span></div>
+        <div class="stat-card"><div class="bar bar-sky"></div><span class="stat-val">38,665</span><span class="stat-sub">树洞帖总评论</span></div>
+        <div class="stat-card"><div class="bar bar-green"></div><span class="stat-val">2.70</span><span class="stat-sub">收藏/赞比最高值</span></div>
+        <div class="stat-card"><div class="bar bar-violet"></div><span class="stat-val">12</span><span class="stat-sub">个自然聚集人群</span></div>
+    </div>
+    <div class="finding reveal">
+        <p>我们从这 6,172 条帖子中识别出 <strong>12 个高度聚集的用户人群</strong>。她们几乎全是女性，不认为自己"有心理疾病"，但每天都觉得"活得很累"。大量帖子同时出现在多个人群中——交叉分析显示，一个今天在搜"高敏感"的 25 岁女生，三年后可能搜"内耗怎么办"，五年后可能搜"失眠"。</p>
+        <p class="core">她的痛苦在加深，角色在变化，但她始终是同一个人。</p>
+        <div class="takeaway">课程不应该按"焦虑""失眠"这样的主题分课，而应该沿着用户的人生轨迹和心理恶化程度来设计——跟着她走，而不是等她来找你。</div>
+    </div>
+</div>
 
-    <!-- ================================
-         JS
-         ================================ -->
-    <script>
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+<!-- 01 人群画像 -->
+<div class="sec-head" id="s1"><div class="sec-num">01</div><div class="sec-info"><h2>人群深度画像</h2><p>12 个人群，沿三条路径流动。点击卡片查看完整分析。</p></div></div>
 
-        document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
-    </script>
+<div class="path-label"><div class="dot" style="background:var(--rose)"></div><span>心理恶化路径</span><span class="tag">&nbsp;— 从"性格敏感"到"身体出症状"</span></div>
+<div class="grid" style="margin-bottom:24px">
+    <a href="group-hypersensitive.html" class="card t-rose"><div class="num">01</div><h3>高敏感自我厌恶者</h3><p class="desc">20-30岁女性，既厌恶又依赖"高敏感"标签</p><div class="stats"><div class="stat"><b>2.0%</b><span>发帖占比</span></div><div class="stat"><b>23.1%</b><span>互动率</span></div></div></a>
+    <a href="group-rumination.html" class="card t-rose"><div class="num">02</div><h3>内耗思维反刍者</h3><p class="desc">多角色中年女性，每天都很累但说不清为什么</p><div class="stats"><div class="stat"><b>10.3%</b><span>发帖占比</span></div><div class="stat"><b>8.1%</b><span>互动率</span></div></div></a>
+    <a href="group-bedtime-theater.html" class="card t-rose"><div class="num">03</div><h3>睡前思维剧场患者</h3><p class="desc">脑子关不掉，更年期+职场人为主，凌晨仍活跃</p><div class="stats"><div class="stat"><b>9.7%</b><span>发帖占比</span></div></div></a>
+    <a href="group-somatization.html" class="card t-rose"><div class="num">04</div><h3>躯体化焦虑-就医彷徨者</h3><p class="desc">焦虑已制造身体症状，纠结要不要吃药</p><div class="stats"><div class="stat"><b>4.5%</b><span>发帖占比</span></div><div class="stat"><b>5.0%</b><span>互动率</span></div></div></a>
+</div>
+
+<div class="path-label"><div class="dot" style="background:var(--green)"></div><span>生命周期路径</span><span class="tag">&nbsp;— 同一个女性的 30 到 50 岁</span></div>
+<div class="grid" style="margin-bottom:24px">
+    <a href="group-fulltime-mom.html" class="card t-green"><div class="num">05</div><h3>全职妈妈情绪废墟</h3><p class="desc">"妈妈"角色正在摧毁她们的自我</p><div class="stats"><div class="stat"><b>9.0%</b><span>发帖占比</span></div><div class="stat"><b>7.0%</b><span>互动率</span></div></div></a>
+    <a href="group-marriage-fatigue.html" class="card t-green"><div class="num">06</div><h3>婚姻围城疲惫女性</h3><p class="desc">"婚内已寡"，用依恋理论标签解读伴侣</p><div class="stats"><div class="stat"><b>3.3%</b><span>发帖占比</span></div><div class="stat"><b>6.3%</b><span>互动率</span></div></div></a>
+    <a href="group-menopause.html" class="card t-green"><div class="num">07</div><h3>更年期孤岛女性</h3><p class="desc">互动率最低但评论密度最高——被算法遗忘的真实需求</p><div class="stats"><div class="stat"><b>5.3%</b><span>发帖占比</span></div><div class="stat"><b>1.7%</b><span>互动率</span></div></div></a>
+    <a href="group-gaokao-parents.html" class="card t-green"><div class="num">08</div><h3>高三家长濒崩群体</h3><p class="desc">帖量最小但单帖评论密度最高</p><div class="stats"><div class="stat"><b>0.3%</b><span>发帖占比</span></div><div class="stat"><b>561</b><span>评论/帖</span></div></div></a>
+</div>
+
+<div class="path-label"><div class="dot" style="background:var(--sky)"></div><span>认知觉醒路径</span><span class="tag">&nbsp;— 从"做测试"到"不让孩子重蹈覆辙"</span></div>
+<div class="grid" style="margin-bottom:24px">
+    <a href="group-label-collectors.html" class="card t-sky"><div class="num">09</div><h3>自我标签收集者</h3><p class="desc">疯狂做测试，用标签命名自己——天然的引流入口</p><div class="stats"><div class="stat"><b>7.6%</b><span>发帖占比</span></div><div class="stat"><b>7.0%</b><span>互动率</span></div></div></a>
+    <a href="group-family-trauma.html" class="card t-sky"><div class="num">10</div><h3>原生家庭创伤命名者</h3><p class="desc">正在做妈妈的人回望童年，给痛苦起精确的名字</p><div class="stats"><div class="stat"><b>2.6%</b><span>发帖占比</span></div><div class="stat"><b>17.1%</b><span>互动率</span></div></div></a>
+</div>
+
+<div class="path-label"><div class="dot" style="background:var(--violet)"></div><span>独立产品线</span><span class="tag">&nbsp;— 需要独立的获客语言和产品形态</span></div>
+<div class="grid">
+    <a href="group-emotional-eating.html" class="card t-violet"><div class="num">11</div><h3>情绪性进食困局者</h3><p class="desc">"不是饿，是情绪"，和心理学圈子零交叉的孤岛</p><div class="stats"><div class="stat"><b>4.4%</b><span>发帖占比</span></div><div class="stat"><b>10.1%</b><span>互动率</span></div></div></a>
+    <a href="group-counseling-blocked.html" class="card t-violet"><div class="num">12</div><h3>咨询价格受阻者</h3><p class="desc">已有付费意愿，但被价格/效果/污名化挡住了</p><div class="stats"><div class="stat"><b>11.2%</b><span>发帖占比</span></div><div class="stat"><b>0.8%</b><span>互动率</span></div></div></a>
+</div>
+
+<!-- 02 流动关系 -->
+<div class="sec-head" id="s2"><div class="sec-num">02</div><div class="sec-info"><h2>人群之间的流动关系</h2><p>343条帖子中有44条出现在2+个人群</p></div></div>
+
+<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--rose)"></div><div class="flow-title">心理恶化路径——从"性格敏感"到"身体出症状"</div></div><div class="flow-chain"><span class="pill rose">高敏感</span><span class="arr">→</span><span class="cross">5帖交叉</span><span class="arr">→</span><span class="pill rose">内耗</span><span class="arr">→</span><span class="cross">9帖交叉</span><span class="arr">→</span><span class="pill rose">睡前思维</span><span class="arr">→</span><span class="cross">2帖交叉</span><span class="arr">→</span><span class="pill rose">躯体化/就医</span></div></div>
+<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--green)"></div><div class="flow-title">生命周期路径——从"带娃崩溃"到"更年期失眠"</div></div><div class="flow-chain"><span class="pill green">妈妈 (30-40)</span><span class="arr">→</span><span class="cross">4帖交叉</span><span class="arr">→</span><span class="pill green">婚姻 (35-45)</span><span class="arr">→</span><span class="cross">5帖+3帖交叉</span><span class="arr">→</span><span class="pill green">更年期 (42-55)</span><span class="arr">→</span><span class="pill green">躯体化</span></div></div>
+<div class="flow-block reveal"><div class="flow-head"><div class="flow-bar" style="background:var(--sky)"></div><div class="flow-title">认知觉醒路径——从"做测试"到"不让孩子重蹈覆辙"</div></div><div class="flow-chain"><span class="pill sky">标签收集 (自测)</span><span class="arr">→</span><span class="cross">2帖交叉</span><span class="arr">→</span><span class="pill sky">原生家庭 (归因)</span><span class="arr">→</span><span class="cross">2帖交叉</span><span class="arr">→</span><span class="pill sky">婚姻 (重现)</span><span class="arr">→</span><span class="cross">4帖交叉</span><span class="arr">→</span><span class="pill sky">妈妈 (传递恐惧)</span></div></div>
+<div class="note-box reveal"><strong>另有1个孤岛</strong>（情绪性进食：和所有群体零交叉）和<strong>2个入口</strong>（标签测试：引流；咨询受阻：付费转化）。</div>
+
+<!-- 03 内容规律 -->
+<div class="sec-head" id="s3"><div class="sec-num">03</div><div class="sec-info"><h2>内容设计的五条基本规律</h2></div></div>
+
+<div class="rule reveal"><div class="rule-label">铁律 01</div><h4>收藏/赞比是区分"流量"和"价值"的唯一指标</h4><div class="rule-body"><table class="data-table"><thead><tr><th>内容类型</th><th>收藏/赞比</th><th>含义</th></tr></thead><tbody><tr><td>鸡汤/安慰（"你担心的事99%不会发生"）</td><td>0.01-0.04</td><td>看了就忘</td></tr><tr><td>共鸣/宣泄（"高敏感的人在学校活不下去"）</td><td>0.10-0.15</td><td>点赞但不存</td></tr><tr><td>命名/解释（"过度独立是一种心理防御"）</td><td>0.7-1.2</td><td>存下来理解自己</td></tr><tr><td>方法/工具（"两分钟骗过你的大脑"）</td><td><strong>1.0-2.7</strong></td><td>存下来反复用</td></tr></tbody></table><p style="margin-top:.6rem">"你担心的事99%不会发生"被5个人反复发布，每次都有赞但收藏比都在0.02-0.04——<strong>鸡汤的无效性被精确量化了。</strong></p></div></div>
+<div class="rule reveal"><div class="rule-label">铁律 02</div><h4>不同年龄信任完全不同的语言系统</h4><div class="rule-body"><ul><li>20-30岁（高敏感/内耗）→ 信任"脑科学"：皮质醇、杏仁核、神经系统</li><li>30-40岁（妈妈）→ 信任"可执行的每日练习"：每天抄写一遍（收藏比1.40）</li><li>40-55岁（更年期）→ 信任"中医/食疗"：滋阴潜阳汤（<strong>收藏比2.70——全场最高</strong>）</li></ul></div></div>
+<div class="rule reveal"><div class="rule-label">铁律 03</div><h4>评论密度比互动率更能反映真实需求</h4><p>更年期群体互动率1.7%（全场最低），但评论/赞比6.93（全场最高）。不是需求不大，是算法不推——<strong>每一个靠搜索找到帖子的人几乎都会留言。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">铁律 04</div><h4>用户已经造出了一套比心理学术语更有效的"民间词汇"</h4><p>"过度独立"（4.5万赞）、"精神房租"（2.8万赞）、"婚内已寡"、"睡前妄想症"、"内核稳定"——这些词不存在于心理学教科书，但传播力远超正式术语。<strong>课程应该用这套民间语言做入口。</strong></p></div>
+<div class="rule reveal"><div class="rule-label">铁律 05</div><h4>心理内容赛道正在快速红海化</h4><p>帖量从2025.10的224帖增长到2026.04的2440帖（<strong>11倍</strong>），但均赞从3024下降到517（<strong>1/6</strong>）。免费内容泛滥 → 单帖价值稀释 → <strong>用户开始愿意为"系统化+可执行"的产品付费的窗口正在打开。</strong></p></div>
+
+<!-- 04 反直觉洞察 -->
+<div class="sec-head" id="s4"><div class="sec-num">04</div><div class="sec-info"><h2>反直觉洞察</h2><p>数据中容易踩的坑</p></div></div>
+
+<div class="insight reveal"><div class="n">01</div><div><h4>用户在自建"免费心理咨询替代品"</h4><p>244条"树洞/搭子/倾诉"帖产出 <strong>38,665 条评论</strong>。"大家可以说说最近的烦心事吗？"单帖 10,538 评论。用户发现评论区互助比花300块找咨询师更有效——因为回应她们的是"经历过同样事情的人"。</p><div class="hl">课程的附加价值不只是内容，而是社群——课程是入群的门票。</div></div></div>
+<div class="insight reveal"><div class="n">02</div><div><h4>周末的痛苦比工作日更深</h4><p>工作日均评论 150，周末均评论 183（高出 22%）。周末帖子写得更详细，引发更深共鸣。</p><div class="hl">深度内容应该周末推送，碎片化工具应该工作日推送。</div></div></div>
+<div class="insight reveal"><div class="n">03</div><div><h4>"转变故事"是被低估的高价值格式</h4><p>255条"走出来/变好了/康复"帖的藏/赞比 0.42，高于平均。头部帖收藏比 2.0。用户存的不只是方法，还有<strong>"证据"——证明这条路能走通</strong>。</p><div class="hl">课程应嵌入真实用户的转变叙事。</div></div></div>
+<div class="insight reveal"><div class="n">04</div><div><h4>"脑子停不下来"是横跨4个群体的隐性超级需求</h4><p><strong>150+ 帖</strong>，但从未被当作统一现象。高敏感的"自动脑补"、内耗的"胡思乱想"、睡前的"脑内剧场"、躯体化的"反复扫描身体"——在临床上都指向强迫性思维谱系，但用户不知道它们是同一个东西。</p><div class="hl">一个叫"怎么让脑子停下来"的课程模块会同时命中 4 个群体。</div></div></div>
+<div class="insight reveal"><div class="n">05</div><div><h4>灵性内容正在填补心理学的空白</h4><p>"这个频率可以让你停止胡思乱想" <strong>3.2万赞，收藏比 1.0</strong>。用户在用灵性语言描述的是很具体的体验——"能量低"=疲惫、"频率"=外部工具帮脑子关机。</p><div class="hl">课程如果能用科学语言回应同样的体验（"你说的'能量低'在神经科学里叫交感神经过度激活"），会同时获得两类用户的信任。</div></div></div>
+
+<!-- 05 竞品 -->
+<div class="sec-head" id="s5"><div class="sec-num">05</div><div class="sec-info"><h2>竞品现状与用户评价</h2><p>平台/机构 · 专家KOL · 内容格式效果</p></div></div>
+
+<div class="comp-section reveal"><div class="comp-title">平台/机构</div><table class="data-table"><thead><tr><th>品牌</th><th>提及量</th><th>用户态度</th></tr></thead><tbody><tr><td>壹心理</td><td>141帖</td><td>大而空——大量是平台自产日签/推广，来访者帖集中在"贵"和"没用"</td></tr><tr><td>简单心理</td><td>91帖</td><td>咨询匹配+培训；从业者帖中出现"正式退出平台"</td></tr><tr><td><strong>暂停实验室</strong></td><td>80帖</td><td><strong>唯一被用户当"方法"而非"平台"提及的品牌——有人在写"训练日记"</strong></td></tr><tr><td>KnowYourself</td><td>12帖</td><td>自我成长方向，影响力在这个数据集中有限</td></tr></tbody></table><div class="note-box" style="margin-top:12px">暂停实验室是唯一值得深入研究的竞品——它做到了<strong>"让用户把品牌和具体练习绑定"</strong>。</div></div>
+
+<div class="comp-section reveal"><div class="comp-title">专家 KOL</div><ul class="kol-list"><li><strong>武志红</strong>（18帖）：原生家庭群体的第一KOL，用户用他的框架分析自己的童年</li><li><strong>余华</strong>（22帖）：不是心理学家但被当作权威引用——"东亚家庭的现状是孩子等父母道歉，父母等孩子报恩"</li><li><strong>埃克哈特·托利</strong>（7帖）：灵性/正念方向的锚点，《当下的力量》4.8万赞</li></ul></div>
+
+<div class="comp-section reveal"><div class="comp-title">内容格式效果排名（按收藏/赞比）</div><table class="data-table"><thead><tr><th>格式</th><th>藏/赞比</th><th>适用场景</th></tr></thead><tbody><tr><td>频率/音频</td><td><strong>1.05</strong></td><td>助眠/冥想——唯一"收藏>赞"的格式</td></tr><tr><td>每日打卡/抄写</td><td><strong>0.85</strong></td><td>妈妈群体最爱</td></tr><tr><td>食疗/食物方案</td><td>0.66</td><td>更年期群体最爱</td></tr><tr><td>书单</td><td>0.52</td><td>内耗群体在"囤学习路径"</td></tr><tr><td>自测/测试</td><td>0.34（但均评论955）</td><td><strong>赞低评论炸——引流之王</strong></td></tr><tr><td>骂醒/毒鸡汤</td><td>0.31（但均赞7383）</td><td><strong>赞高藏低——流量工具，非付费工具</strong></td></tr></tbody></table><div class="note-box" style="margin-top:12px"><strong>"抄写"比"记录"更受妈妈欢迎</strong>——因为抄写不需要组织语言（她们的认知资源已经耗尽），而"写下你的感受"还需要动脑。</div></div>
+
+<!-- 06 产品全景 -->
+<div class="sec-head" id="s6"><div class="sec-num">06</div><div class="sec-info"><h2>课程产品全景图</h2><p>获客层 · 核心课程 · 场景包 · 独立产品 · 贯穿原则</p></div></div>
+
+<a href="product-overview.html" class="product-link reveal"><div><div class="product-link-title">查看完整产品架构</div><p class="product-link-desc">从获客层到核心课程到场景包——基于数据验证的完整课程产品体系</p><div class="product-link-tags"><span class="ptag">获客层</span><span class="ptag">核心课程（三层）</span><span class="ptag">场景包（三线）</span><span class="ptag">独立产品</span><span class="ptag">贯穿原则</span></div></div><span class="product-link-arrow">&#8594;</span></a>
+
+</div>
+
+<div class="footer">心理课程市场用户洞察报告 · 小红书 6,172 条帖子 · 2025.10 — 2026.04</div>
+
+<script>
+const io=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
