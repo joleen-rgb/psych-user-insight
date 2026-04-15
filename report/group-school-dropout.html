@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 休学家庭 - 用户洞察</title>
+
+<style>
+:root {
+    --bg-primary: #fbfaf7; --bg-card: #ffffff; --bg-card-hover: #ffffff;
+    --border-subtle: #ececef; --border-hover: #dcdce0;
+    --text-primary: #1b1b1f; --text-secondary: #4a4a55; --text-muted: #8a8a96;
+    --accent-warm: #f5a524; --accent-pink: #ff6b8a;
+    --path-emerging: #f5a524;
+    --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif; --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.8; min-height: 100vh; overflow-x: hidden; }
+a { color: var(--accent-warm); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; padding: 24px 0 0 0; transition: color 0.3s; }
+.back-link:hover { color: var(--text-primary); text-decoration: none; }
+.back-link::before { content: '\2190'; font-size: 1.1rem; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+.page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 32px; }
+.header-number { font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: rgba(245,165,36,0.15); line-height: 1; }
+.header-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin: -12px 0 8px; }
+.header-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 16px; }
+.header-badges { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.path-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+.badge-emerging { background: rgba(245,165,36,0.1); color: var(--path-emerging); border: 1px solid rgba(245,165,36,0.2); }
+.metrics-bar { display: flex; gap: 32px; padding: 20px 24px; margin-bottom: 32px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); }
+.metric-item { text-align: center; }
+.metric-value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--accent-warm); }
+.metric-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border-subtle); flex-wrap: wrap; }
+.tab-btn { padding: 12px 24px; background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s var(--ease-out-expo); position: relative; top: 1px; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent-warm); }
+.tab-content { display: none; padding: 32px 0; animation: fadeIn 0.4s var(--ease-out-expo); }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section { margin-bottom: 40px; }
+.section-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: var(--bg-card); color: var(--text-secondary); font-weight: 500; border-bottom: 1px solid var(--border-subtle); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+tr:hover td { background: var(--bg-card-hover); }
+.insight-box { background: var(--bg-card); border-left: 3px solid var(--accent-warm); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.insight-box strong { color: var(--text-primary); }
+.post-list { list-style: none; margin: 12px 0; }
+.post-list li { padding: 10px 16px; margin: 6px 0; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border-subtle); font-size: 0.9rem; transition: border-color 0.3s; }
+.post-list li:hover { border-color: var(--border-hover); }
+.post-list li a { color: var(--accent-warm); }
+.post-stat { color: var(--text-muted); font-size: 0.8rem; }
+.accordion { margin: 16px 0; }
+.accordion-item { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--bg-card); cursor: pointer; font-weight: 500; font-size: 0.95rem; transition: background 0.3s; user-select: none; }
+.accordion-header:hover { background: var(--bg-card-hover); }
+.accordion-arrow { transition: transform 0.3s var(--ease-out-expo); font-size: 0.8rem; color: var(--text-muted); }
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out-expo), padding 0.3s; }
+.accordion-item.open .accordion-body { max-height: 5000px; padding: 16px 20px; }
+p { margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">返回总览</a>
+
+    <div class="page-header">
+        <div class="header-number">15</div>
+        <h1 class="header-title">休学家庭</h1>
+        <div class="header-subtitle">一个正在爆发的青少年危机</div>
+        <div class="header-badges">
+            <span class="path-badge badge-emerging">新兴人群</span>
+        </div>
+    </div>
+
+    <div class="metrics-bar">
+        <div class="metric-item">
+            <div class="metric-value">90</div>
+            <div class="metric-label">相关帖子</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-value">6:4</div>
+            <div class="metric-label">家长:孩子视角</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-value">76</div>
+            <div class="metric-label">与妈妈交叉</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="parents">家长视角</button>
+        <button class="tab-btn" data-tab="children">孩子视角</button>
+        <button class="tab-btn" data-tab="crossover">交叉分析</button>
+        <button class="tab-btn" data-tab="course">课程意义</button>
+    </div>
+
+    <!-- 家长视角 -->
+    <div class="tab-content active" id="tab-parents">
+        <div class="section">
+            <h3 class="section-title">家长视角帖子</h3>
+            <ul class="post-list">
+                <li><a href="https://www.xiaohongshu.com/explore/67e3ea34000000001c008f97" target="_blank">"孩子不爱学习拒绝上学怎么办？"</a> <span class="post-stat">5939赞，235评论</span></li>
+                <li><a href="https://www.xiaohongshu.com/explore/67a5cde1000000002503cb02" target="_blank">"孩子不想上学的原因——高敏感的孩子训练"</a> <span class="post-stat">470评论</span></li>
+                <li><a href="https://www.xiaohongshu.com/explore/69c98ceb000000001a02f3c2" target="_blank">"京津冀青少年休学疗愈栖息地"</a> <span class="post-stat">282评论——已出现商业化服务</span></li>
+            </ul>
+            <div class="insight-box">
+                <strong>与妈妈交叉76帖（82%是妈妈视角）。</strong>在休学问题上，妈妈是最焦虑、最活跃的声音。商业化服务已经出现（"京津冀青少年休学疗愈栖息地"），说明市场已在形成。
+            </div>
+        </div>
+    </div>
+
+    <!-- 孩子视角 -->
+    <div class="tab-content" id="tab-children">
+        <div class="section">
+            <h3 class="section-title">孩子视角帖子</h3>
+            <ul class="post-list">
+                <li><a href="https://www.xiaohongshu.com/explore/6852716c000000000b01f598" target="_blank">"高敏感的孩子不想去的并不是学校——追根溯源和原生家庭有关"</a> <span class="post-stat">399评论</span></li>
+                <li><a href="https://www.xiaohongshu.com/explore/69c13c3b000000001a02e2e1" target="_blank">"我就怪原生家庭"</a> <span class="post-stat">6644赞，732评论</span></li>
+                <li><a href="https://www.xiaohongshu.com/explore/69197cf00000000007021568" target="_blank">"本科休学两次，最后熬到了毕业证"</a> <span class="post-stat">598评论——过来人的转变故事</span></li>
+            </ul>
+            <div class="insight-box">
+                <strong>孩子的叙事指向同一个方向：原生家庭。</strong>"我就怪原生家庭"6644赞——在孩子眼中，休学不是学业问题，是家庭关系问题。
+            </div>
+        </div>
+    </div>
+
+    <!-- 交叉分析 -->
+    <div class="tab-content" id="tab-crossover">
+        <div class="section">
+            <h3 class="section-title">交叉分析</h3>
+            <table>
+                <thead><tr><th>交叉群体</th><th>帖量</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>与妈妈交叉</td><td>76</td><td>82%是妈妈视角</td></tr>
+                    <tr><td>与高敏感交叉</td><td>10</td><td>"高敏感"是家长和孩子共同使用的标签</td></tr>
+                </tbody>
+            </table>
+            <div class="insight-box">
+                <strong>两种声音——家长和孩子——在讲同一件事的两面。</strong>家长说"孩子不上学怎么办"，孩子说"我不想去的不是学校，是那个家"。
+            </div>
+        </div>
+    </div>
+
+    <!-- 课程意义 -->
+    <div class="tab-content" id="tab-course">
+        <div class="section">
+            <h3 class="section-title">对课程的启示</h3>
+            <ul class="post-list">
+                <li><strong>"双人群"课程——同时面向家长和孩子。</strong>家长为"让孩子重返学校"的付费意愿极强。</li>
+                <li><strong>最有价值的角度不是"怎么让孩子回去上学"。</strong>而是"休学是孩子在说'我需要帮助'"。</li>
+                <li><strong>家长课程核心：</strong>帮家长理解"休学不是孩子的问题，是家庭系统的信号"。</li>
+                <li><strong>孩子课程核心：</strong>帮孩子表达"我需要什么"——而不是用休学来表达。</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+</script>
+</body>
+</html>
