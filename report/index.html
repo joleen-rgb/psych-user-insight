@@ -147,20 +147,41 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 .footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;font-size:12px;color:var(--ink-3)}
 
+/* COLLAPSIBLE SECTIONS */
+.sec-head{cursor:pointer;user-select:none}
+.sec-head::after{content:'＋';font-size:20px;font-weight:400;color:var(--ink-3);margin-left:auto;flex-shrink:0;transition:transform .3s ease}
+.sec-head.open::after{content:'－'}
+.sec-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1)}
+.sec-body.open{max-height:none;overflow:visible}
+
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-@media(max-width:640px){
-.stat-bar{grid-template-columns:repeat(3,1fr)}
-.grid{grid-template-columns:1fr}
+@media(max-width:768px){
+.grid{grid-template-columns:1fr 1fr}
 .map-notes{grid-template-columns:1fr}
-.map-wrapper{aspect-ratio:4/5}
-.sec-head{gap:12px}
-.sec-num{font-size:36px;min-width:44px}
-.product-link{flex-direction:column}
+.map-wrapper{aspect-ratio:3/4}
+.node-name{font-size:9px!important}
+.node-desc,.node-stat{font-size:7px!important}
+.node-dot{opacity:0.08!important}
+.axis-label{font-size:9px;letter-spacing:1px}
+.zone-label{font-size:8px}
 .insight{flex-direction:column;gap:8px}
 .insight .sub-n{width:auto}
+.sec-head{gap:10px}
+.sec-num{font-size:32px;min-width:40px}
+}
+@media(max-width:480px){
+.grid{grid-template-columns:1fr}
+.map-wrapper{aspect-ratio:2/3}
+.node-name{font-size:8px!important}
+.node-desc{display:none!important}
+.node-stat{display:none!important}
+.axis-label{font-size:8px}
+.zone-label{display:none}
+.sec-num{font-size:28px;min-width:36px}
+.sec-info h2{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.15s!important}html{scroll-behavior:auto}}
 </style>
@@ -186,13 +207,6 @@ table.data-table td strong{color:var(--ink);font-weight:600}
         <p>我们从 20,563 条小红书帖子（2025.10—2026.04）中识别出 16 个潜在用户人群。心理相关话题的讨论整体较为活跃，其中焦虑（4,395帖）、失眠（1,568帖）、内耗（1,367帖）、亲子育儿（1,911帖）是讨论最集中的几个方向。</p>
         <p>从用户的互动行为来看，<strong>她们真正愿意收藏和反复使用的不是心理学知识或情绪安慰，而是可以直接照做的具体方法</strong>——"两分钟骗过你的大脑"的收藏/赞比达到 2.49（每个赞对应 2.5 次收藏），而"你担心的事99%不会发生"这类安慰内容的收藏/赞比仅有 0.02。然而目前市面上大量心理内容仍停留在共鸣和鸡汤层面，真正提供<span class="hl">系统化可执行方法</span>的产品几乎空白。</p>
     </div>
-    <div class="stat-bar reveal">
-        <div class="stat-card"><div class="bar bar-rose"></div><span class="stat-val">11x</span><span class="stat-sub">帖量半年增长</span></div>
-        <div class="stat-card"><div class="bar bar-amber"></div><span class="stat-val">1/6</span><span class="stat-sub">均赞下降幅度</span></div>
-        <div class="stat-card"><div class="bar bar-sky"></div><span class="stat-val">38,665</span><span class="stat-sub">树洞帖总评论</span></div>
-        <div class="stat-card"><div class="bar bar-green"></div><span class="stat-val">2.70</span><span class="stat-sub">收藏/赞比最高值</span></div>
-        <div class="stat-card"><div class="bar bar-violet"></div><span class="stat-val">16</span><span class="stat-sub">个自然聚集人群</span></div>
-    </div>
     <div class="finding reveal">
         <p>我们对 16 个人群进行交叉分析后发现：<strong>大量帖子同时出现在多个人群中——这意味着心理课程要服务的不是 16 个不同的群体，而是同一批人在不同人生阶段的不同需求。</strong>一个今天在搜"高敏感"的 25 岁女生，三年后可能变成搜"内耗怎么办"的职场人，再过五年可能变成搜"失眠"的新手妈妈。</p>
         <p class="core">她的痛苦在加深，角色在变化，但她始终是同一个人。</p>
@@ -202,7 +216,7 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 <!-- 01 人群画像 -->
 <div class="sec-head" id="s1"><div class="sec-num">01</div><div class="sec-info"><h2>人群深度画像</h2><p>16 个人群，沿三条路径流动。点击卡片查看完整分析。</p></div></div>
-
+<div class="sec-body">
 <div class="path-label"><div class="dot" style="background:var(--rose)"></div><span>心理恶化路径</span><span class="tag">&nbsp;— 从"性格敏感"到"身体出症状"</span></div>
 <div class="grid" style="margin-bottom:24px">
     <a href="group-hypersensitive.html" class="card t-rose"><div class="num">01</div><h3>高敏感自我厌恶者</h3><p class="desc">20-30岁女性，既厌恶又依赖"高敏感"标签</p><div class="stats"><div class="stat"><b>2.0%</b><span>发帖占比</span></div><div class="stat"><b>23.1%</b><span>互动率</span></div></div></a>
@@ -238,10 +252,11 @@ table.data-table td strong{color:var(--ink);font-weight:600}
     <a href="group-school-dropout.html" class="card t-rose" style="--rose:var(--amber)"><div class="num">15</div><h3>休学家庭</h3><p class="desc">家长说"孩子不上学"，孩子说"是原生家庭的问题"</p><div class="stats"><div class="stat"><b>90</b><span>帖</span></div></div></a>
     <a href="group-overseas-chinese.html" class="card t-rose" style="--rose:var(--amber)"><div class="num">16</div><h3>海外华人心理困扰</h3><p class="desc">38帖但两条"留子吐槽"帖合计3,119评论——需求真空</p><div class="stats"><div class="stat"><b>3,119</b><span>评论</span></div></div></a>
 </div>
+</div><!-- /sec-body 01 -->
 
 <!-- 02 人群光谱图 -->
 <div class="sec-head" id="s2"><div class="sec-num">02</div><div class="sec-info"><h2>人群光谱图</h2><p>16 个人群在二维空间上的位置、大小与流动方向</p></div></div>
-
+<div class="sec-body">
 <p class="map-intro reveal">这 16 个人群并非固定不变的标签——同一个人会随着心理状态的变化，在不同人群之间流动和迁移。我们根据帖子交叉数据还原了这些流动路径，将所有人群绘制在同一张光谱图上：<strong>横轴代表问题的严重程度（左轻右重），纵轴代表痛苦的指向（上方关于自己，下方关于关系与家庭）</strong>。</p>
 
 <div class="map-wrapper reveal">
@@ -307,17 +322,11 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 <div class="note-box reveal" style="margin-top:16px"><strong>"咨询受阻"是所有人群的最大交叉枢纽</strong>——与倾听师转行交叉 216 帖、与妈妈交叉 227 帖、与 AI 依恋交叉 52 帖。<strong>休学家庭×妈妈=76帖</strong>，成为妈妈路径的新分支。情绪性进食仍然是孤岛。</div>
 
-<div class="comp-section reveal" style="margin-top:14px"><div class="comp-title">咨询受阻交叉实例——同一个用户同时处于多个人群</div>
-<ul class="kol-list">
-<li><strong>×躯体化：</strong><a href="https://www.xiaohongshu.com/explore/69b93821000000001d01a468" style="color:var(--sky);text-decoration:underline">"第一次心理咨询止于价格——抑郁情绪已经很久了，躯体化的反应，但又不想留就诊记录"</a>（1932评论）；<a href="https://www.xiaohongshu.com/explore/697e17f50000000228001c79" style="color:var(--sky);text-decoration:underline">"咨询师要给我涨价，快做不起了"</a>（222评论）</li>
-<li><strong>×内耗：</strong><a href="https://www.xiaohongshu.com/explore/6942d554000000001e02e058" style="color:var(--sky);text-decoration:underline">"周六想看心理医生，但老是想要不要取消挂号，已经内耗一晚上了"</a>（223评论）；<a href="https://www.xiaohongshu.com/explore/687a116c000000002400caa3" style="color:var(--sky);text-decoration:underline">"一直想找个心理咨询师，与青春期孩子僵持，内耗自己"</a>（201评论）</li>
-<li><strong>×AI替代：</strong><a href="https://www.xiaohongshu.com/explore/69945d380000000028023a13" style="color:var(--sky);text-decoration:underline">"终于知道为什么大家都喜欢和豆包聊天了"</a>（596评论）；<a href="https://www.xiaohongshu.com/explore/699236de000000001d02647a" style="color:var(--sky);text-decoration:underline">"豆包是最好的心理医生"</a>（96评论）</li>
-<li><strong>×婚姻：</strong><a href="https://www.xiaohongshu.com/explore/69a622da0000000022033e90" style="color:var(--sky);text-decoration:underline">"找了16000一个月的线上心理婚姻咨询"</a>（59评论）——价格极端案例</li>
-</ul></div>
+</div><!-- /sec-body 02 -->
 
 <!-- 03 反直觉洞察 -->
 <div class="sec-head" id="s3"><div class="sec-num">03</div><div class="sec-info"><h2>反直觉洞察</h2><p>数据中容易踩的坑</p></div></div>
-
+<div class="sec-body">
 <div class="insight reveal"><div class="sub-n">1</div><div><h4>用户在自建"免费心理咨询替代品"</h4><p>244条"树洞/搭子/倾诉"帖产出 <strong>38,665 条评论</strong>。用户发现评论区互助比花300块找咨询师更有效——因为回应她们的是"经历过同样事情的人"。</p><p style="font-size:12px;color:var(--ink-3);margin-top:6px">实例：<a href="https://www.xiaohongshu.com/explore/69cb40e70000000023012e77" style="color:var(--sky);text-decoration:underline">"大家可以说说最近的烦心事吗？"</a>（10538评论）· <a href="https://www.xiaohongshu.com/explore/69c2c2830000000021005a38" style="color:var(--sky);text-decoration:underline">"这里是发泄区"</a>（7671评论）· <a href="https://www.xiaohongshu.com/explore/69d3d47d000000001f007df8" style="color:var(--sky);text-decoration:underline">"敏感内耗bot"</a>（670评论）</p><div class="hl">课程的附加价值不只是内容，而是社群——课程是入群的门票。</div></div></div>
 <div class="insight reveal"><div class="sub-n">2</div><div><h4>周末的痛苦比工作日更深</h4><p>工作日帖均评论 150.2，周末帖均评论 183.2（高出 22%）。周六帖均赞 1076（全周最高），周日帖均评论 95（全周最高）。</p><div class="hl">深度内容应该周末推送，碎片化工具应该工作日推送。</div></div></div>
 <div class="insight reveal"><div class="sub-n">3</div><div><h4>"转变故事"是被低估的高价值格式</h4><p>255条康复帖的藏/赞比 0.42，头部帖收藏比 2.0。用户存的不只是方法，还有<strong>"证据"——证明这条路能走通</strong>。</p><p style="font-size:12px;color:var(--ink-3);margin-top:6px">实例：<a href="https://www.xiaohongshu.com/explore/69be8a46000000001f005d2c" style="color:var(--sky);text-decoration:underline">"更年期症状全来了，我用半年走出来"</a>（280评论）· <a href="https://www.xiaohongshu.com/explore/69aac00a000000001a028d4f" style="color:var(--sky);text-decoration:underline">"焦虑症康复日记——坚持吃药一年"</a> · <a href="https://www.xiaohongshu.com/explore/69d3d47d000000001f007df8" style="color:var(--sky);text-decoration:underline">"我从极致拧巴变成敞亮人"</a>（1.9万赞）</p><div class="hl">课程应嵌入真实用户的转变叙事。</div></div></div>
@@ -330,9 +339,11 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 <div class="insight reveal"><div class="sub-n">10</div><div><h4>"休学"是一个正在爆发的青少年危机——已出现商业化服务</h4><p><strong>90帖</strong>。家长在问"孩子不上学怎么办"，孩子在说"是原生家庭的问题"。</p><p style="font-size:12px;color:var(--ink-3);margin-top:6px">实例：<a href="https://www.xiaohongshu.com/explore/6852716c000000000b01f598" style="color:var(--sky);text-decoration:underline">"高敏感的孩子不想去的并不是学校"</a>（399评论）· <a href="https://www.xiaohongshu.com/explore/69c13c3b000000001a02e2e1" style="color:var(--sky);text-decoration:underline">"我就怪原生家庭"</a>（732评论，6644赞）· <a href="https://www.xiaohongshu.com/explore/69c98ceb000000001a02f3c2" style="color:var(--sky);text-decoration:underline">"京津冀青少年休学疗愈栖息地"</a>（282评论）</p><div class="hl">家长和孩子的归因完全不同——这个认知鸿沟本身就是课程可以填补的。</div></div></div>
 <div class="insight reveal"><div class="sub-n">11</div><div><h4>海外华人心理困扰是一个"需求真空"</h4><p>38帖但两条"留子吐槽"帖合计<strong>3,119评论</strong>。</p><p style="font-size:12px;color:var(--ink-3);margin-top:6px">实例：<a href="https://www.xiaohongshu.com/explore/69d0f73a000000001d01d654" style="color:var(--sky);text-decoration:underline">"留子最近都在烦什么？进来吐槽一下"</a>（2150评论）· <a href="https://www.xiaohongshu.com/explore/69abaeb8000000001a0295d8" style="color:var(--sky);text-decoration:underline">"留美找不到工作，每天失眠吃安眠药"</a>（553评论）</p><div class="hl">英文心理服务不理解"东亚家庭""原生家庭""内耗"——中文线上课程对她们有天然优势。</div></div></div>
 
+</div><!-- /sec-body 03 -->
+
 <!-- 04 竞品 -->
 <div class="sec-head" id="s4"><div class="sec-num">04</div><div class="sec-info"><h2>竞品现状与用户评价</h2><p>心理服务平台 · AI工具 · 专家KOL · 从业者培训市场</p></div></div>
-
+<div class="sec-body">
 <div class="comp-section reveal"><div class="comp-title">心理服务平台</div><table class="data-table"><thead><tr><th>品牌</th><th>提及量</th><th>用户态度</th></tr></thead><tbody><tr><td>壹心理</td><td>427帖</td><td>最大但最空——大量自产日签/推广，来访者帖集中在"贵"和"没用"，从业者在"正式退出平台"</td></tr><tr><td>暂停实验室</td><td><strong>256帖</strong></td><td><strong>唯一让用户"练起来"的品牌</strong>——"650天，全体系完成"，但也有"ADHDer不适合""害怕是智商税"</td></tr><tr><td>简单心理</td><td>122帖</td><td>培训讨论多于咨询讨论；从业者在讨论"平台潜规则""头一次把咨询师给投诉了"</td></tr><tr><td>KnowYourself</td><td>27帖</td><td>老牌但影响力衰减——长文模式在小红书上失灵，用户正从微信迁移到短内容平台</td></tr><tr><td>清华心理课</td><td>22帖</td><td>权威标签传播力极强——"教你如何建立自信"1.3万赞，收藏/赞比0.55-0.85</td></tr></tbody></table><div class="note-box" style="margin-top:12px">暂停实验室做对了什么：把品牌和"具体的每日练习"绑定，让用户形成"打卡"习惯。课程可以学习的不是它的内容，而是它的<strong>留存机制</strong>。</div></div>
 
 <div class="comp-section reveal"><div class="comp-title">新竞争力量——AI工具</div><table class="data-table"><thead><tr><th>品牌</th><th>提及量</th><th>用户态度</th></tr></thead><tbody><tr><td><strong>豆包/DeepSeek</strong></td><td><strong>106帖</strong></td><td>"deepseek是最适合中国宝宝的心理医生"（992评论）——用户在认真讨论AI能否替代咨询</td></tr><tr><td>蜗牛睡眠/小睡眠/潮汐</td><td>135帖</td><td>助眠工具赛道——用户留存是核心问题，"坚持三个月就放弃了"</td></tr></tbody></table></div>
@@ -341,9 +352,11 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 
 <div class="comp-section reveal"><div class="comp-title">从业者培训市场——供给侧在崩溃</div><ul class="kol-list"><li><a href="https://www.xiaohongshu.com/explore/69a44a8f0000000022032b65" style="color:var(--sky);text-decoration:underline"><strong>"避雷，心理咨询师考试就是坑！"</strong></a>（419评论）</li><li><a href="https://www.xiaohongshu.com/explore/696cd023000000001a036d12" style="color:var(--sky);text-decoration:underline"><strong>"花几十万学心理学已经碎了"</strong></a>（173评论）</li><li><a href="https://www.xiaohongshu.com/explore/69c41c2a000000001a02e3d2" style="color:var(--sky);text-decoration:underline">"为什么心理咨询师不可以自己报名"</a>（287评论）</li><li><a href="https://www.xiaohongshu.com/explore/680ef85d00000000230165d5" style="color:var(--sky);text-decoration:underline">"我学心理学11年，但我根本不想做咨询师！"</a>（431评论）</li><li><a href="https://www.xiaohongshu.com/explore/695657e3000000001e017732" style="color:var(--sky);text-decoration:underline">"价值20w的纯公益心理疗愈"</a>（467评论）——暗示培训费用极高</li><li><a href="https://www.xiaohongshu.com/explore/69246219000000001e026cf0" style="color:var(--sky);text-decoration:underline">"你们也是这样嘛"</a>（446评论）——从业者集体吐槽</li><li><a href="https://www.xiaohongshu.com/explore/692acd7c000000001e02e77f" style="color:var(--sky);text-decoration:underline">"这才是36岁转行心理咨询师的真实现状"</a>（32评论）</li><li><a href="https://www.xiaohongshu.com/explore/6970eb1b000000000d00960d" style="color:var(--sky);text-decoration:underline">"45岁转行倾听师，只做晚上这几小时"</a>（1318评论）——从传统培训转向民间路径</li></ul><div class="note-box">培训端正在崩溃：高学费+低回报+行业门槛不透明。<strong>课程如果面向"想做倾听师"的中年女性，定价和培训路径需要和传统"考证"模式完全区隔。</strong></div></div>
 
+</div><!-- /sec-body 04 -->
+
 <!-- 05 内容规律 -->
 <div class="sec-head" id="s5"><div class="sec-num">05</div><div class="sec-info"><h2>内容设计的基本规律</h2></div></div>
-
+<div class="sec-body">
 <div class="rule reveal"><div class="rule-label">规律 01</div><h4>收藏/赞比是区分"流量"和"价值"的唯一指标</h4><div class="rule-body"><table class="data-table"><thead><tr><th>内容类型</th><th>收藏/赞比</th><th>含义</th></tr></thead><tbody><tr><td>鸡汤/安慰（"你担心的事99%不会发生"）</td><td>0.01-0.04</td><td>看了就忘</td></tr><tr><td>共鸣/宣泄（"高敏感的人在学校活不下去"）</td><td>0.10-0.15</td><td>点赞但不存</td></tr><tr><td>命名/解释（"过度独立是一种心理防御"）</td><td>0.7-1.2</td><td>存下来理解自己</td></tr><tr><td>方法/工具（"两分钟骗过你的大脑"）</td><td><strong>1.0-2.7</strong></td><td>存下来反复用</td></tr></tbody></table><p style="margin-top:.6rem">"你担心的事99%不会发生"被5个人反复发布，每次都有赞但收藏比都在0.02-0.04——<strong>鸡汤的无效性被精确量化了。</strong></p></div></div>
 <div class="rule reveal"><div class="rule-label">规律 02</div><h4>不同年龄信任完全不同的语言系统</h4><div class="rule-body"><ul><li>20-30岁（高敏感/内耗）→ 信任"脑科学"：皮质醇、杏仁核、神经系统</li><li>30-40岁（妈妈）→ 信任"可执行的每日练习"：每天抄写一遍（收藏比1.40）</li><li>40-55岁（更年期）→ 信任"中医/食疗"：滋阴潜阳汤（<strong>收藏比2.70——全场最高</strong>）</li></ul></div></div>
 <div class="rule reveal"><div class="rule-label">规律 03</div><h4>评论密度比互动率更能反映真实需求</h4><p>更年期群体互动率1.7%（全场最低），但评论/赞比6.93（全场最高）。不是需求不大，是算法不推——<strong>每一个靠搜索找到帖子的人几乎都会留言。</strong></p></div>
@@ -356,14 +369,38 @@ table.data-table td strong{color:var(--ink);font-weight:600}
 <div class="rule reveal"><div class="rule-label">规律 10</div><h4>"真问题"比"好内容"更能激发讨论</h4><p>1055条"评论数超过赞数"的纯讨论帖中，最高频intent是：提问（180）> 吐槽（104）> 求助（96）。<strong>课程社群运营的起手式应该是投放"提问帖"而非"知识帖"。</strong></p></div>
 <div class="rule reveal"><div class="rule-label">规律 11</div><h4>用户心中的价格锚点——150-200元是心理甜点</h4><p>989条价格讨论帖中，用户最频繁提到的价格是200元（11次）和150元（10次）。三个价格带：99元以下="冲动消费"，150-200元="能接受但会犹豫"，500-800元="咬牙才会试"。<strong>课程定价在99-199区间，刚好卡在"比咨询便宜但比免费内容有质量"的心理甜点上。</strong></p></div>
 <div class="rule reveal"><div class="rule-label">规律 12</div><h4>用户说"有效"的东西都是不需要理解原理、直接照做的小动作</h4><p>96条"亲测有用"帖中，收藏比最高的不是方法论而是具体的行动指令：不吼不叫孩子反而更听话（收藏比1.07）、凌晨早醒亲测好用方法（收藏比1.58）。<strong>课程的方法设计应该是"行动指令"级别的，不是"先理解再行动"。</strong></p></div>
+</div><!-- /sec-body 05 -->
 
 </div>
 
 <div class="footer">心理课程市场用户洞察报告 · 小红书 20,563 条帖子 · 2025.10 — 2026.04</div>
 
 <script>
+// Scroll reveal
 const io=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Collapsible sections
+document.querySelectorAll('.sec-head').forEach(head=>{
+    head.addEventListener('click',()=>{
+        const body=head.nextElementSibling;
+        if(!body||!body.classList.contains('sec-body'))return;
+        const isOpen=body.classList.contains('open');
+        if(isOpen){
+            body.style.maxHeight=body.scrollHeight+'px';
+            requestAnimationFrame(()=>{body.style.maxHeight='0';});
+            body.classList.remove('open');
+            head.classList.remove('open');
+        }else{
+            body.style.maxHeight=body.scrollHeight+'px';
+            body.classList.add('open');
+            head.classList.add('open');
+            setTimeout(()=>{body.style.maxHeight='none';},500);
+            // trigger reveal animations inside
+            body.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+        }
+    });
+});
 </script>
 </body>
 </html>
